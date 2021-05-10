@@ -9,19 +9,19 @@ export function createWhere (...selectors: string[]): SelectorFunction {
 }
 
 export function createUniversal (): SelectorFunction {
-  return (selector: string = '') => createIs(selector)('*')
+  return (selector: string = '') => createIs('*')(selector)
 }
 
 export function createType (type: string): SelectorFunction {
-  return (selector: string = '') => createIs(selector)(type)
+  return (selector: string = '') => createIs(type)(selector)
 }
 
 export function createClass (name: string): SelectorFunction {
-  return (selector: string = '') => createIs(selector)(name)
+  return (selector: string = '') => createIs(`.${name}`)(selector)
 }
 
 export function createId (id: string): SelectorFunction {
-  return (selector: string = '') => createIs(selector)(id)
+  return (selector: string = '') => createIs(`#${id}`)(selector)
 }
 
 export type AttributeOperator = '='
@@ -34,25 +34,25 @@ export function createAttribute (name: string): SelectorFunction
 export function createAttribute (name: string, operator: AttributeOperator, value: string): SelectorFunction
 export function createAttribute (name: string, operator?: AttributeOperator, value?: string): SelectorFunction {
   if (operator) {
-    return (selector: string = '') => `${selector}["${name}"${operator}"${value}"]`
+    return (selector: string = '') => createIs(`["${name}"${operator}"${value}"]`)(selector)
   }
 
-  return (selector: string = '') => `${selector}["${name}"]`
+  return (selector: string = '') => createIs(`["${name}"]`)(selector)
 }
 
-export function createDescendantOf (ancestor: string): SelectorFunction {
-  return (selector: string = '') => `${ancestor} ${selector}`
+export function createDescendant (ancestor: string): SelectorFunction {
+  return (selector: string = '') => `${ancestor} ${createIs()(selector)}`
 }
 
-export function createDirectChildOf (parent: string): SelectorFunction {
-  return (selector: string = '') => `${parent} > ${selector}`
+export function createDirectChild (parent: string): SelectorFunction {
+  return (selector: string = '') => `${parent} > ${createIs()(selector)}`
 }
 
-export function createGeneralSiblingOf (generalSibling: string): SelectorFunction {
-  return (selector: string = '') => `${generalSibling} ~ ${selector}`
+export function createGeneralSibling (generalSibling: string): SelectorFunction {
+  return (selector: string = '') => `${generalSibling} ~ ${createIs()(selector)}`
 }
 
-export function createAdjacentSiblingOf (adjacentSibling: string): SelectorFunction {
-  return (selector: string = '') => `${adjacentSibling} + ${selector}`
+export function createAdjacentSibling (adjacentSibling: string): SelectorFunction {
+  return (selector: string = '') => `${adjacentSibling} + ${createIs()(selector)}`
 }
 
