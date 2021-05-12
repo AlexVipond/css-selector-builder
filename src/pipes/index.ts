@@ -29,22 +29,22 @@ export function tag (tag: keyof HTMLElementTagNameMap) {
 }
 
 // APPEND
-export function append<AppendedType> (beforeAppended: '' | '#' | '.' | ':' | '::', appended: AppendedType): Pipe {
+export function append<AppendedType> (appended: AppendedType): Pipe {
   return (selector = '') => {
     const { relative, selected } = toFamily(selector)
     return relative + pipe(
-      selector => `${selector}${beforeAppended}${appended}`,
+      selector => `${selector}${appended}`,
       toWithoutRedundantUniversal(),
     )(selected)
   }
 }
 
 export function className (name: string) {
-  return append('.', name)
+  return append(`.${name}`)
 }
 
 export function id (id: string) {
-  return append('#', id)
+  return append(`#${id}`)
 }
 
 type AttributeOperator = '='
@@ -57,10 +57,10 @@ export function attribute (name: string): Pipe
 export function attribute (name: string, operator: AttributeOperator, value: string): Pipe
 export function attribute (name: string, operator?: AttributeOperator, value?: string) {
   if (operator !== undefined) {
-    return append('', `["${name}"${operator}"${value}"]`)
+    return append(`["${name}"${operator}"${value}"]`)
   }
 
-  return append('', `["${name}"]`)
+  return append(`["${name}"]`)
 }
 
 type PseudoState = 'active'
@@ -114,7 +114,7 @@ type PseudoState = 'active'
   | 'visited'
 
 export function pseudoState (state: PseudoState) {
-  return append(':', state)
+  return append(`:${state}`)
 }
 
 export function active () {
@@ -331,7 +331,7 @@ type PseudoFn = 'dir'
   | 'where'
 
 export function pseudoFn<ArgumentType> (fn: PseudoFn, ...args: ArgumentType[]) {
-  return append(':', `${fn}(${args.join(', ')})`)
+  return append(`:${fn}(${args.join(', ')})`)
 }
 
 export function dir (directionality: 'rtl' | 'ltr') {
@@ -354,8 +354,8 @@ export function is (...selectors: string[]) {
   return pseudoFn('is', ...selectors)
 }
 
-export function lang (lang: string) {
-  return pseudoFn('lang', lang)
+export function lang (languageCode: string) {
+  return pseudoFn('lang', languageCode)
 }
 
 export function not (...selectors: string[]) {
@@ -380,11 +380,11 @@ export function nthLastCol (pattern: NthPattern) {
   return pseudoFn('nth-last-col', pattern)
 }
 
-export function nthLastOfType (tag: keyof HTMLElementTagNameMap) {
+export function nthLastOfType (pattern: NthPattern) {
   return pseudoFn('nth-last-of-type', tag)
 }
 
-export function nthOfType (tag: keyof HTMLElementTagNameMap) {
+export function nthOfType (pattern: NthPattern) {
   return pseudoFn('nth-of-type', tag)
 }
 
@@ -413,7 +413,7 @@ type PseudoElement = 'after'
   | 'target-text'
 
 export function pseudoElement (element: PseudoElement) {
-  return append('::', element)
+  return append(`::${element}`)
 }
 
 export function after () {
@@ -475,7 +475,7 @@ export function targetText () {
 type PseudoElementFn = 'part' | 'slotted'
 
 export function pseudoElementFn (elementFn: PseudoElementFn, arg: string) {
-  return append('::', `${elementFn}(${arg})`)
+  return append(`::${elementFn}(${arg})`)
 }
 
 export function part (part: string) {
@@ -488,10 +488,10 @@ export function slotted (selector: string) {
 
 
 // RELATE
-export function relate (relationship: ' ' | ' > ' | ' ~ ' | ' + ', relative: string): Pipe {
+export function relate (combinator: ' ' | ' > ' | ' ~ ' | ' + ', relative: string): Pipe {
   return (selector = universal()()) => {
     const { relative: existingRelative, selected } = toFamily(selector)
-    return `${relative}${relationship}${existingRelative}${selected}`
+    return `${relative}${combinator}${existingRelative}${selected}`
   }
 }
 

@@ -7,19 +7,19 @@ const suite = createSuite('append pipes (node)')
 suite(`append`, () => {
   // Appends selector
   assert.is(
-    pipes.append(':', 'focus')('h1'),
+    pipes.append(`:focus`)('h1'),
     'h1:focus'
   )
 
   // Appends target, not relative
   assert.is(
-    pipes.append(':', 'focus')('.haha .business'),
+    pipes.append(`:focus`)('.haha .business'),
     '.haha .business:focus'
   )
   
   // Removes redundant universal
   assert.is(
-    pipes.append(':', 'focus')('.haha *.business'),
+    pipes.append(`:focus`)('.haha *.business'),
     '.haha .business:focus'
   )
 })

@@ -3,11 +3,13 @@ import * as pipes from '../pipes'
 type Metadatum = {
   method: keyof typeof pipes,
   category: 'abstractions' | 'basic' | 'pseudo states' | 'pseudo elements' | 'relationships',
-  description: string,
+  label: string,
   args: {
     name: string,
-    type: 'string' | 'selector',
-    description: string,
+    inputType: 'unknown' | 'string' | 'selector' | 'attributeOperators' | 'directionalities' | 'nthPattern',
+    label: string,
+    required: boolean | ((values: Record<any, any>) => boolean),
+    repeatable?: boolean
   }[]
 }
 
@@ -16,57 +18,112 @@ export const metadata: Metadatum[] = [
   {
     method: 'prepend',
     category: 'abstractions',
-    description: '',
+    label: 'is selected by a custom selector prepended to the current selector',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'prepended',
+        inputType: 'string',
+        label: 'Custom selector that should be prepended to the current selector',
+        required: true
+      },
     ]
   },
   {
     method: 'append',
     category: 'abstractions',
-    description: '',
+    label: 'is selected by a custom selector appended to the current selector',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'appended',
+        inputType: 'string',
+        label: 'Custom selector that should be appended to the current selector',
+        required: true
+      },
     ]
   },
   {
     method: 'pseudoState',
     category: 'abstractions',
-    description: '',
+    label: 'has a custom pseudo state',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'state',
+        inputType: 'string',
+        label: 'Name of the pseudo state',
+        required: true
+      },
     ]
   },
   {
     method: 'pseudoFn',
     category: 'abstractions',
-    description: '',
+    label: 'has a custom pseudo state that accepts arguments',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'fn',
+        inputType: 'string',
+        label: 'Name of the pseudo state function',
+        required: true
+      },
+      {
+        name: 'args',
+        inputType: 'unknown',
+        label: 'An argument to pass to the pseudo state function',
+        required: true,
+        repeatable: true,
+      },
     ]
   },
   {
     method: 'pseudoElement',
     category: 'abstractions',
-    description: '',
+    label: 'has a custom pseudo element',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'state',
+        inputType: 'string',
+        label: 'Name of the pseudo element',
+        required: true
+      },
     ]
   },
   {
     method: 'pseudoElementFn',
     category: 'abstractions',
-    description: '',
+    label: 'has a custom pseudo element that accepts arguments',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'fn',
+        inputType: 'string',
+        label: 'Name of the pseudo element function',
+        required: true
+      },
+      {
+        name: 'args',
+        inputType: 'unknown',
+        label: 'An argument to pass to the pseudo element function',
+        required: true,
+        repeatable: true,
+      },
     ]
   },
   {
     method: 'relate',
     category: 'abstractions',
-    description: '',
+    label: 'has a custom relationship with another selector',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'combinator',
+        inputType: 'string',
+        label: 'Custom combinator that goes between your selector and its relative',
+        required: true
+      },
+      {
+        name: 'relative',
+        inputType: 'selector',
+        label: 'Your selector\'s relative',
+        required: true
+      },
     ]
   },
 
@@ -74,41 +131,71 @@ export const metadata: Metadatum[] = [
   {
     method: 'universal',
     category: 'basic',
-    description: '',
-    args: [
-      { name: '', type: '', description: '' },
-    ]
+    label: 'universally meets any other conditions',
+    args: []
   },
   {
     method: 'tag',
     category: 'basic',
-    description: '',
+    label: 'has a specific tag',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'tag',
+        inputType: 'string',
+        label: 'The tag',
+        required: true
+      },
     ]
   },
   {
     method: 'className',
     category: 'basic',
-    description: '',
+    label: 'has a specific class',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'name',
+        inputType: 'string',
+        label: 'The class name',
+        required: true
+      },
     ]
   },
   {
     method: 'id',
     category: 'basic',
-    description: '',
+    label: 'has a specific ID',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'id',
+        inputType: 'string',
+        label: 'The id',
+        required: true
+      },
     ]
   },
   {
     method: 'attribute',
     category: 'basic',
-    description: '',
+    label: 'has an attribute, or has an attribute whose value meets certain conditions',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'attribute',
+        inputType: 'string',
+        label: 'Name of the attribute',
+        required: true
+      },
+      {
+        name: 'operator',
+        inputType: 'attributeOperators',
+        label: 'Operator that describes the relationship between the attribute and its value',
+        required: values => !!values.value,
+      },
+      {
+        name: 'value',
+        inputType: 'string',
+        label: 'Value of the attribute',
+        required: values => !!values.operator,
+      },
     ]
   },
 
@@ -118,31 +205,31 @@ export const metadata: Metadatum[] = [
   {
     method: 'active',
     category: 'pseudo states',
-    description: 'is currently activated by the user',
+    label: 'is currently activated by the user',
     args: [],
   },
   {
     method: 'focus',
     category: 'pseudo states',
-    description: 'is currently focused by the user',
+    label: 'is currently focused by the user',
     args: [],
   },
   {
     method: 'focusVisible',
     category: 'pseudo states',
-    description: 'is currently focused by the user using the keyboard, not the mouse',
+    label: 'is currently focused by the user using the keyboard, not the mouse',
     args: [],
   },
   {
     method: 'focusWithin',
     category: 'pseudo states',
-    description: 'is either currently focused by the user, or contains the focused element',
+    label: 'is either currently focused by the user, or contains the focused element',
     args: [],
   },
   {
     method: 'hover',
     category: 'pseudo states',
-    description: 'is currently hovered by the user',
+    label: 'is currently hovered by the user',
     args: [],
   },
 
@@ -150,97 +237,103 @@ export const metadata: Metadatum[] = [
   {
     method: 'autofill',
     category: 'pseudo states',
-    description: 'has been autofilled',
+    label: 'has been autofilled',
     args: [],
   },
   {
     method: 'blank',
     category: 'pseudo states',
-    description: 'is a blank user input',
+    label: 'is a blank user input',
     args: [],
   },
   {
     method: 'checked',
     category: 'pseudo states',
-    description: 'is a checked radio button or checkbox',
+    label: 'is a checked radio button or checkbox',
     args: [],
   },
   {
     method: 'defaultState',
     category: 'pseudo states',
-    description: 'is the default radio, checkbox, or select option, or the first <button> in a form without the "button" type',
+    label: 'is the default radio, checkbox, or select option, or the first <button> in a form without the "button" type',
     args: [],
   },
   {
     method: 'disabled',
     category: 'pseudo states',
-    description: 'is disabled',
+    label: 'is disabled',
     args: [],
   },
   {
     method: 'enabled',
     category: 'pseudo states',
-    description: 'is enabled',
+    label: 'is enabled',
     args: [],
   },
   {
     method: 'indeterminate',
     category: 'pseudo states',
-    description: 'is any form element whose state is indeterminate',
+    label: 'is any form element whose state is indeterminate',
     args: [],
   },
   {
     method: 'inRange',
     category: 'pseudo states',
-    description: 'is a slider whose selected value is within the allowed range',
+    label: 'is a slider whose selected value is within the allowed range',
     args: [],
   },
   {
     method: 'outOfRange',
     category: 'pseudo states',
-    description: 'is a slider whose selected value is outside the allowed range',
+    label: 'is a slider whose selected value is outside the allowed range',
     args: [],
   },
   {
     method: 'valid',
     category: 'pseudo states',
-    description: 'has valid contents',
+    label: 'has valid contents',
     args: [],
   },
   {
     method: 'invalid',
     category: 'pseudo states',
-    description: 'has invalid contents',
+    label: 'has invalid contents',
     args: [],
   },
   {
     method: 'userInvalid',
     category: 'pseudo states',
-    description: 'has invalid contents, and the user has already interacted with it',
+    label: 'has invalid contents, and the user has already interacted with it',
     args: [],
   },
   {
     method: 'optional',
     category: 'pseudo states',
-    description: 'is an optional form field',
+    label: 'is an optional form field',
     args: [],
   },
   {
     method: 'required',
     category: 'pseudo states',
-    description: 'is a required form field',
+    label: 'is a required form field',
     args: [],
   },
   {
     method: 'readOnly',
     category: 'pseudo states',
-    description: 'is read-only',
+    label: 'is read-only',
     args: [],
   },
   {
     method: 'readWrite',
     category: 'pseudo states',
-    description: 'is user-editable',
+    label: 'is user-editable',
+    args: [],
+  },
+  {
+    method: 'placeholderShown',
+    category: 'pseudo states',
+    label: 'is an input element that is displaying placeholder text',
     args: [],
   },
 
@@ -248,43 +341,65 @@ export const metadata: Metadatum[] = [
   {
     method: 'anyLink',
     category: 'pseudo states',
-    description: 'is any <a> with an href',
+    label: 'is any <a> with an href',
     args: [],
   },
   {
     method: 'localLink',
     category: 'pseudo states',
-    description: 'is any <a> that links to the same document',
+    label: 'is any <a> that links to the same document',
     args: [],
   },
   {
     method: 'link',
     category: 'pseudo states',
-    description: 'is an <a> that hasn\'t been visited',
+    label: 'is an <a> that hasn\'t been visited',
     args: [],
   },
   {
     method: 'visited',
     category: 'pseudo states',
-    description: 'is an <a> that has been visited',
+    label: 'is an <a> that has been visited',
     args: [],
   },
   {
     method: 'scope',
     category: 'pseudo states',
-    description: 'is currently calling the querySelector or querySelectorAll method',
+    label: 'is currently calling the querySelector or querySelectorAll method',
     args: [],
   },
   {
     method: 'target',
     category: 'pseudo states',
-    description: 'is the target of the current URL',
+    label: 'is the target of the current URL',
     args: [],
   },
   {
     method: 'targetWithin',
     category: 'pseudo states',
-    description: 'is the target of the current URL, or contains the target',
+    label: 'is the target of the current URL, or contains the target',
+    args: [],
+  },
+
+  // PRINTED PAGE STRUCTURE
+
+  {
+    method: 'first',
+    category: 'pseudo states',
+    label: 'is the first page of a printed document',
+    args: [],
+  },
+  {
+    method: 'left',
+    category: 'pseudo states',
+    label: 'is a left-hand page of a printed document',
+    args: [],
+  },
+
+  {
+    method: 'right',
+    category: 'pseudo states',
+    label: 'is a right-hand page of a printed document',
     args: [],
   },
   
@@ -292,356 +407,414 @@ export const metadata: Metadatum[] = [
   {
     method: 'root',
     category: 'pseudo states',
-    description: 'is the document root',
+    label: 'is the document root',
     args: [],
   },
   {
     method: 'empty',
     category: 'pseudo states',
-    description: 'has no children other than whitespace characters',
-    args: [],
-  },
-  {
-    method: 'first',
-    category: 'pseudo states',
-    description: 'is the first page of a printed document',
+    label: 'has no children other than whitespace characters',
     args: [],
   },
   {
     method: 'firstChild',
     category: 'pseudo states',
-    description: 'is the first child inside a parent',
+    label: 'is the first child inside a parent',
     args: [],
   },
   {
     method: 'firstOfType',
     category: 'pseudo states',
-    description: 'is the first child of a specific type inside a parent',
+    label: 'is the first child of its type inside a parent',
     args: [],
   },
   {
     method: 'lastChild',
     category: 'pseudo states',
-    description: 'is the last child inside a parent',
+    label: 'is the last child inside a parent',
     args: [],
   },
   {
     method: 'lastOfType',
     category: 'pseudo states',
-    description: 'is the last child of a specific type inside a parent',
+    label: 'is the last child of its type inside a parent',
     args: [],
   },
   {
     method: 'onlyChild',
     category: 'pseudo states',
-    description: 'is the only child inside a parent',
+    label: 'is the only child inside a parent',
     args: [],
   },
   {
     method: 'onlyOfType',
     category: 'pseudo states',
-    description: 'is the only child of a specific type inside a parent',
+    label: 'is the only child of its type inside a parent',
     args: [],
-  },
-  {
-    method: 'left',
-    category: 'pseudo states',
-    description: '',
-    args: [],
-  },
-
-
-  {
-    method: 'defined',
-    category: 'pseudo states',
-    description: 'is a defined custom element',
-    args: [],
-  },
-  
-  {
-    method: 'fullscreen',
-    category: 'pseudo states',
-    description: '',
-    args: [],
-  },
-
-  // TIME DIMENSIONAL
-  {
-    method: 'current',
-    category: 'pseudo states',
-    description: 'is a WebVTT caption that is currently displayed',
-    args: [],
-  },
-  {
-    method: 'future',
-    category: 'pseudo states',
-    description: 'is a WebVTT caption that is not yet displayed',
-    args: [],
-  },
-  {
-    method: 'past',
-    category: 'pseudo states',
-    description: 'is a WebVTT caption that was displayed',
-    args: [],
-  },
-
-
-  {
-    method: 'host',
-    category: 'pseudo states',
-    description: '',
-    args: [],
-  },
-  
-  {
-    method: 'pictureInPicture',
-    category: 'pseudo states',
-    description: '',
-    args: [],
-  },
-  {
-    method: 'placeholderShown',
-    category: 'pseudo states',
-    description: '',
-    args: [],
-  },
-  {
-    method: 'paused',
-    category: 'pseudo states',
-    description: '',
-    args: [],
-  },
-  {
-    method: 'playing',
-    category: 'pseudo states',
-    description: '',
-    args: [],
-  },
-  {
-    method: 'right',
-    category: 'pseudo states',
-    description: '',
-    args: [],
-  },
-  {
-    method: 'dir',
-    category: 'pseudo states',
-    description: '',
-    args: [
-      { name: '', type: '', description: '' },
-    ]
-  },
-  {
-    method: 'has',
-    category: 'pseudo states',
-    description: '',
-    args: [
-      { name: '', type: '', description: '' },
-    ]
-  },
-  {
-    method: 'hostFn',
-    category: 'pseudo states',
-    description: '',
-    args: [
-      { name: '', type: '', description: '' },
-    ]
-  },
-  {
-    method: 'hostContext',
-    category: 'pseudo states',
-    description: '',
-    args: [
-      { name: '', type: '', description: '' },
-    ]
-  },
-  {
-    method: 'is',
-    category: 'pseudo states',
-    description: '',
-    args: [
-      { name: '', type: '', description: '' },
-    ]
-  },
-  {
-    method: 'lang',
-    category: 'pseudo states',
-    description: '',
-    args: [
-      { name: '', type: '', description: '' },
-    ]
-  },
-  {
-    method: 'not',
-    category: 'pseudo states',
-    description: '',
-    args: [
-      { name: '', type: '', description: '' },
-    ]
   },
   {
     method: 'nthChild',
     category: 'pseudo states',
-    description: '',
+    label: 'is the nth child inside a parent',
     args: [
-      { name: '', type: '', description: '' },
-    ]
-  },
-  {
-    method: 'nthCol',
-    category: 'pseudo states',
-    description: '',
-    args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'pattern',
+        inputType: 'nthPattern',
+        label: 'nth pattern describing the element\'s position',
+        required: true,
+      }
     ]
   },
   {
     method: 'nthLastChild',
     category: 'pseudo states',
-    description: '',
+    label: 'is the nth from last child inside a parent',
     args: [
-      { name: '', type: '', description: '' },
-    ]
-  },
-  {
-    method: 'nthLastCol',
-    category: 'pseudo states',
-    description: '',
-    args: [
-      { name: '', type: '', description: '' },
-    ]
-  },
-  {
-    method: 'nthLastOfType',
-    category: 'pseudo states',
-    description: '',
-    args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'pattern',
+        inputType: 'nthPattern',
+        label: 'nth pattern describing the element\'s position',
+        required: true,
+      }
     ]
   },
   {
     method: 'nthOfType',
     category: 'pseudo states',
-    description: '',
+    label: 'is the nth child of its type inside a parent',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'pattern',
+        inputType: 'nthPattern',
+        label: 'nth pattern describing the element\'s position',
+        required: true,
+      }
+    ]
+  },
+  {
+    method: 'nthLastOfType',
+    category: 'pseudo states',
+    label: 'is the nth from the last child of its type inside a parent',
+    args: [
+      {
+        name: 'pattern',
+        inputType: 'nthPattern',
+        label: 'nth pattern describing the element\'s position',
+        required: true,
+      }
+    ]
+  },
+  {
+    method: 'nthCol',
+    category: 'pseudo states',
+    label: 'is in the nth column inside a parent',
+    args: [
+      {
+        name: 'pattern',
+        inputType: 'nthPattern',
+        label: 'nth pattern describing the element\'s position',
+        required: true,
+      }
+    ]
+  },
+  {
+    method: 'nthLastCol',
+    category: 'pseudo states',
+    label: 'is in the nth from last column inside a parent',
+    args: [
+      {
+        name: 'pattern',
+        inputType: 'nthPattern',
+        label: 'nth pattern describing the element\'s position',
+        required: true,
+      }
+    ]
+  },
+
+  // DISPLAY
+  {
+    method: 'fullscreen',
+    category: 'pseudo states',
+    label: 'is currently displayed fullscreen',
+    args: [],
+  },
+  {
+    method: 'pictureInPicture',
+    category: 'pseudo states',
+    label: 'is currently displayed as picture-in-picture',
+    args: [],
+  },
+
+
+  // TIME DIMENSIONAL
+  {
+    method: 'current',
+    category: 'pseudo states',
+    label: 'is a WebVTT caption that is currently displayed',
+    args: [],
+  },
+  {
+    method: 'future',
+    category: 'pseudo states',
+    label: 'is a WebVTT caption that is not yet displayed',
+    args: [],
+  },
+  {
+    method: 'past',
+    category: 'pseudo states',
+    label: 'is a WebVTT caption that was displayed',
+    args: [],
+  },
+  {
+    method: 'defined',
+    category: 'pseudo states',
+    label: 'is a defined custom element',
+    args: [],
+  },
+  
+
+  {
+    method: 'host',
+    category: 'pseudo states',
+    label: '',
+    args: [],
+  },
+
+
+  // RESOURCE STATE
+  {
+    method: 'paused',
+    category: 'pseudo states',
+    label: 'is a media element that is currently paused',
+    args: [],
+  },
+  {
+    method: 'playing',
+    category: 'pseudo states',
+    label: 'is a media element that is currently playing',
+    args: [],
+  },
+
+  {
+    method: 'dir',
+    category: 'pseudo states',
+    label: '',
+    args: [
+      {
+        name: 'directionality',
+        inputType: 'directionalities',
+        label: 'Text directionality',
+        required: true,
+      }
+    ]
+  },
+  {
+    method: 'lang',
+    category: 'pseudo states',
+    label: '',
+    args: [
+      {
+        name: 'language code',
+        inputType: 'string',
+        label: '',
+        required: true,
+      }
+    ]
+  },
+  {
+    method: 'has',
+    category: 'pseudo states',
+    label: '',
+    args: [
+      {
+        name: 'selector',
+        inputType: 'selector',
+        label: '',
+        required: true,
+      }
+    ]
+  },
+  {
+    method: 'hostFn',
+    category: 'pseudo states',
+    label: '',
+    args: [
+      
+    ]
+  },
+  {
+    method: 'hostContext',
+    category: 'pseudo states',
+    label: '',
+    args: [
+      
+    ]
+  },
+  {
+    method: 'is',
+    category: 'pseudo states',
+    label: '',
+    args: [
+      {
+        name: 'selector',
+        inputType: 'selector',
+        label: '',
+        required: true,
+        repeatable: true,
+      }
+    ]
+  },
+  {
+    method: 'not',
+    category: 'pseudo states',
+    label: '',
+    args: [
+      {
+        name: 'selector',
+        inputType: 'selector',
+        label: '',
+        required: true,
+        repeatable: true,
+      }
+    ]
+  },  
+  {
+    method: 'where',
+    category: 'pseudo states',
+    label: '',
+    args: [
+      {
+        name: 'selector',
+        inputType: 'selector',
+        label: '',
+        required: true,
+        repeatable: true,
+      }
     ]
   },
   {
     method: 'state',
     category: 'pseudo states',
-    description: '',
+    label: '',
     args: [
-      { name: '', type: '', description: '' },
-    ]
-  },
-  {
-    method: 'where',
-    category: 'pseudo states',
-    description: '',
-    args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'state',
+        inputType: 'string',
+        label: '',
+        required: true,
+      }
     ]
   },
 
   {
     method: 'after',
     category: 'pseudo elements',
-    description: '',
+    label: '',
     args: [],
   },
   {
     method: 'backdrop',
     category: 'pseudo elements',
-    description: '',
+    label: '',
     args: [],
   },
   {
     method: 'before',
     category: 'pseudo elements',
-    description: '',
+    label: '',
     args: [],
   },
   {
     method: 'cue',
     category: 'pseudo elements',
-    description: '',
+    label: '',
     args: [],
   },
   {
     method: 'cueRegion',
     category: 'pseudo elements',
-    description: '',
+    label: '',
     args: [],
   },
   {
     method: 'firstLetter',
     category: 'pseudo elements',
-    description: '',
+    label: '',
     args: [],
   },
   {
     method: 'firstLine',
     category: 'pseudo elements',
-    description: '',
+    label: '',
     args: [],
   },
   {
     method: 'fileSelectorButton',
     category: 'pseudo elements',
-    description: '',
+    label: '',
     args: [],
   },
   {
     method: 'grammarError',
     category: 'pseudo elements',
-    description: '',
+    label: '',
     args: [],
   },
   {
     method: 'marker',
     category: 'pseudo elements',
-    description: '',
+    label: '',
     args: [],
   },
   {
     method: 'placeholder',
     category: 'pseudo elements',
-    description: '',
+    label: '',
     args: [],
   },
   {
     method: 'selection',
     category: 'pseudo elements',
-    description: '',
+    label: '',
     args: [],
   },
   {
     method: 'spellingError',
     category: 'pseudo elements',
-    description: '',
+    label: '',
     args: [],
   },
   {
     method: 'targetText',
     category: 'pseudo elements',
-    description: '',
+    label: '',
     args: [],
   },
   {
     method: 'part',
     category: 'pseudo elements',
-    description: '',
+    label: '',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'part',
+        inputType: 'string',
+        label: '',
+        required: true,
+      }
     ]
   },
   {
     method: 'slotted',
     category: 'pseudo elements',
-    description: '',
+    label: '',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'selector',
+        inputType: 'selector',
+        label: '',
+        required: true,
+        repeatable: true,
+      }
     ]
   },
 
@@ -649,33 +822,53 @@ export const metadata: Metadatum[] = [
   {
     method: 'descendant',
     category: 'relationships',
-    description: '',
+    label: 'is the descendant of a specific element',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'ancestor',
+        inputType: 'selector',
+        label: 'Ancestor of the selected element',
+        required: true,
+      }
     ]
   },
   {
     method: 'directChild',
     category: 'relationships',
-    description: '',
+    label: 'is the direct child of a specific element',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'parent',
+        inputType: 'selector',
+        label: 'Parent of the selected element',
+        required: true,
+      }
     ]
   },
   {
     method: 'generalSibling',
     category: 'relationships',
-    description: '',
+    label: 'is the general sibling of a specific element',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'sibling',
+        inputType: 'selector',
+        label: 'Sibling of the selected element',
+        required: true,
+      }
     ]
   },
   {
     method: 'adjacentSibling',
     category: 'relationships',
-    description: '',
+    label: 'is the adjacent sibling of a specific element',
     args: [
-      { name: '', type: '', description: '' },
+      {
+        name: 'sibling',
+        inputType: 'selector',
+        label: 'Sibling of the selected element',
+        required: true,
+      }
     ]
   },
 ]
