@@ -36,31 +36,31 @@ npm i @alexvipond/css-selector-pipes
 From the library, you can import functions for building CSS selectors:
 
 ```ts
-import { type, className, not } from '@alexvipond/css-selector-pipes'
+import { tag, className, not } from '@alexvipond/css-selector-pipes'
 
-type('h1')()          // 'h1'
+tag('h1')()          // 'h1'
 className('poop')()   // .poop
-not(type('h1')())()   // ':not(h1)'
+not(tag('h1')())()   // ':not(h1)'
 ```
 
 Each function is a **higher order function**, returning a function that accepts a CSS selector as it's only parameter, and returns the transformed selector.
 
 ```js
-import { type, className } from '@alexvipond/css-selector-pipes'
+import { tag, className } from '@alexvipond/css-selector-pipes'
 
-const typeTransform = type('h1')
+const tagTransform = tag('h1')
 const classNameTransform = className('poop')
 
-typeTransform(classNameTransform()) // h1.poop
+tagTransform(classNameTransform()) // h1.poop
 ```
 
 You can also import a `pipe` utility that makes it easier to compose multiple functions into a selector pipeline.
 
 ```js
-import { pipe, type, className } from '@alexvipond/css-selector-pipes'
+import { pipe, tag, className } from '@alexvipond/css-selector-pipes'
 
 pipe(
-  type('h1'),
+  tag('h1'),
   className('poop')
 )() // h1.poop
 ```

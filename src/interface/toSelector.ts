@@ -1,6 +1,6 @@
-import * as pipes from './pipes'
-import type { Pipe } from './pipes'
-import { pipe } from './pipes/util'
+import * as pipes from '../pipes'
+import type { Pipe } from '../pipes'
+import { pipe } from '../pipes/util'
 
 type Condition = {
   method: keyof typeof pipes,

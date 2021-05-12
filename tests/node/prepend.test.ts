@@ -31,9 +31,9 @@ suite(`universal`, () => {
   )
 })
 
-suite(`type`, () => {
+suite(`tag`, () => {
   assert.is(
-    pipes.type('h1')('.poop'),
+    pipes.tag('h1')('.poop'),
     'h1.poop'
   )
 })

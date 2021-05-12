@@ -24,8 +24,8 @@ export function universal (): Pipe {
   return prepend('*')
 }
 
-export function type (type: keyof HTMLElementTagNameMap): Pipe {
-  return prepend(type)
+export function tag (tag: keyof HTMLElementTagNameMap): Pipe {
+  return prepend(tag)
 }
 
 // APPEND
@@ -380,12 +380,12 @@ export function nthLastCol (pattern: NthPattern): Pipe {
   return pseudoFn('nth-last-col', pattern)
 }
 
-export function nthLastOfType (type: keyof HTMLElementTagNameMap): Pipe {
-  return pseudoFn('nth-last-of-type', type)
+export function nthLastOfType (tag: keyof HTMLElementTagNameMap): Pipe {
+  return pseudoFn('nth-last-of-type', tag)
 }
 
-export function nthOfType (type: keyof HTMLElementTagNameMap): Pipe {
-  return pseudoFn('nth-of-type', type)
+export function nthOfType (tag: keyof HTMLElementTagNameMap): Pipe {
+  return pseudoFn('nth-of-type', tag)
 }
 
 export function state (state: string): Pipe {
