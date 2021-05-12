@@ -5,6 +5,8 @@ import {
   toWithoutRedundantUniversal,
 } from './util'
 
+export { pipe }
+
 export type Pipe = (selector?: string) => string
 
 // PREPEND

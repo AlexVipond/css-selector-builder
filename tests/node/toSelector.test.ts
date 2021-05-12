@@ -1,6 +1,6 @@
 import { suite as createSuite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { toSelector } from '../../src/toSelector'
+import { toSelector } from '../../src/interface/toSelector'
 
 const suite = createSuite('toSelector (node)')
 

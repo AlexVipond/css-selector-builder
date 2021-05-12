@@ -1,4 +1,14 @@
 {
+  "name": "@alexvipond/css-selector-pipes",
+  "version": "0.0.0",
+  "description": "Pipeline functions for building CSS selectors programmatically",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -16,7 +26,6 @@
     "vite": "^2.2.3"
   },
   "dependencies": {
-    "@baleada/logic": "^0.19.9",
     "vue": "^3.0.11"
   }
 }
