@@ -39,7 +39,7 @@ From the library, you can import functions for building CSS selectors:
 import { tag, className, not } from '@alexvipond/css-selector-pipes'
 
 tag('h1')()          // 'h1'
-className('poop')()   // .poop
+className('poop')()  // .poop
 not(tag('h1')())()   // ':not(h1)'
 ```
 

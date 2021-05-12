@@ -20,16 +20,16 @@ export function prepend<PrependedType extends '*' | keyof HTMLElementTagNameMap>
   }
 }
 
-export function universal (): Pipe {
+export function universal () {
   return prepend('*')
 }
 
-export function tag (tag: keyof HTMLElementTagNameMap): Pipe {
+export function tag (tag: keyof HTMLElementTagNameMap) {
   return prepend(tag)
 }
 
 // APPEND
-export function append<AppendedType> (beforeAppended: '' | '#' | '.' | ':' | '::', appended: AppendedType) {
+export function append<AppendedType> (beforeAppended: '' | '#' | '.' | ':' | '::', appended: AppendedType): Pipe {
   return (selector = '') => {
     const { relative, selected } = toFamily(selector)
     return relative + pipe(
@@ -39,11 +39,11 @@ export function append<AppendedType> (beforeAppended: '' | '#' | '.' | ':' | '::
   }
 }
 
-export function className (name: string): Pipe {
+export function className (name: string) {
   return append('.', name)
 }
 
-export function id (id: string): Pipe {
+export function id (id: string) {
   return append('#', id)
 }
 
@@ -55,7 +55,7 @@ type AttributeOperator = '='
   | '*='
 export function attribute (name: string): Pipe
 export function attribute (name: string, operator: AttributeOperator, value: string): Pipe
-export function attribute (name: string, operator?: AttributeOperator, value?: string): Pipe {
+export function attribute (name: string, operator?: AttributeOperator, value?: string) {
   if (operator !== undefined) {
     return append('', `["${name}"${operator}"${value}"]`)
   }
@@ -113,203 +113,203 @@ type PseudoState = 'active'
   | 'valid'
   | 'visited'
 
-export function pseudoState (state: PseudoState): Pipe {
+export function pseudoState (state: PseudoState) {
   return append(':', state)
 }
 
-export function active (): Pipe {
+export function active () {
   return pseudoState('active')
 }
 
-export function anyLink (): Pipe {
+export function anyLink () {
   return pseudoState('any-link')
 }
 
-export function autofill (): Pipe {
+export function autofill () {
   return pseudoState('autofill')
 }
 
-export function blank (): Pipe {
+export function blank () {
   return pseudoState('blank')
 }
 
-export function checked (): Pipe {
+export function checked () {
   return pseudoState('checked')
 }
 
-export function current (): Pipe {
+export function current () {
   return pseudoState('current')
 }
 
-export function defaultState (): Pipe {
+export function defaultState () {
   return pseudoState('default')
 }
 
-export function defined (): Pipe {
+export function defined () {
   return pseudoState('defined')
 }
 
-export function disabled (): Pipe {
+export function disabled () {
   return pseudoState('disabled')
 }
 
-export function empty (): Pipe {
+export function empty () {
   return pseudoState('empty')
 }
 
-export function enabled (): Pipe {
+export function enabled () {
   return pseudoState('enabled')
 }
 
-export function first (): Pipe {
+export function first () {
   return pseudoState('first')
 }
 
-export function firstChild (): Pipe {
+export function firstChild () {
   return pseudoState('first-child')
 }
 
-export function firstOfType (): Pipe {
+export function firstOfType () {
   return pseudoState('first-of-type')
 }
 
-export function fullscreen (): Pipe {
+export function fullscreen () {
   return pseudoState('fullscreen')
 }
 
-export function future (): Pipe {
+export function future () {
   return pseudoState('future')
 }
 
-export function focus (): Pipe {
+export function focus () {
   return pseudoState('focus')
 }
 
-export function focusVisible (): Pipe {
+export function focusVisible () {
   return pseudoState('focus-visible')
 }
 
-export function focusWithin (): Pipe {
+export function focusWithin () {
   return pseudoState('focus-within')
 }
 
-export function host (): Pipe {
+export function host () {
   return pseudoState('host')
 }
 
-export function hover (): Pipe {
+export function hover () {
   return pseudoState('hover')
 }
 
-export function indeterminate (): Pipe {
+export function indeterminate () {
   return pseudoState('indeterminate')
 }
 
-export function inRange (): Pipe {
+export function inRange () {
   return pseudoState('in-range')
 }
 
-export function invalid (): Pipe {
+export function invalid () {
   return pseudoState('invalid')
 }
 
-export function lastChild (): Pipe {
+export function lastChild () {
   return pseudoState('last-child')
 }
 
-export function lastOfType (): Pipe {
+export function lastOfType () {
   return pseudoState('last-of-type')
 }
 
-export function left (): Pipe {
+export function left () {
   return pseudoState('left')
 }
 
-export function link (): Pipe {
+export function link () {
   return pseudoState('link')
 }
 
-export function localLink (): Pipe {
+export function localLink () {
   return pseudoState('local-link')
 }
 
-export function onlyChild (): Pipe {
+export function onlyChild () {
   return pseudoState('only-child')
 }
 
-export function onlyOfType (): Pipe {
+export function onlyOfType () {
   return pseudoState('only-of-type')
 }
 
-export function optional (): Pipe {
+export function optional () {
   return pseudoState('optional')
 }
 
-export function outOfRange (): Pipe {
+export function outOfRange () {
   return pseudoState('out-of-range')
 }
 
-export function past (): Pipe {
+export function past () {
   return pseudoState('past')
 }
 
-export function pictureInPicture (): Pipe {
+export function pictureInPicture () {
   return pseudoState('picture-in-picture')
 }
 
-export function placeholderShown (): Pipe {
+export function placeholderShown () {
   return pseudoState('placeholder-shown')
 }
 
-export function paused (): Pipe {
+export function paused () {
   return pseudoState('paused')
 }
 
-export function playing (): Pipe {
+export function playing () {
   return pseudoState('playing')
 }
 
-export function readOnly (): Pipe {
+export function readOnly () {
   return pseudoState('read-only')
 }
 
-export function readWrite (): Pipe {
+export function readWrite () {
   return pseudoState('read-write')
 }
 
-export function required (): Pipe {
+export function required () {
   return pseudoState('required')
 }
 
-export function right (): Pipe {
+export function right () {
   return pseudoState('right')
 }
 
-export function root (): Pipe {
+export function root () {
   return pseudoState('root')
 }
 
-export function scope (): Pipe {
+export function scope () {
   return pseudoState('scope')
 }
 
-export function target (): Pipe {
+export function target () {
   return pseudoState('target')
 }
 
-export function targetWithin (): Pipe {
+export function targetWithin () {
   return pseudoState('target-within')
 }
 
-export function userInvalid (): Pipe {
+export function userInvalid () {
   return pseudoState('user-invalid')
 }
 
-export function valid (): Pipe {
+export function valid () {
   return pseudoState('valid')
 }
 
-export function visited (): Pipe {
+export function visited () {
   return pseudoState('visited')
 }
 
@@ -330,71 +330,162 @@ type PseudoFn = 'dir'
   | 'state'
   | 'where'
 
-export function pseudoFn<ArgumentType> (fn: PseudoFn, ...args: ArgumentType[]): Pipe {
+export function pseudoFn<ArgumentType> (fn: PseudoFn, ...args: ArgumentType[]) {
   return append(':', `${fn}(${args.join(', ')})`)
 }
 
-export function dir (directionality: 'rtl' | 'ltr'): Pipe {
+export function dir (directionality: 'rtl' | 'ltr') {
   return pseudoFn('dir', directionality)
 }
 
-export function has (selector: string): Pipe {
+export function has (selector: string) {
   return pseudoFn('has', selector)
 }
 
-export function hostFn (selector: string): Pipe {
+export function hostFn (selector: string) {
   return pseudoFn('host', selector)
 }
 
-export function hostContext (selector: string): Pipe {
+export function hostContext (selector: string) {
   return pseudoFn('host-context', selector)
 }
 
-export function is (...selectors: string[]): Pipe {
+export function is (...selectors: string[]) {
   return pseudoFn('is', ...selectors)
 }
 
-export function lang (lang: string): Pipe {
+export function lang (lang: string) {
   return pseudoFn('lang', lang)
 }
 
-export function not (...selectors: string[]): Pipe {
+export function not (...selectors: string[]) {
   return pseudoFn('not', ...selectors)
 }
 
 type NthPattern = number | 'odd' | 'even' | `${number}n` | `${number}n+${number}`
 
-export function nthChild (pattern: NthPattern): Pipe {
+export function nthChild (pattern: NthPattern) {
   return pseudoFn('nth-child', pattern)
 }
 
-export function nthCol (pattern: NthPattern): Pipe {
+export function nthCol (pattern: NthPattern) {
   return pseudoFn('nth-col', pattern)
 }
 
-export function nthLastChild (pattern: NthPattern): Pipe {
+export function nthLastChild (pattern: NthPattern) {
   return pseudoFn('nth-last-child', pattern)
 }
 
-export function nthLastCol (pattern: NthPattern): Pipe {
+export function nthLastCol (pattern: NthPattern) {
   return pseudoFn('nth-last-col', pattern)
 }
 
-export function nthLastOfType (tag: keyof HTMLElementTagNameMap): Pipe {
+export function nthLastOfType (tag: keyof HTMLElementTagNameMap) {
   return pseudoFn('nth-last-of-type', tag)
 }
 
-export function nthOfType (tag: keyof HTMLElementTagNameMap): Pipe {
+export function nthOfType (tag: keyof HTMLElementTagNameMap) {
   return pseudoFn('nth-of-type', tag)
 }
 
-export function state (state: string): Pipe {
+export function state (state: string) {
   return pseudoFn('state', state)
 }
 
-export function where (...selectors: string[]): Pipe {
+export function where (...selectors: string[]) {
   return pseudoFn('where', ...selectors)
 }
+
+
+type PseudoElement = 'after'
+  | 'backdrop'
+  | 'before'
+  | 'cue'
+  | 'cue-region'
+  | 'first-letter'
+  | 'first-line'
+  | 'file-selector-button'
+  | 'grammar-error'
+  | 'marker'
+  | 'placeholder'
+  | 'selection'
+  | 'spelling-error'
+  | 'target-text'
+
+export function pseudoElement (element: PseudoElement) {
+  return append('::', element)
+}
+
+export function after () {
+  return pseudoElement('after')
+}
+
+export function backdrop () {
+  return pseudoElement('backdrop')
+}
+
+export function before () {
+  return pseudoElement('before')
+}
+
+export function cue () {
+  return pseudoElement('cue')
+}
+
+export function cueRegion () {
+  return pseudoElement('cue-region')
+}
+
+export function firstLetter () {
+  return pseudoElement('first-letter')
+}
+
+export function firstLine () {
+  return pseudoElement('first-line')
+}
+
+export function fileSelectorButton () {
+  return pseudoElement('file-selector-button')
+}
+
+export function grammarError () {
+  return pseudoElement('grammar-error')
+}
+
+export function marker () {
+  return pseudoElement('marker')
+}
+
+export function placeholder () {
+  return pseudoElement('placeholder')
+}
+
+export function selection () {
+  return pseudoElement('selection')
+}
+
+export function spellingError () {
+  return pseudoElement('spelling-error')
+}
+
+export function targetText () {
+  return pseudoElement('target-text')
+}
+
+type PseudoElementFn = 'part' | 'slotted'
+
+export function pseudoElementFn (elementFn: PseudoElementFn, arg: string) {
+  return append('::', `${elementFn}(${arg})`)
+}
+
+export function part (part: string) {
+  return pseudoElementFn('part', part)
+}
+
+export function slotted (selector: string) {
+  return pseudoElementFn('slotted', selector)
+}
+
 
 // RELATE
 export function relate (relationship: ' ' | ' > ' | ' ~ ' | ' + ', relative: string): Pipe {
@@ -404,18 +495,18 @@ export function relate (relationship: ' ' | ' > ' | ' ~ ' | ' + ', relative: str
   }
 }
 
-export function descendant (ancestor: string | string): Pipe {
+export function descendant (ancestor: string | string) {
   return relate(' ', ancestor)
 }
 
-export function directChild (parent: string | string): Pipe {
+export function directChild (parent: string | string) {
   return relate(' > ', parent)
 }
 
-export function generalSibling (sibling: string | string): Pipe {
+export function generalSibling (sibling: string | string) {
   return relate(' ~ ', sibling)
 }
 
-export function adjacentSibling (sibling: string | string): Pipe {
+export function adjacentSibling (sibling: string | string) {
   return relate(' + ', sibling)
 }
