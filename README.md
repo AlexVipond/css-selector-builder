@@ -71,6 +71,8 @@ All functions are fully typed, and you can check out these test files for furthe
 - [`prepend`](https://github.com/AlexVipond/css-selector-builder/blob/main/tests/node/prepend.test.ts)
 - [`pseudoFn`](https://github.com/AlexVipond/css-selector-builder/blob/main/tests/node/pseudoFn.test.ts)
 - [`pseudoState`](https://github.com/AlexVipond/css-selector-builder/blob/main/tests/node/pseudoState.test.ts)
+- [`pseudoElement`](https://github.com/AlexVipond/css-selector-builder/blob/main/tests/node/pseudoElement.test.ts)
+- [`pseudoElementFn`](https://github.com/AlexVipond/css-selector-builder/blob/main/tests/node/pseudoElementFn.test.ts)
 - [`relate`](https://github.com/AlexVipond/css-selector-builder/blob/main/tests/node/relate.test.ts)
 
 The relevant source code is in [the `src/pipes` directory](https://github.com/AlexVipond/css-selector-builder/tree/main/src/pipes).

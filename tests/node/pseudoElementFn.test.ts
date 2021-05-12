@@ -11,14 +11,14 @@ suite(`pseudoElementFn`, () => { // API for append
   )
 })
 
-suite(`part`, () => { // API for append
+suite(`part`, () => {
   assert.is(
     pipes.part('poop')(),
     '::part(poop)'
   )
 })
 
-suite(`slotted`, () => { // API for append
+suite(`slotted`, () => {
   assert.is(
     pipes.slotted('.poop')(),
     '::slotted(.poop)'

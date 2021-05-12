@@ -2,7 +2,9 @@
   "name": "@alexvipond/css-selector-pipes",
   "version": "0.0.0",
   "description": "Pipeline functions for building CSS selectors programmatically",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/css-selector-pipes.umd.js",
   "module": "./dist/css-selector-pipes.es.js",
   "exports": {
