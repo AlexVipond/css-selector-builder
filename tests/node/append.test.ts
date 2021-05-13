@@ -45,10 +45,16 @@ suite(`attribute`, () => {
     '["poop"]'
   )
   
-  // Attributes with specified operators and values
+  // Attributes with specified operator and value
   assert.is(
     pipes.attribute('data-haha', '=', 'business')(),
     '["data-haha"="business"]'
+  )
+  
+  // Attributes with specified operator, value, and case sensitivity
+  assert.is(
+    pipes.attribute('data-haha', '=', 'business', true)(),
+    '["data-haha"="business" s]'
   )
 })
 

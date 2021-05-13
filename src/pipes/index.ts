@@ -54,10 +54,21 @@ export type AttributeOperator = '='
   | '$='
   | '*='
 export function attribute (name: string): Pipe
-export function attribute (name: string, operator: AttributeOperator, value: string): Pipe
-export function attribute (name: string, operator?: AttributeOperator, value?: string) {
+export function attribute (name: string, operator: AttributeOperator, value: string, isCaseSensitive?: boolean): Pipe
+export function attribute (name: string, operator?: AttributeOperator, value?: string, isCaseSensitive?: boolean) {
   if (operator !== undefined) {
-    return append(`["${name}"${operator}"${value}"]`)
+    const condition = `"${name}"${operator}"${value}"`,
+          caseSensitivityModifier = (() => {
+            switch (isCaseSensitive) {
+              case true: 
+                return ' s'
+              case false:
+                return ' i'
+              case undefined:
+                return ''
+            }
+          })()
+    return append(`[${condition}${caseSensitivityModifier}]`)
   }
 
   return append(`["${name}"]`)
@@ -381,11 +392,11 @@ export function nthLastCol (pattern: NthPattern) {
 }
 
 export function nthLastOfType (pattern: NthPattern) {
-  return pseudoFn('nth-last-of-type', tag)
+  return pseudoFn('nth-last-of-type', pattern)
 }
 
 export function nthOfType (pattern: NthPattern) {
-  return pseudoFn('nth-of-type', tag)
+  return pseudoFn('nth-of-type', pattern)
 }
 
 export function state (state: string) {

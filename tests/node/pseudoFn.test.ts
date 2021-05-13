@@ -115,15 +115,15 @@ suite(`nthLastCol`, () => {
 
 suite(`nthLastOfType`, () => {
   assert.is(
-    pipes.nthLastOfType('h1')(),
-    ':nth-last-of-type(h1)',
+    pipes.nthLastOfType('even')(),
+    ':nth-last-of-type(even)',
   )
 })
 
 suite(`nthOfType`, () => {
   assert.is(
-    pipes.nthOfType('h1')(),
-    ':nth-of-type(h1)',
+    pipes.nthOfType('even')(),
+    ':nth-of-type(even)',
   )
 })
 
