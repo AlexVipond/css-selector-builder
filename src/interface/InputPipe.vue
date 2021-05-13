@@ -29,7 +29,7 @@
           >
             <li
               :class="[
-                active ? 'text-violet-900 bg-violet-100' : 'text-blue-gray-900',
+                active ? 'text-primary-900 bg-primary-100' : 'text-blue-gray-900',
                 'cursor-default select-none relative py-2 pl-10 pr-4',
               ]"
             >
@@ -42,7 +42,7 @@
               >
               <span
                 v-if="selected"
-                class="absolute inset-y-0 left-0 flex items-center pl-3 text-violet-600"
+                class="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-600"
               >
                 <CheckIcon class="w-5 h-5" aria-hidden="true" />
               </span>
@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import {
   Listbox,
   ListboxLabel,
@@ -66,7 +66,7 @@ import {
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
 import { pipeMetadata } from './pipeMetadata'
 
-export default {
+export default defineComponent({
   components: {
     Listbox,
     ListboxLabel,
@@ -85,5 +85,5 @@ export default {
       selectedPipe,
     }
   },
-}
+})
 </script>
