@@ -7,9 +7,9 @@ type PipeMetadatum = {
   label: string,
   args: {
     name: string,
-    inputType: 'unknown' | 'string' | 'selector' | 'attributeOperators' | 'directionalities' | 'nthPattern',
+    inputType: 'unknown' | 'string' | 'selector' | 'attributeOperator' | 'attributeCaseSensitivity' | 'directionality' | 'nthPattern',
     label: string,
-    required: boolean | ((attributeUserInput: { attribute: string, operator: AttributeOperator, value: string }) => boolean),
+    required: boolean | ((attributeUserInput: { attribute: string, operator: AttributeOperator, value: string, isCaseSensitive: boolean | 'unspecified' }) => boolean),
     repeatable?: boolean
   }[]
 }
@@ -187,15 +187,20 @@ export const pipeMetadata: PipeMetadatum[] = [
       },
       {
         name: 'operator',
-        inputType: 'attributeOperators',
+        inputType: 'attributeOperator',
         label: 'Operator that describes the relationship between the attribute and its value',
-        required: attributeUserInput => !!attributeUserInput.value,
+        required: attributeUserInput => !!attributeUserInput.value || attributeUserInput.isCaseSensitive !== 'unknown',
       },
       {
         name: 'value',
         inputType: 'string',
         label: 'Value of the attribute',
-        required: attributeUserInput => !!attributeUserInput.operator,
+        required: attributeUserInput => !!attributeUserInput.operator || attributeUserInput.isCaseSensitive !== 'unknown',
+      },
+      {
+        name: 'isCaseSensitive',
+        inputType: 'attributeCaseSensitivity',
+        label: 'Value of the attribute',
       },
     ]
   },
@@ -603,7 +608,7 @@ export const pipeMetadata: PipeMetadatum[] = [
     args: [
       {
         name: 'directionality',
-        inputType: 'directionalities',
+        inputType: 'directionality',
         label: 'Text directionality',
         required: true,
       }

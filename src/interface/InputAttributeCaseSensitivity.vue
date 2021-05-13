@@ -1,7 +1,7 @@
 <template>
   <BrandRadioGroup
     v-model="selected"
-    label="Text directionality"
+    label="Case sensitivity"
     :options="options"
   />
 </template>
@@ -16,8 +16,9 @@ export default defineComponent({
   },
   setup() {
     const options = [
-            { label: 'left to right', value: 'ltr' },
-            { label: 'right to left', value: 'ltr' }
+            { label: 'sensitive', value: true },
+            { label: 'insensitive', value: false },
+            { label: 'unspecified', value: 'unspecified' },
           ],
           selected = ref(options[0])
 

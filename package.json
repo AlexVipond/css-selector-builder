@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@baleada/logic": "^0.19.9",
+    "@baleada/vue-composition": "^0.10.0",
     "@headlessui/vue": "^1.2.0",
     "@heroicons/vue": "^1.0.1",
     "nanoid": "^3.1.23",

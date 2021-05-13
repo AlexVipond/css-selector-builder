@@ -7,8 +7,11 @@
     <section class="w-full max-w-xl flex flex-col gap-4">
       <h1 class="uppercase font-bold text-blue-gray-400 opacity-60 tracking-[.2em] text-sm">Selector Builder</h1>
 
-      <section class="bg-blue-gray-800 p-6 rounded-md shadow-lg text-lg text-blue-gray-300">
-        <InputDirectionality label="Text directionality" />
+      <section class="bg-blue-gray-800 p-6 rounded-md shadow-lg text-blue-gray-300">
+        <InputDirectionality />
+        <InputAttributeOperator />
+        <InputAttributeCaseSensitivity />
+        <InputPipe />
       </section>
     </section>
 
@@ -23,19 +26,25 @@
 </template>
 
 <script lang="ts">
+import InputAttributeCaseSensitivity from './InputAttributeCaseSensitivity.vue'
+import InputAttributeOperator from './InputAttributeOperator.vue'
+import InputDirectionality from './InputDirectionality.vue'
+import InputPipe from './InputPipe.vue'
 import { ref, computed, defineComponent } from 'vue'
 import type { Ref } from 'vue'
 import { nanoid } from 'nanoid'
 import { createReorder } from '@baleada/logic'
 // import FormConditions from './FormConditions.vue'
-import InputDirectionality from './InputDirectionality.vue'
 import { toSelector } from './toSelector'
 import type { Condition } from './toSelector'
 
 export default defineComponent({
   components: {
+    InputAttributeCaseSensitivity,
+    InputAttributeOperator,
+    InputPipe,
+    InputDirectionality
     // FormConditions,
-    InputDirectionality,
   },
   setup () {
     const conditions = ref<Condition[]>([]),
