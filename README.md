@@ -80,6 +80,19 @@ pipe(
 )() // h1.poop["name"$="lol"]:focus
 ```
 
+Or, if your dev environment supports it, you can use the upcoming pipeline operator:
+
+```js
+import { tag, className, attribute, focus } from '@alexvipond/css-selector-pipes'
+
+|> tag('h1'),
+|> className('poop'),
+|> attribute('name', '$=', 'lol'),
+|> focus()
+
+// h1.poop["name"$="lol"]:focus
+```
+
 All functions are fully typed, and you can check out these test files for further documentation and a list of available functions:
 
 - [`append`](https://github.com/AlexVipond/css-selector-builder/blob/main/tests/node/append.test.ts)
