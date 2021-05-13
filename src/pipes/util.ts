@@ -50,7 +50,11 @@ export function toFamily (selector: string): {
 // 
 // Finally, once the relative and relation are separated, the unique symbol in both halves
 // of the original selector can be globally replaced with a space again.
-const attributeSpaceRE = /(\[".*?)(\s)(.*?"\])/
+//
+// Notably, this implementation doesn't support attribute values that include
+// spaces after closed square brackets, even though it's valid CSS.
+const attributeSpaceRE = /(\[[^\]]*?)(\s)(.*?\])/
+const attributeSpaceAfterClosedSquareBracketRE = /(\[[^\]]*?)(\s)(.*?\])/
 const ATTRIBUTE_SPACE_REPLACEMENT = 'Qx3qlPtYnH-YhkuNvdNez' // nanoid
 export function toWithoutAttributeSpaces (): Pipe {
   return selector => {

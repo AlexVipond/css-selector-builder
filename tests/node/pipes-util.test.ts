@@ -4,47 +4,59 @@ import { toFamily } from '../../src/pipes/util'
 
 const suite = createSuite('pipes (node)')
 
-suite(`toFamily`, () => {
-  // Doesn't remove non-redundant universal
+suite(`toFamily doesn't remove non-redundant universal`, () => {
   assert.equal(
     toFamily('*'),
     { relative: '', selected: '*' }
   )
+})
 
-  // Parses simple targets
+suite(`toFamily parses simple targets`, () => {
   assert.equal(
     toFamily('.haha.business'),
     { relative: '', selected: '.haha.business' }
   )
+})
   
-  // Parses simple targets with simple relatives
+suite(`toFamily parses simple targets with simple relatives`, () => {
   assert.equal(
     toFamily('.haha .business'),
     { relative: '.haha ', selected: '.business' }
   )
+})
   
-  // Removes redundant universal from relatives and targets
+suite(`toFamily removes redundant universal from relatives and targets`, () => {
   assert.equal(
     toFamily('*.haha *.business'),
     { relative: '.haha ', selected: '.business' }
   )
+})
   
-  // Parses simple targets with multiple relatives
+suite(`toFamily parses simple targets with multiple relatives`, () => {
   assert.equal(
     toFamily('.haha .poop > .business'),
     { relative: '.haha .poop > ', selected: '.business' }
   )
+})
   
-  // Parses complex targets
+suite(`toFamily parses complex targets`, () => {
   assert.equal(
     toFamily('.haha ~ ["name"="with multiple spaces"].business'),
     { relative: '.haha ~ ', selected: '["name"="with multiple spaces"].business' }
   )
+})
   
-  // Parses complex targets with complex relatives
+suite(`toFamily parses complex targets with complex relatives`, () => {
   assert.equal(
     toFamily('["name"="with multiple spaces"].haha ~ ["name"="with multiple spaces"].business'),
     { relative: '["name"="with multiple spaces"].haha ~ ', selected: '["name"="with multiple spaces"].business' }
+  )
+})
+
+suite(`toFamily doesn't support attribute values that include spaces after closed square brackets`, () => {
+  assert.equal(
+    toFamily('.haha ~ ["name"="] "]'),
+    { relative: '.haha ~ [\"name\"=\"] ', selected: '"]' } // Neither half is a valid selector
   )
 })
 
