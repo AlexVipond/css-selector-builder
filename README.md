@@ -32,7 +32,7 @@ Components follow a naming convention:
 | `Form...` | Custom layouts for combinations of `Input...` components. `Form...` components are controlled, i.e. they receive data from their parent, and emit changes. |
 
 
-## Library
+### Library
 
 To run tests:
 
