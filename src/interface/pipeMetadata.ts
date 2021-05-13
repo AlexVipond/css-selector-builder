@@ -1,22 +1,23 @@
 import * as pipes from '../pipes'
+import type { AttributeOperator } from '../pipes'
 
-type Metadatum = {
-  method: keyof typeof pipes,
+type PipeMetadatum = {
+  name: keyof typeof pipes,
   category: 'abstractions' | 'basic' | 'pseudo states' | 'pseudo elements' | 'relationships',
   label: string,
   args: {
     name: string,
     inputType: 'unknown' | 'string' | 'selector' | 'attributeOperators' | 'directionalities' | 'nthPattern',
     label: string,
-    required: boolean | ((values: Record<any, any>) => boolean),
+    required: boolean | ((attributeUserInput: { attribute: string, operator: AttributeOperator, value: string }) => boolean),
     repeatable?: boolean
   }[]
 }
 
-export const metadata: Metadatum[] = [
+export const pipeMetadata: PipeMetadatum[] = [
   // ABSTRACTIONS
   {
-    method: 'prepend',
+    name: 'prepend',
     category: 'abstractions',
     label: 'is selected by a custom selector prepended to the current selector',
     args: [
@@ -29,7 +30,7 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'append',
+    name: 'append',
     category: 'abstractions',
     label: 'is selected by a custom selector appended to the current selector',
     args: [
@@ -42,7 +43,7 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'pseudoState',
+    name: 'pseudoState',
     category: 'abstractions',
     label: 'has a custom pseudo state',
     args: [
@@ -55,7 +56,7 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'pseudoFn',
+    name: 'pseudoFn',
     category: 'abstractions',
     label: 'has a custom pseudo state that accepts arguments',
     args: [
@@ -75,7 +76,7 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'pseudoElement',
+    name: 'pseudoElement',
     category: 'abstractions',
     label: 'has a custom pseudo element',
     args: [
@@ -88,7 +89,7 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'pseudoElementFn',
+    name: 'pseudoElementFn',
     category: 'abstractions',
     label: 'has a custom pseudo element that accepts arguments',
     args: [
@@ -108,7 +109,7 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'relate',
+    name: 'relate',
     category: 'abstractions',
     label: 'has a custom relationship with another selector',
     args: [
@@ -129,15 +130,15 @@ export const metadata: Metadatum[] = [
 
   // BASIC
   {
-    method: 'universal',
+    name: 'universal',
     category: 'basic',
     label: 'universally meets any other conditions',
     args: []
   },
   {
-    method: 'tag',
+    name: 'tag',
     category: 'basic',
-    label: 'has a specific tag',
+    label: 'has a tag, which I\'ll specify',
     args: [
       {
         name: 'tag',
@@ -148,9 +149,9 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'className',
+    name: 'className',
     category: 'basic',
-    label: 'has a specific class',
+    label: 'has a class, which I\'ll specify',
     args: [
       {
         name: 'name',
@@ -161,9 +162,9 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'id',
+    name: 'id',
     category: 'basic',
-    label: 'has a specific ID',
+    label: 'has a ID, which I\'ll specify',
     args: [
       {
         name: 'id',
@@ -174,7 +175,7 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'attribute',
+    name: 'attribute',
     category: 'basic',
     label: 'has an attribute, or has an attribute whose value meets certain conditions',
     args: [
@@ -188,13 +189,13 @@ export const metadata: Metadatum[] = [
         name: 'operator',
         inputType: 'attributeOperators',
         label: 'Operator that describes the relationship between the attribute and its value',
-        required: values => !!values.value,
+        required: attributeUserInput => !!attributeUserInput.value,
       },
       {
         name: 'value',
         inputType: 'string',
         label: 'Value of the attribute',
-        required: values => !!values.operator,
+        required: attributeUserInput => !!attributeUserInput.operator,
       },
     ]
   },
@@ -203,31 +204,31 @@ export const metadata: Metadatum[] = [
 
   // USER ACTION
   {
-    method: 'active',
+    name: 'active',
     category: 'pseudo states',
     label: 'is currently activated by the user',
     args: [],
   },
   {
-    method: 'focus',
+    name: 'focus',
     category: 'pseudo states',
     label: 'is currently focused by the user',
     args: [],
   },
   {
-    method: 'focusVisible',
+    name: 'focusVisible',
     category: 'pseudo states',
     label: 'is currently focused by the user using the keyboard, not the mouse',
     args: [],
   },
   {
-    method: 'focusWithin',
+    name: 'focusWithin',
     category: 'pseudo states',
     label: 'is either currently focused by the user, or contains the focused element',
     args: [],
   },
   {
-    method: 'hover',
+    name: 'hover',
     category: 'pseudo states',
     label: 'is currently hovered by the user',
     args: [],
@@ -235,103 +236,103 @@ export const metadata: Metadatum[] = [
 
   // INPUT
   {
-    method: 'autofill',
+    name: 'autofill',
     category: 'pseudo states',
     label: 'has been autofilled',
     args: [],
   },
   {
-    method: 'blank',
+    name: 'blank',
     category: 'pseudo states',
     label: 'is a blank user input',
     args: [],
   },
   {
-    method: 'checked',
+    name: 'checked',
     category: 'pseudo states',
     label: 'is a checked radio button or checkbox',
     args: [],
   },
   {
-    method: 'defaultState',
+    name: 'defaultState',
     category: 'pseudo states',
     label: 'is the default radio, checkbox, or select option, or the first <button> in a form without the "button" type',
     args: [],
   },
   {
-    method: 'disabled',
+    name: 'disabled',
     category: 'pseudo states',
     label: 'is disabled',
     args: [],
   },
   {
-    method: 'enabled',
+    name: 'enabled',
     category: 'pseudo states',
     label: 'is enabled',
     args: [],
   },
   {
-    method: 'indeterminate',
+    name: 'indeterminate',
     category: 'pseudo states',
     label: 'is any form element whose state is indeterminate',
     args: [],
   },
   {
-    method: 'inRange',
+    name: 'inRange',
     category: 'pseudo states',
     label: 'is a slider whose selected value is within the allowed range',
     args: [],
   },
   {
-    method: 'outOfRange',
+    name: 'outOfRange',
     category: 'pseudo states',
     label: 'is a slider whose selected value is outside the allowed range',
     args: [],
   },
   {
-    method: 'valid',
+    name: 'valid',
     category: 'pseudo states',
     label: 'has valid contents',
     args: [],
   },
   {
-    method: 'invalid',
+    name: 'invalid',
     category: 'pseudo states',
     label: 'has invalid contents',
     args: [],
   },
   {
-    method: 'userInvalid',
+    name: 'userInvalid',
     category: 'pseudo states',
     label: 'has invalid contents, and the user has already interacted with it',
     args: [],
   },
   {
-    method: 'optional',
+    name: 'optional',
     category: 'pseudo states',
     label: 'is an optional form field',
     args: [],
   },
   {
-    method: 'required',
+    name: 'required',
     category: 'pseudo states',
     label: 'is a required form field',
     args: [],
   },
   {
-    method: 'readOnly',
+    name: 'readOnly',
     category: 'pseudo states',
     label: 'is read-only',
     args: [],
   },
   {
-    method: 'readWrite',
+    name: 'readWrite',
     category: 'pseudo states',
     label: 'is user-editable',
     args: [],
   },
   {
-    method: 'placeholderShown',
+    name: 'placeholderShown',
     category: 'pseudo states',
     label: 'is an input element that is displaying placeholder text',
     args: [],
@@ -339,43 +340,43 @@ export const metadata: Metadatum[] = [
 
   // LOCATION
   {
-    method: 'anyLink',
+    name: 'anyLink',
     category: 'pseudo states',
-    label: 'is any <a> with an href',
+    label: 'is an <a> with an href',
     args: [],
   },
   {
-    method: 'localLink',
+    name: 'localLink',
     category: 'pseudo states',
-    label: 'is any <a> that links to the same document',
+    label: 'is an <a> that links to the same document',
     args: [],
   },
   {
-    method: 'link',
+    name: 'link',
     category: 'pseudo states',
     label: 'is an <a> that hasn\'t been visited',
     args: [],
   },
   {
-    method: 'visited',
+    name: 'visited',
     category: 'pseudo states',
     label: 'is an <a> that has been visited',
     args: [],
   },
   {
-    method: 'scope',
+    name: 'scope',
     category: 'pseudo states',
     label: 'is currently calling the querySelector or querySelectorAll method',
     args: [],
   },
   {
-    method: 'target',
+    name: 'target',
     category: 'pseudo states',
     label: 'is the target of the current URL',
     args: [],
   },
   {
-    method: 'targetWithin',
+    name: 'targetWithin',
     category: 'pseudo states',
     label: 'is the target of the current URL, or contains the target',
     args: [],
@@ -384,20 +385,20 @@ export const metadata: Metadatum[] = [
   // PRINTED PAGE STRUCTURE
 
   {
-    method: 'first',
+    name: 'first',
     category: 'pseudo states',
     label: 'is the first page of a printed document',
     args: [],
   },
   {
-    method: 'left',
+    name: 'left',
     category: 'pseudo states',
     label: 'is a left-hand page of a printed document',
     args: [],
   },
 
   {
-    method: 'right',
+    name: 'right',
     category: 'pseudo states',
     label: 'is a right-hand page of a printed document',
     args: [],
@@ -405,55 +406,55 @@ export const metadata: Metadatum[] = [
   
   // TREE STRUCTURE
   {
-    method: 'root',
+    name: 'root',
     category: 'pseudo states',
     label: 'is the document root',
     args: [],
   },
   {
-    method: 'empty',
+    name: 'empty',
     category: 'pseudo states',
     label: 'has no children other than whitespace characters',
     args: [],
   },
   {
-    method: 'firstChild',
+    name: 'firstChild',
     category: 'pseudo states',
     label: 'is the first child inside a parent',
     args: [],
   },
   {
-    method: 'firstOfType',
+    name: 'firstOfType',
     category: 'pseudo states',
     label: 'is the first child of its type inside a parent',
     args: [],
   },
   {
-    method: 'lastChild',
+    name: 'lastChild',
     category: 'pseudo states',
     label: 'is the last child inside a parent',
     args: [],
   },
   {
-    method: 'lastOfType',
+    name: 'lastOfType',
     category: 'pseudo states',
     label: 'is the last child of its type inside a parent',
     args: [],
   },
   {
-    method: 'onlyChild',
+    name: 'onlyChild',
     category: 'pseudo states',
     label: 'is the only child inside a parent',
     args: [],
   },
   {
-    method: 'onlyOfType',
+    name: 'onlyOfType',
     category: 'pseudo states',
     label: 'is the only child of its type inside a parent',
     args: [],
   },
   {
-    method: 'nthChild',
+    name: 'nthChild',
     category: 'pseudo states',
     label: 'is the nth child inside a parent',
     args: [
@@ -466,7 +467,7 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'nthLastChild',
+    name: 'nthLastChild',
     category: 'pseudo states',
     label: 'is the nth from last child inside a parent',
     args: [
@@ -479,7 +480,7 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'nthOfType',
+    name: 'nthOfType',
     category: 'pseudo states',
     label: 'is the nth child of its type inside a parent',
     args: [
@@ -492,7 +493,7 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'nthLastOfType',
+    name: 'nthLastOfType',
     category: 'pseudo states',
     label: 'is the nth from the last child of its type inside a parent',
     args: [
@@ -505,7 +506,7 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'nthCol',
+    name: 'nthCol',
     category: 'pseudo states',
     label: 'is in the nth column inside a parent',
     args: [
@@ -518,7 +519,7 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'nthLastCol',
+    name: 'nthLastCol',
     category: 'pseudo states',
     label: 'is in the nth from last column inside a parent',
     args: [
@@ -533,13 +534,13 @@ export const metadata: Metadatum[] = [
 
   // DISPLAY
   {
-    method: 'fullscreen',
+    name: 'fullscreen',
     category: 'pseudo states',
     label: 'is currently displayed fullscreen',
     args: [],
   },
   {
-    method: 'pictureInPicture',
+    name: 'pictureInPicture',
     category: 'pseudo states',
     label: 'is currently displayed as picture-in-picture',
     args: [],
@@ -548,25 +549,25 @@ export const metadata: Metadatum[] = [
 
   // TIME DIMENSIONAL
   {
-    method: 'current',
+    name: 'current',
     category: 'pseudo states',
     label: 'is a WebVTT caption that is currently displayed',
     args: [],
   },
   {
-    method: 'future',
+    name: 'future',
     category: 'pseudo states',
     label: 'is a WebVTT caption that is not yet displayed',
     args: [],
   },
   {
-    method: 'past',
+    name: 'past',
     category: 'pseudo states',
     label: 'is a WebVTT caption that was displayed',
     args: [],
   },
   {
-    method: 'defined',
+    name: 'defined',
     category: 'pseudo states',
     label: 'is a defined custom element',
     args: [],
@@ -574,31 +575,31 @@ export const metadata: Metadatum[] = [
   
 
   {
-    method: 'host',
+    name: 'host',
     category: 'pseudo states',
-    label: '',
+    label: 'is a shadow root host',
     args: [],
   },
 
 
   // RESOURCE STATE
   {
-    method: 'paused',
+    name: 'paused',
     category: 'pseudo states',
     label: 'is a media element that is currently paused',
     args: [],
   },
   {
-    method: 'playing',
+    name: 'playing',
     category: 'pseudo states',
     label: 'is a media element that is currently playing',
     args: [],
   },
 
   {
-    method: 'dir',
+    name: 'dir',
     category: 'pseudo states',
-    label: '',
+    label: 'has a text directionality, which I\'ll specify',
     args: [
       {
         name: 'directionality',
@@ -609,220 +610,229 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'lang',
+    name: 'lang',
     category: 'pseudo states',
-    label: '',
+    label: 'contains content in a language, which I\'ll specify',
     args: [
       {
         name: 'language code',
         inputType: 'string',
-        label: '',
+        label: 'Language code for the element\'s content',
         required: true,
       }
     ]
   },
   {
-    method: 'has',
+    name: 'has',
     category: 'pseudo states',
-    label: '',
+    label: 'contains any element that matches a selector, which I\'ll specify',
     args: [
       {
         name: 'selector',
         inputType: 'selector',
-        label: '',
+        label: 'Selector for the contained element',
         required: true,
       }
     ]
   },
   {
-    method: 'hostFn',
+    name: 'hostFn',
     category: 'pseudo states',
-    label: '',
-    args: [
-      
-    ]
-  },
-  {
-    method: 'hostContext',
-    category: 'pseudo states',
-    label: '',
-    args: [
-      
-    ]
-  },
-  {
-    method: 'is',
-    category: 'pseudo states',
-    label: '',
+    label: 'is a shadow root host that matches other conditions, which I\'ll specify',
     args: [
       {
         name: 'selector',
         inputType: 'selector',
-        label: '',
+        label: 'Additional selector conditions for the shadow root host',
+        required: true,
+      }
+    ]
+  },
+  {
+    name: 'hostContext',
+    category: 'pseudo states',
+    label: 'is a shadow root host with an ancestor that matches other conditions, which I\'ll specify',
+    args: [
+      {
+        name: 'selector',
+        inputType: 'selector',
+        label: 'Selector for the shadow root host\'s ancestor',
+        required: true,
+      }
+    ]
+  },
+  {
+    name: 'is',
+    category: 'pseudo states',
+    label: 'matches any of one or more selectors, which I\'ll specify, and retains the specificity of the most specific matching selector',
+    args: [
+      {
+        name: 'selector',
+        inputType: 'selector',
+        label: 'A selector that the element might match',
         required: true,
         repeatable: true,
       }
     ]
   },
   {
-    method: 'not',
+    name: 'where',
     category: 'pseudo states',
-    label: '',
+    label: 'matches any of one or more selectors, which I\'ll specify, and takes on a specifity of 0',
     args: [
       {
         name: 'selector',
         inputType: 'selector',
-        label: '',
-        required: true,
-        repeatable: true,
-      }
-    ]
-  },  
-  {
-    method: 'where',
-    category: 'pseudo states',
-    label: '',
-    args: [
-      {
-        name: 'selector',
-        inputType: 'selector',
-        label: '',
+        label: 'A selector that the element might match',
         required: true,
         repeatable: true,
       }
     ]
   },
   {
-    method: 'state',
+    name: 'not',
     category: 'pseudo states',
-    label: '',
+    label: 'matches none of one or more selectors, which I\'ll specify',
+    args: [
+      {
+        name: 'selector',
+        inputType: 'selector',
+        label: 'A selector that the element must not match',
+        required: true,
+        repeatable: true,
+      }
+    ]
+  },
+  {
+    name: 'state',
+    category: 'pseudo states',
+    label: 'has a custom state, which I\'ll specify, in ElementInternals.states',
     args: [
       {
         name: 'state',
         inputType: 'string',
-        label: '',
+        label: 'Custom state',
         required: true,
       }
     ]
   },
 
   {
-    method: 'after',
+    name: 'before',
     category: 'pseudo elements',
-    label: '',
+    label: 'is a pseudo element that comes before my element',
     args: [],
   },
   {
-    method: 'backdrop',
+    name: 'after',
     category: 'pseudo elements',
-    label: '',
+    label: 'is a pseudo element that comes after my element',
     args: [],
   },
   {
-    method: 'before',
+    name: 'backdrop',
     category: 'pseudo elements',
-    label: '',
+    label: 'is the pseudo element rendered underneath my element when it displays in fullscreen',
     args: [],
   },
   {
-    method: 'cue',
+    name: 'cue',
     category: 'pseudo elements',
-    label: '',
+    label: 'is the pseudo element for any WebVTT cues rendered inside my element',
     args: [],
   },
   {
-    method: 'cueRegion',
+    name: 'cueRegion',
     category: 'pseudo elements',
-    label: '',
+    label: 'is the pseudo element for a region containing any WebVTT cues rendered inside my element',
     args: [],
   },
   {
-    method: 'firstLetter',
+    name: 'firstLetter',
     category: 'pseudo elements',
-    label: '',
+    label: 'is the pseudo element for the first letter inside my element',
     args: [],
   },
   {
-    method: 'firstLine',
+    name: 'firstLine',
     category: 'pseudo elements',
-    label: '',
+    label: 'is the pseudo element for the first line inside my element',
     args: [],
   },
   {
-    method: 'fileSelectorButton',
+    name: 'grammarError',
     category: 'pseudo elements',
-    label: '',
+    label: 'is the pseudo element for grammar errors in my element',
     args: [],
   },
   {
-    method: 'grammarError',
+    name: 'spellingError',
     category: 'pseudo elements',
-    label: '',
+    label: 'is the pseudo element for spelling errors in my element',
     args: [],
   },
   {
-    method: 'marker',
+    name: 'fileSelectorButton',
     category: 'pseudo elements',
-    label: '',
+    label: 'is the pseudo element for the file selector button inside my element, which must be a file input',
     args: [],
   },
   {
-    method: 'placeholder',
+    name: 'marker',
     category: 'pseudo elements',
-    label: '',
+    label: 'is the pseudo element for the marker of my element, which must have its \'display\' set to \'list-item\'',
     args: [],
   },
   {
-    method: 'selection',
+    name: 'placeholder',
     category: 'pseudo elements',
-    label: '',
+    label: 'is the pseudo element for the placeholder inside my element, which must be a textarea or text input',
     args: [],
   },
   {
-    method: 'spellingError',
+    name: 'selection',
     category: 'pseudo elements',
-    label: '',
+    label: 'is the pseudo element for the part of my document that has been highlighted by the user',
     args: [],
   },
   {
-    method: 'targetText',
+    name: 'targetText',
     category: 'pseudo elements',
-    label: '',
+    label: 'is the pseudo element for text that has been scrolled to',
     args: [],
   },
   {
-    method: 'part',
+    name: 'part',
     category: 'pseudo elements',
-    label: '',
+    label: 'is the pseudo element for an element in shadow tree with a part, which I\'ll specify',
     args: [
       {
         name: 'part',
         inputType: 'string',
-        label: '',
+        label: 'The part name',
         required: true,
       }
     ]
   },
   {
-    method: 'slotted',
+    name: 'slotted',
     category: 'pseudo elements',
-    label: '',
+    label: 'is the pseudo element for an element, whose selector I\'ll specify, that has been placed into a slot inside my element, which must be an HTML template',
     args: [
       {
         name: 'selector',
         inputType: 'selector',
-        label: '',
+        label: 'Selector for the element in the slot',
         required: true,
-        repeatable: true,
       }
     ]
   },
 
   // RELATIONSHIPS
   {
-    method: 'descendant',
+    name: 'descendant',
     category: 'relationships',
-    label: 'is the descendant of a specific element',
+    label: 'is the descendant of an element, which I\'ll specify',
     args: [
       {
         name: 'ancestor',
@@ -833,9 +843,9 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'directChild',
+    name: 'directChild',
     category: 'relationships',
-    label: 'is the direct child of a specific element',
+    label: 'is the direct child of an element, which I\'ll specify',
     args: [
       {
         name: 'parent',
@@ -846,9 +856,9 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'generalSibling',
+    name: 'generalSibling',
     category: 'relationships',
-    label: 'is the general sibling of a specific element',
+    label: 'is the general sibling of an element, which I\'ll specify',
     args: [
       {
         name: 'sibling',
@@ -859,9 +869,9 @@ export const metadata: Metadatum[] = [
     ]
   },
   {
-    method: 'adjacentSibling',
+    name: 'adjacentSibling',
     category: 'relationships',
-    label: 'is the adjacent sibling of a specific element',
+    label: 'is the adjacent sibling of an element, which I\'ll specify',
     args: [
       {
         name: 'sibling',

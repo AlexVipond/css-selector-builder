@@ -31,6 +31,10 @@
     "vite": "^2.2.3"
   },
   "dependencies": {
+    "@baleada/logic": "^0.19.9",
+    "@headlessui/vue": "^1.2.0",
+    "@heroicons/vue": "^1.0.1",
+    "nanoid": "^3.1.23",
     "vue": "^3.0.11"
   }
 }

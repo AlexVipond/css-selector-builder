@@ -47,7 +47,7 @@ export function id (id: string) {
   return append(`#${id}`)
 }
 
-type AttributeOperator = '='
+export type AttributeOperator = '='
   | '~='
   | '|='
   | '^='

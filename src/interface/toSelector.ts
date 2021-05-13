@@ -2,7 +2,8 @@ import * as pipes from '../pipes'
 import type { Pipe } from '../pipes'
 import { pipe } from '../pipes/util'
 
-type Condition = {
+export type Condition = {
+  id: string,
   method: keyof typeof pipes,
   args: any[],
 }

@@ -57,12 +57,14 @@ tagTransform(classNameTransform()) // h1.poop
 You can also import a `pipe` utility that makes it easier to compose multiple functions into a selector pipeline.
 
 ```js
-import { pipe, tag, className } from '@alexvipond/css-selector-pipes'
+import { pipe, tag, className, attribute, focus } from '@alexvipond/css-selector-pipes'
 
 pipe(
   tag('h1'),
-  className('poop')
-)() // h1.poop
+  className('poop'),
+  attribute('name', '$=', 'lol'),
+  focus()
+)() // h1.poop["name"$="lol"]:focus
 ```
 
 All functions are fully typed, and you can check out these test files for further documentation and a list of available functions:
