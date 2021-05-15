@@ -40,6 +40,11 @@ module.exports = {
       '.brand-gradient-to-r': apply('brand-gradient bg-gradient-to-r'),
       '.brand-gradient-to-l': apply('brand-gradient bg-gradient-to-l'),
       '.brand-gradient-text': apply('text-transparent bg-clip-text brand-gradient-to-r'),
+    })),
+    plugin(({ addUtilities }) => addUtilities({
+      '.appearance-textfield': {
+        appearance: 'textfield',
+      }
     }))
   ],
 }
