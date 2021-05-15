@@ -1,5 +1,5 @@
 <template>
-  <BrandListbox
+  <BaseListbox
     v-model="selected"
     :options="options"
     label="My element..."
@@ -8,12 +8,12 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import BrandListbox from './BrandListbox.vue'
-import { pipeMetadata } from './pipeMetadata'
+import BaseListbox from './BaseListbox.vue'
+import { pipeMetadata } from '../pipeMetadata'
 
 export default defineComponent({
   components: {
-    BrandListbox,
+    BaseListbox,
   },
   setup() {
     const options = pipeMetadata,

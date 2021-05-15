@@ -39,8 +39,9 @@
                   selected ? 'font-medium' : 'font-normal',
                   'block',
                 ]"
-                >{{ option.label }}</span
               >
+                {{ option.label }}
+              </span>
               <span
                 v-if="selected"
                 class="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-400"

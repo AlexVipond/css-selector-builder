@@ -1,24 +1,23 @@
 <template>
-  <BrandRadioGroup
+  <BaseRadioGroup
     v-model="selected"
-    label="Case sensitivity"
+    label="Text directionality"
     :options="options"
   />
 </template>
 
 <script lang="ts">
 import { ref, defineComponent } from 'vue'
-import BrandRadioGroup from './BrandRadioGroup.vue'
+import BaseRadioGroup from './BaseRadioGroup.vue'
 
 export default defineComponent({
   components: {
-    BrandRadioGroup,
+    BaseRadioGroup,
   },
   setup() {
     const options = [
-            { label: 'sensitive', value: true },
-            { label: 'insensitive', value: false },
-            { label: 'unspecified', value: 'unspecified' },
+            { label: 'left to right', value: 'ltr' },
+            { label: 'right to left', value: 'ltr' }
           ],
           selected = ref(options[0])
 

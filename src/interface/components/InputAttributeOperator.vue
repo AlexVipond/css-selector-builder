@@ -1,5 +1,5 @@
 <template>
-  <BrandListbox
+  <BaseListbox
     v-model="selected"
     :options="options"
     label="Operator"
@@ -8,11 +8,11 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import BrandListbox from './BrandListbox.vue'
+import BaseListbox from './BaseListbox.vue'
 
 export default defineComponent({
   components: {
-    BrandListbox,
+    BaseListbox,
   },
   setup() {
     const options = [

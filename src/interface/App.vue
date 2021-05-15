@@ -8,10 +8,11 @@
       <h1 class="uppercase font-bold text-blue-gray-400 opacity-60 tracking-[.2em] text-sm">Selector Builder</h1>
 
       <section class="bg-blue-gray-800 p-6 rounded-md shadow-lg text-blue-gray-300">
-        <InputDirectionality />
+        <!-- <InputDirectionality />
         <InputAttributeOperator />
         <InputAttributeCaseSensitivity />
-        <InputPipe />
+        <InputPipe /> -->
+        <InputNthPattern v-model="selected" />
       </section>
     </section>
 
@@ -26,10 +27,11 @@
 </template>
 
 <script lang="ts">
-import InputAttributeCaseSensitivity from './InputAttributeCaseSensitivity.vue'
-import InputAttributeOperator from './InputAttributeOperator.vue'
-import InputDirectionality from './InputDirectionality.vue'
-import InputPipe from './InputPipe.vue'
+import InputNthPattern from './InputNthPattern.vue'
+import InputAttributeCaseSensitivity from './components/InputAttributeCaseSensitivity.vue'
+import InputAttributeOperator from './components/InputAttributeOperator.vue'
+import InputDirectionality from './components/InputDirectionality.vue'
+import InputPipe from './components/InputPipe.vue'
 import { ref, computed, defineComponent } from 'vue'
 import type { Ref } from 'vue'
 import { nanoid } from 'nanoid'
@@ -40,6 +42,7 @@ import type { Condition } from './toSelector'
 
 export default defineComponent({
   components: {
+    InputNthPattern,
     InputAttributeCaseSensitivity,
     InputAttributeOperator,
     InputPipe,
@@ -90,6 +93,8 @@ export default defineComponent({
       conditions.value = createReorder<Condition>({ from: index, to })(conditions.value)
     }
 
+    const selected = ref({ value: 'odd', label: 'odd' })
+
 
     return {
       createCondition,
@@ -97,6 +102,7 @@ export default defineComponent({
       updateCondition,
       reorderCondition,
       selector,
+      selected,
     }
   }
 })
