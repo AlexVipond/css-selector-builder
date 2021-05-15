@@ -24,13 +24,6 @@ To use the CSS selector builder interface, go to [the website](https://css-selec
 
 The relevant source code for the user interface is in [in the `src/interface` directory](https://github.com/AlexVipond/css-selector-builder/tree/main/src/interface).
 
-Components follow a naming convention:
-| Name | Description |
-| --- | --- |
-| `Brand...` | Custom-designed implementations of Headless UI components. |
-| `Input...` | Each component captures a particular type of data. They rely on `Brand...` form controls. |
-| `Form...` | Custom layouts for combinations of `Input...` components. `Form...` components are controlled, i.e. they receive data from their parent, and emit changes. |
-
 
 ### Library
 
