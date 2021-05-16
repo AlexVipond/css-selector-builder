@@ -11,11 +11,10 @@
     :placeholder="label"
     v-model="arg"
   />
-  <!-- <FormSelector
-    v-model="args"
+  <FormConditions
+    v-model="arg"
     v-if="inputType === 'selector'"
-    :label="label"
-  /> -->
+  />
   <InputAttributeOperator
     v-if="inputType === 'attributeOperator'"
     :label="label"
@@ -44,7 +43,6 @@ import InputAttributeCaseSensitivity from './InputAttributeCaseSensitivity.vue'
 import InputAttributeOperator from './InputAttributeOperator.vue'
 import InputDirectionality from './InputDirectionality.vue'
 import InputNthPattern from './InputNthPattern.vue'
-import { pipeMetadata } from '../pipeMetadata'
 import { attributeCaseSensitivityDefault, attributeOperatorDefault, nthPatternDefault, directionalityDefault } from '../options'
 
 export default defineComponent({

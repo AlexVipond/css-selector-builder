@@ -1,17 +1,16 @@
 <template>
   <section class="flex flex-col gap-3">
     <label class="input-label text-blue-gray-300">{{ label }}</label>
-    <div class="flex gap-3">
+    <div class="max-w-full flex gap-3">
       <InputPipe
         class="w-full"
         :modelValue="pipeOption"
-        @update:modelValue="option => condition = ({ ...condition, pipe: option.value })"
-        :label="label"
+        @update:modelValue="option => condition = ({ ...condition, args: [], pipe: option.value })"
       />
       <button
         type="button"
         name="Delete condition"
-        class="my-auto p-1 btn--raised btn--grows bg-red-100 text-red-700  rounded-full"
+        class="my-auto flex-shrink-0 p-1 btn--raised btn--grows bg-red-100 text-red-700  rounded-full"
         @click="emitDelete"
       >
         <TrashIcon class="h-5 w-5" />

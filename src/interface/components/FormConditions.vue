@@ -28,7 +28,7 @@
       />
     </div>
     <button
-      class="mr-auto btn btn--lg btn--raised btn--grows bg-gradient-to-r from-violet-600 to-violet-500 text-violet-100"
+      class="mr-auto btn btn--lg btn--raised btn--grows bg-gradient-to-r from-violet-600 to-violet-500 text-violet-100 flex-shrink-0"
       @click="conditionCreate"
       type="button"
     >
@@ -49,6 +49,7 @@ import FormCondition from './FormCondition.vue'
 import { pipeMetadata } from '../pipeMetadata'
 
 export default defineComponent({
+  name: 'FormConditions',
   components: {
     FormCondition,
     PlusIcon
