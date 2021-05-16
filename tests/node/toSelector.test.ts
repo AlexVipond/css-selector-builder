@@ -7,8 +7,8 @@ const suite = createSuite('toSelector (node)')
 suite(`toSelector`, () => {
   assert.is(
     toSelector([
-      { id: '123', pipe: 'id', args: ['haha'] },
-      { id: 'ABC', pipe: 'className', args: ['business'] },
+      { id: '123', pipe: 'has an ID, which I\'ll specify', args: ['haha'] },
+      { id: 'ABC', pipe: 'has a class, which I\'ll specify', args: ['business'] },
     ]),
     '#haha.business'
   )
@@ -18,18 +18,18 @@ suite(`toSelector`, () => {
     toSelector([
       { 
         id: '123',
-        pipe: 'not', 
+        pipe: 'matches none of one or more selectors, which I\'ll specify', 
         args: [
           [
-            { id: 'ABC', pipe: 'id', args: ['haha'] },
-            { id: '420', pipe: 'className', args: ['business'] },
+            { id: 'ABC', pipe: 'has an ID, which I\'ll specify', args: ['haha'] },
+            { id: '420', pipe: 'has a class, which I\'ll specify', args: ['business'] },
           ],
           [
             {
-              pipe: 'is',
+              pipe: 'matches any of one or more selectors, which I\'ll specify, and retains the specificity of the most specific matching selector',
               args: [
                 [
-                  { id: 'POOP', pipe: 'attribute', args: ['poop'] }
+                  { id: 'POOP', pipe: 'has an attribute', args: ['poop'] }
                 ]
               ]
             },
