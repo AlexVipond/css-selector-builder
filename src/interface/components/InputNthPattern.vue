@@ -1,7 +1,7 @@
 <template>
-  <label class="input-label text-blue-900">{{ label }}</label>
-  <Listbox v-model="selectedOption">
-    <div class="relative mt-1">
+  <label class="input-label text-violet-900">{{ label }}</label>
+  <Listbox v-model="selectedOption" v-slot="{ open }">
+    <div class="relative mt-1" :class="open ? 'z-10' : ''">
       <ListboxButton
         class="relative w-full py-2 pl-3 pr-10 text-left border border-blue-gray-300 rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-primary-300 focus-visible:ring-offset-2 focus-visible:border-primary-500"
       >
@@ -29,8 +29,8 @@
           >
             <li
               :class="[
-                active ? 'text-blue-900 bg-blue-100' : '',
-                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-blue-100',
+                active ? 'text-violet-900 bg-violet-100' : '',
+                'cursor-default select-none relative py-3 pl-10 pr-4 transition duration-75 border-b border-violet-100',
               ]"
             >
               <span
@@ -57,8 +57,8 @@
           >
             <li
               :class="[
-                active ? 'text-blue-900 bg-blue-100' : '',
-                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-blue-100',
+                active ? 'text-violet-900 bg-violet-100' : '',
+                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-violet-100',
               ]"
             >
               <span
@@ -85,8 +85,8 @@
           >
             <li
               :class="[
-                active ? 'text-blue-900 bg-blue-100' : '',
-                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-blue-100',
+                active ? 'text-violet-900 bg-violet-100' : '',
+                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-violet-100',
               ]"
             >
               <div
@@ -123,8 +123,8 @@
           >
             <li
               :class="[
-                active ? 'text-blue-900 bg-blue-100' : '',
-                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-blue-100',
+                active ? 'text-violet-900 bg-violet-100' : '',
+                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-violet-100',
               ]"
             >
               <div

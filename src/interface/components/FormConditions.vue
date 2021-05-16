@@ -28,7 +28,7 @@
       />
     </div>
     <button
-      class="mr-auto btn btn--lg btn--raised btn--grows bg-gradient-to-r from-blue-700 to-blue-500 text-blue-100"
+      class="mr-auto btn btn--lg btn--raised btn--grows bg-gradient-to-r from-violet-600 to-violet-500 text-violet-100"
       @click="conditionCreate"
       type="button"
     >
@@ -66,7 +66,7 @@ export default defineComponent({
               ...conditions.value,
               {
                 id: nanoid(),
-                pipe: pipeMetadata[0].name,
+                pipe: pipeMetadata[0].label,
                 args: []
               }
             ]

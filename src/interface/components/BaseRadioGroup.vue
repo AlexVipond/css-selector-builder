@@ -14,7 +14,7 @@
       >
         <div
           class="btn btn--lg mr-auto transition duration-150"
-          :class="checked ? 'bg-primary-800 text-primary-100' : 'bg-blue-gray-1000 text-blue-gray-300 hover:bg-blue-gray-900 hover:text-blue-gray-100'"
+          :class="checked ? 'bg-violet-100 text-violet-900' : 'bg-blue-gray-100 text-blue-gray-800 hover:bg-violet-200 hover:text-violet-900'"
         >
           <span >{{ option.label }}</span>
         </div>

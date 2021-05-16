@@ -64,7 +64,20 @@ export const pipeMetadata: PipeMetadatum[] = [
   {
     name: 'attribute',
     category: 'basic',
-    label: 'has an attribute, or has an attribute whose value meets certain conditions',
+    label: 'has an attribute',
+    args: [
+      {
+        name: 'attribute',
+        inputType: 'string',
+        label: 'Name of the attribute',
+        required: true
+      },
+    ]
+  },
+  {
+    name: 'attribute',
+    category: 'basic',
+    label: 'has an attribute whose value meets certain conditions',
     args: [
       {
         name: 'attribute',

@@ -22,7 +22,7 @@ export default defineComponent({
               emit('update:modelValue', value)
             }
           }),
-          options = pipeMetadata.map(({ name, label }) => ({ value: name, label }))
+          options = pipeMetadata.map(({ label }) => ({ value: label, label }))
 
     return {
       options,

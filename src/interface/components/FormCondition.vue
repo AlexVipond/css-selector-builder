@@ -11,7 +11,7 @@
       <button
         type="button"
         name="Delete condition"
-        class="my-auto p-1 btn--raised btn--grows bg-gradient-to-r from-blue-700 to-blue-500 text-blue-100 rounded-full"
+        class="my-auto p-1 btn--raised btn--grows bg-red-100 text-red-700  rounded-full"
         @click="emitDelete"
       >
         <TrashIcon class="h-5 w-5" />
@@ -53,7 +53,7 @@ export default defineComponent({
               emit('update:modelValue', value)
             }
           }),
-          pipe = computed(() => pipeMetadata.find(({ name }) => name === condition.value.pipe)),
+          pipe = computed(() => pipeMetadata.find(({ label }) => label === condition.value.pipe)),
           pipeOption = computed(() => ({
             value: pipe.value.name,
             label: pipe.value.label,
