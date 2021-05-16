@@ -7,19 +7,22 @@
 </template>
 
 <script lang="ts">
-import { ref, defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 import BaseRadioGroup from './BaseRadioGroup.vue'
+import { directionalities as options } from '../options'
 
 export default defineComponent({
   components: {
     BaseRadioGroup,
   },
-  setup() {
-    const options = [
-            { label: 'left to right', value: 'ltr' },
-            { label: 'right to left', value: 'ltr' }
-          ],
-          selected = ref(options[0])
+  props: ['modelValue', 'label'],
+  setup(props, { emit }) {
+    const selected = computed<{ value: string, label: string }>({
+            get: () => props.modelValue,
+            set: option => {
+              emit('update:modelValue', option)
+            }
+          })
 
     return {
       selected,

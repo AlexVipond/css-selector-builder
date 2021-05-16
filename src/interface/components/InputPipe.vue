@@ -2,12 +2,11 @@
   <BaseListbox
     v-model="selected"
     :options="options"
-    label="My element..."
   />
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, computed } from 'vue'
 import BaseListbox from './BaseListbox.vue'
 import { pipeMetadata } from '../pipeMetadata'
 
@@ -15,9 +14,15 @@ export default defineComponent({
   components: {
     BaseListbox,
   },
-  setup() {
-    const options = pipeMetadata,
-          selected = ref(options[0])
+  props: ['modelValue'],
+  setup(props, { emit }) {
+    const selected = computed<{ value: string, label: string }>({
+            get: () => props.modelValue,
+            set: value => {
+              emit('update:modelValue', value)
+            }
+          }),
+          options = pipeMetadata.map(({ name, label }) => ({ value: name, label }))
 
     return {
       options,

@@ -1,9 +1,9 @@
 <template>
-  <label class="input-label text-blue-gray-400">{{ label }}</label>
+  <label class="input-label text-blue-900">{{ label }}</label>
   <Listbox v-model="selectedOption">
     <div class="relative mt-1">
       <ListboxButton
-        class="relative w-full py-2 pl-3 pr-10 text-left bg-blue-gray-700 rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-primary-300 focus-visible:ring-offset-2 focus-visible:border-primary-500"
+        class="relative w-full py-2 pl-3 pr-10 text-left border border-blue-gray-300 rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-primary-300 focus-visible:ring-offset-2 focus-visible:border-primary-500"
       >
         <span class="block truncate">{{ selectedOption.label }}</span>
         <span
@@ -19,7 +19,7 @@
         leave-to-class="opacity-0"
       >
         <ListboxOptions
-          class="absolute w-full py-1 mt-1 overflow-auto bg-blue-gray-700 rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none"
+          class="absolute w-full py-1 mt-1 overflow-auto bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none"
         >
           <ListboxOption
             v-slot="{ active, selected }"
@@ -29,8 +29,8 @@
           >
             <li
               :class="[
-                active ? 'text-blue-gray-200 bg-blue-gray-600' : '',
-                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-blue-gray-600',
+                active ? 'text-blue-900 bg-blue-100' : '',
+                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-blue-100',
               ]"
             >
               <span
@@ -57,8 +57,8 @@
           >
             <li
               :class="[
-                active ? 'text-blue-gray-200 bg-blue-gray-600' : '',
-                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-blue-gray-600',
+                active ? 'text-blue-900 bg-blue-100' : '',
+                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-blue-100',
               ]"
             >
               <span
@@ -85,8 +85,8 @@
           >
             <li
               :class="[
-                active ? 'text-blue-gray-200 bg-blue-gray-600' : '',
-                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-blue-gray-600',
+                active ? 'text-blue-900 bg-blue-100' : '',
+                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-blue-100',
               ]"
             >
               <div
@@ -100,7 +100,7 @@
                   @click="stopPropagation"
                   @keydown="stopPropagation"
                   @keydown.enter="() => enterHandle(2)"
-                  class="ml-2 appearance-textfield w-14 font-mono text-right bg-blue-gray-800 border-none rounded"
+                  class="ml-2 appearance-textfield w-14 font-mono text-right border-blue-gray-300 rounded"
                   type="number"
                   :value="n"
                   @input="({ target: { value } }) => n = isNaN(Number(value)) ? 0 : Number(value)"
@@ -123,8 +123,8 @@
           >
             <li
               :class="[
-                active ? 'text-blue-gray-200 bg-blue-gray-600' : '',
-                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-blue-gray-600',
+                active ? 'text-blue-900 bg-blue-100' : '',
+                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-blue-100',
               ]"
             >
               <div
@@ -138,7 +138,7 @@
                   @click="stopPropagation"
                   @keydown="stopPropagation"
                   @keydown.enter="() => enterHandle(3)"
-                  class="ml-2 appearance-textfield w-14 font-mono text-right bg-blue-gray-800 border-none rounded"
+                  class="ml-2 appearance-textfield w-14 font-mono text-right border-blue-gray-300 rounded"
                   type="number"
                   :value="a"
                   @input="({ target: { value } }) => a = isNaN(Number(value)) ? 0 : Number(value)"
@@ -148,7 +148,7 @@
                   @click="stopPropagation"
                   @keydown="stopPropagation"
                   @keydown.enter="() => enterHandle(3)"
-                  class="ml-2 appearance-textfield w-14 font-mono text-right bg-blue-gray-800 border-none rounded"
+                  class="ml-2 appearance-textfield w-14 font-mono text-right border-blue-gray-300 rounded"
                   type="number"
                   :value="b"
                   @input="({ target: { value } }) => b = isNaN(Number(value)) ? 0 : Number(value)"
@@ -197,8 +197,6 @@ export default defineComponent({
             set: option => {
               // Option for n and An+B was coming out stale, so I'm
               // rereading it from the array.
-              console.log(option)
-              console.log(options.value.find(({ key }) => key === option.key))
               emit('update:modelValue', options.value.find(({ key }) => key === option.key))
             }
           }),

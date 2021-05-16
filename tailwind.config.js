@@ -9,12 +9,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        ...defaultTheme.colors,
         ...colors,
         'blue-gray': colors.blueGray,
-        primary: colors.violet
+        'cool-gray': colors.coolGray,
+        primary: colors.blue,
       },
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
+        mono: ['Inconsolata', ...defaultTheme.fontFamily.mono],
       },
     }
   },
@@ -34,12 +37,7 @@ module.exports = {
       '.btn--raised': apply('shadow hover:shadow-lg focus:shadow-lg transition'),
       '.btn--grows': apply('scale-100 hover:scale-110 focus:scale-110 transform origin-center transition'),
 
-      '.input-label': apply('text-sm font-semibold'),
-
-      '.brand-gradient': apply('from-primary-900 to-primary-800'),
-      '.brand-gradient-to-r': apply('brand-gradient bg-gradient-to-r'),
-      '.brand-gradient-to-l': apply('brand-gradient bg-gradient-to-l'),
-      '.brand-gradient-text': apply('text-transparent bg-clip-text brand-gradient-to-r'),
+      '.input-label': apply('text-sm font-semibold tracking-wide'),
     })),
     plugin(({ addUtilities }) => addUtilities({
       '.appearance-textfield': {

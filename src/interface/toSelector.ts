@@ -4,18 +4,18 @@ import { pipe } from '../pipes/util'
 
 export type Condition = {
   id: string,
-  method: keyof typeof pipes,
+  pipe: keyof typeof pipes,
   args: any[],
 }
 
 export function toSelector (conditions: Condition[] = []) {
-  const reduced: Pipe[] = conditions.reduce((reduced, { method, args: rawArgs }) => {
+  const reduced: Pipe[] = conditions.reduce((reduced, { pipe, args: rawArgs }) => {
     const args = rawArgs.map(arg => Array.isArray(arg) ? toSelector(arg) : arg)
     
     return [
       ...reduced,
       // @ts-ignore
-      pipes[method](...args),
+      pipes[pipe](...args),
     ]
   }, [])
   

@@ -7,8 +7,8 @@ const suite = createSuite('toSelector (node)')
 suite(`toSelector`, () => {
   assert.is(
     toSelector([
-      { method: 'id', args: ['haha'] },
-      { method: 'className', args: ['business'] },
+      { id: '123', pipe: 'id', args: ['haha'] },
+      { id: 'ABC', pipe: 'className', args: ['business'] },
     ]),
     '#haha.business'
   )
@@ -17,18 +17,19 @@ suite(`toSelector`, () => {
   assert.is(
     toSelector([
       { 
-        method: 'not', 
+        id: '123',
+        pipe: 'not', 
         args: [
           [
-            { method: 'id', args: ['haha'] },
-            { method: 'className', args: ['business'] },
+            { id: 'ABC', pipe: 'id', args: ['haha'] },
+            { id: '420', pipe: 'className', args: ['business'] },
           ],
           [
             {
-              method: 'is',
+              pipe: 'is',
               args: [
                 [
-                  { method: 'attribute', args: ['poop'] }
+                  { id: 'POOP', pipe: 'attribute', args: ['poop'] }
                 ]
               ]
             },

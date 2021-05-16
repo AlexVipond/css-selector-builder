@@ -1,9 +1,8 @@
 <template>
-  <label class="input-label text-blue-gray-400">{{ label }}</label>
   <Listbox v-model="selectedOption">
     <div class="relative mt-1">
       <ListboxButton
-        class="relative w-full py-2 pl-3 pr-10 text-left bg-blue-gray-700 rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-primary-300 focus-visible:ring-offset-2 focus-visible:border-primary-500"
+        class="relative w-full py-2 pl-3 pr-10 text-left border border-blue-gray-300 rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-primary-300 focus-visible:ring-offset-2 focus-visible:border-primary-500"
       >
         <span class="block truncate">{{ selectedOption.label }}</span>
         <span
@@ -19,7 +18,7 @@
         leave-to-class="opacity-0"
       >
         <ListboxOptions
-          class="absolute w-full py-1 mt-1 overflow-auto bg-blue-gray-700 rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none"
+          class="absolute w-full py-1 mt-1 overflow-auto bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none"
         >
           <ListboxOption
             v-slot="{ active, selected }"
@@ -30,8 +29,8 @@
           >
             <li
               :class="[
-                active ? 'text-blue-gray-200 bg-blue-gray-600' : '',
-                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-blue-gray-600',
+                active ? 'text-blue-900 bg-blue-100' : '',
+                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-blue-100',
               ]"
             >
               <span
@@ -44,7 +43,7 @@
               </span>
               <span
                 v-if="selected"
-                class="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-400"
+                class="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-500"
               >
                 <CheckIcon class="w-5 h-5" aria-hidden="true" />
               </span>
@@ -77,7 +76,7 @@ export default defineComponent({
     CheckIcon,
     SelectorIcon,
   },
-  props: ['options', 'modelValue', 'label'],
+  props: ['options', 'modelValue'],
   setup (props, { emit }) {
     const selectedOption = computed({
       get: () => props.modelValue,

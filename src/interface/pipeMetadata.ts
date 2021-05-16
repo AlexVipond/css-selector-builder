@@ -15,119 +15,6 @@ type PipeMetadatum = {
 }
 
 export const pipeMetadata: PipeMetadatum[] = [
-  // ABSTRACTIONS
-  {
-    name: 'prepend',
-    category: 'abstractions',
-    label: 'is selected by a custom selector prepended to the current selector',
-    args: [
-      {
-        name: 'prepended',
-        inputType: 'string',
-        label: 'Custom selector that should be prepended to the current selector',
-        required: true
-      },
-    ]
-  },
-  {
-    name: 'append',
-    category: 'abstractions',
-    label: 'is selected by a custom selector appended to the current selector',
-    args: [
-      {
-        name: 'appended',
-        inputType: 'string',
-        label: 'Custom selector that should be appended to the current selector',
-        required: true
-      },
-    ]
-  },
-  {
-    name: 'pseudoState',
-    category: 'abstractions',
-    label: 'has a custom pseudo state',
-    args: [
-      {
-        name: 'state',
-        inputType: 'string',
-        label: 'Name of the pseudo state',
-        required: true
-      },
-    ]
-  },
-  {
-    name: 'pseudoFn',
-    category: 'abstractions',
-    label: 'has a custom pseudo state that accepts arguments',
-    args: [
-      {
-        name: 'fn',
-        inputType: 'string',
-        label: 'Name of the pseudo state function',
-        required: true
-      },
-      {
-        name: 'args',
-        inputType: 'unknown',
-        label: 'An argument to pass to the pseudo state function',
-        required: true,
-        repeatable: true,
-      },
-    ]
-  },
-  {
-    name: 'pseudoElement',
-    category: 'abstractions',
-    label: 'has a custom pseudo element',
-    args: [
-      {
-        name: 'state',
-        inputType: 'string',
-        label: 'Name of the pseudo element',
-        required: true
-      },
-    ]
-  },
-  {
-    name: 'pseudoElementFn',
-    category: 'abstractions',
-    label: 'has a custom pseudo element that accepts arguments',
-    args: [
-      {
-        name: 'fn',
-        inputType: 'string',
-        label: 'Name of the pseudo element function',
-        required: true
-      },
-      {
-        name: 'args',
-        inputType: 'unknown',
-        label: 'An argument to pass to the pseudo element function',
-        required: true,
-        repeatable: true,
-      },
-    ]
-  },
-  {
-    name: 'relate',
-    category: 'abstractions',
-    label: 'has a custom relationship with another selector',
-    args: [
-      {
-        name: 'combinator',
-        inputType: 'string',
-        label: 'Custom combinator that goes between your selector and its relative',
-        required: true
-      },
-      {
-        name: 'relative',
-        inputType: 'selector',
-        label: 'Your selector\'s relative',
-        required: true
-      },
-    ]
-  },
-
   // BASIC
   {
     name: 'universal',
@@ -164,12 +51,12 @@ export const pipeMetadata: PipeMetadatum[] = [
   {
     name: 'id',
     category: 'basic',
-    label: 'has a ID, which I\'ll specify',
+    label: 'has an ID, which I\'ll specify',
     args: [
       {
         name: 'id',
         inputType: 'string',
-        label: 'The id',
+        label: 'The ID',
         required: true
       },
     ]
@@ -189,18 +76,19 @@ export const pipeMetadata: PipeMetadatum[] = [
         name: 'operator',
         inputType: 'attributeOperator',
         label: 'Operator that describes the relationship between the attribute and its value',
-        required: attributeUserInput => !!attributeUserInput.value || attributeUserInput.isCaseSensitive !== 'unknown',
+        required: attributeUserInput => !!attributeUserInput.value || attributeUserInput.isCaseSensitive !== 'unspecified',
       },
       {
         name: 'value',
         inputType: 'string',
         label: 'Value of the attribute',
-        required: attributeUserInput => !!attributeUserInput.operator || attributeUserInput.isCaseSensitive !== 'unknown',
+        required: attributeUserInput => !!attributeUserInput.operator || attributeUserInput.isCaseSensitive !== 'unspecified',
       },
       {
         name: 'isCaseSensitive',
         inputType: 'attributeCaseSensitivity',
         label: 'Value of the attribute',
+        required: false,
       },
     ]
   },
@@ -886,4 +774,120 @@ export const pipeMetadata: PipeMetadatum[] = [
       }
     ]
   },
+
+  
+  // ABSTRACTIONS
+  {
+    name: 'prepend',
+    category: 'abstractions',
+    label: 'is selected by a custom selector prepended to the current selector',
+    args: [
+      {
+        name: 'prepended',
+        inputType: 'string',
+        label: 'Custom selector that should be prepended to the current selector',
+        required: true
+      },
+    ]
+  },
+  {
+    name: 'append',
+    category: 'abstractions',
+    label: 'is selected by a custom selector appended to the current selector',
+    args: [
+      {
+        name: 'appended',
+        inputType: 'string',
+        label: 'Custom selector that should be appended to the current selector',
+        required: true
+      },
+    ]
+  },
+  {
+    name: 'pseudoState',
+    category: 'abstractions',
+    label: 'has a custom pseudo state',
+    args: [
+      {
+        name: 'state',
+        inputType: 'string',
+        label: 'Name of the pseudo state',
+        required: true
+      },
+    ]
+  },
+  {
+    name: 'pseudoFn',
+    category: 'abstractions',
+    label: 'has a custom pseudo state that accepts arguments',
+    args: [
+      {
+        name: 'fn',
+        inputType: 'string',
+        label: 'Name of the pseudo state function',
+        required: true
+      },
+      {
+        name: 'args',
+        inputType: 'unknown',
+        label: 'An argument to pass to the pseudo state function',
+        required: true,
+        repeatable: true,
+      },
+    ]
+  },
+  {
+    name: 'pseudoElement',
+    category: 'abstractions',
+    label: 'has a custom pseudo element',
+    args: [
+      {
+        name: 'state',
+        inputType: 'string',
+        label: 'Name of the pseudo element',
+        required: true
+      },
+    ]
+  },
+  {
+    name: 'pseudoElementFn',
+    category: 'abstractions',
+    label: 'has a custom pseudo element that accepts arguments',
+    args: [
+      {
+        name: 'fn',
+        inputType: 'string',
+        label: 'Name of the pseudo element function',
+        required: true
+      },
+      {
+        name: 'args',
+        inputType: 'unknown',
+        label: 'An argument to pass to the pseudo element function',
+        required: true,
+        repeatable: true,
+      },
+    ]
+  },
+  {
+    name: 'relate',
+    category: 'abstractions',
+    label: 'has a custom relationship with another selector',
+    args: [
+      {
+        name: 'combinator',
+        inputType: 'string',
+        label: 'Custom combinator that goes between your selector and its relative',
+        required: true
+      },
+      {
+        name: 'relative',
+        inputType: 'selector',
+        label: 'Your selector\'s relative',
+        required: true
+      },
+    ]
+  },
 ]
+
+export const pipeMetadataDefault = pipeMetadata[0]

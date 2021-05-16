@@ -7,41 +7,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, computed } from 'vue'
 import BaseListbox from './BaseListbox.vue'
+import { attributeOperators as options } from '../options'
 
 export default defineComponent({
   components: {
     BaseListbox,
   },
-  setup() {
-    const options = [
-            { 
-              label: 'is',
-              value: '=',
-            },
-            { 
-              label: 'includes (as an exact value in a whitespace-separated list)',
-              value: '~=',
-            },
-            { 
-              label: 'contains (as an exact match anywhere)',
-              value: '*=',
-            },
-            { 
-              label: 'starts with',
-              value: '^=',
-            },
-            { 
-              label: 'ends with',
-              value: '$=',
-            },
-            { 
-              label: 'is kebab-cased, with the first segment being',
-              value: '|=',
-            },
-          ],
-          selected = ref(options[0])
+  props: ['modelValue', 'label'],
+  setup(props, { emit }) {
+    const selected = computed<{ value: string, label: string }>({
+            get: () => props.modelValue,
+            set: option => {
+              emit('update:modelValue', option)
+            }
+          })
 
     return {
       options,
