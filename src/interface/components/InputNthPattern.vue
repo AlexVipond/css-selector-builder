@@ -1,5 +1,5 @@
 <template>
-  <label class="input-label text-cyan-900">{{ label }}</label>
+  <label class="input-label text-emerald-900">{{ label }}</label>
   <Listbox v-model="selectedOption" v-slot="{ open }">
     <div class="relative mt-1" :class="open ? 'z-10' : ''">
       <ListboxButton
@@ -43,7 +43,7 @@
               </span>
               <span
                 v-if="options[0].key === selectedOption.key"
-                class="absolute inset-y-0 left-0 flex items-center pl-3 text-cyan-600"
+                class="absolute inset-y-0 left-0 flex items-center pl-3 text-emerald-600"
               >
                 <CheckIcon class="w-5 h-5" aria-hidden="true" />
               </span>
@@ -71,7 +71,7 @@
               </span>
               <span
                 v-if="options[1].key === selectedOption.key"
-                class="absolute inset-y-0 left-0 flex items-center pl-3 text-cyan-600"
+                class="absolute inset-y-0 left-0 flex items-center pl-3 text-emerald-600"
               >
                 <CheckIcon class="w-5 h-5" aria-hidden="true" />
               </span>
@@ -109,7 +109,7 @@
               </div>
               <span
                 v-if="options[2].key === selectedOption.key"
-                class="absolute inset-y-0 left-0 flex items-center pl-3 text-cyan-600"
+                class="absolute inset-y-0 left-0 flex items-center pl-3 text-emerald-600"
               >
                 <CheckIcon class="w-5 h-5" aria-hidden="true" />
               </span>
@@ -157,7 +157,7 @@
               </div>
               <span
                 v-if="options[3].key === selectedOption.key"
-                class="absolute inset-y-0 left-0 flex items-center pl-3 text-cyan-600"
+                class="absolute inset-y-0 left-0 flex items-center pl-3 text-emerald-600"
               >
                 <CheckIcon class="w-5 h-5" aria-hidden="true" />
               </span>

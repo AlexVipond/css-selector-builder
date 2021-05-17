@@ -3,7 +3,7 @@
     class="flex flex-col gap-3"
     v-model="selectedOption"
   >
-    <RadioGroupLabel class="ml-3 input-label text-cyan-gray-900">{{ label }}</RadioGroupLabel>
+    <RadioGroupLabel class="ml-3 input-label text-emerald-gray-900">{{ label }}</RadioGroupLabel>
     <div class="flex gap-4">
       <RadioGroupOption
         v-for="option in options"
@@ -14,7 +14,7 @@
       >
         <div
           class="btn btn--lg mr-auto transition duration-150"
-          :class="checked ? 'bg-cyan-100 text-cyan-900' : 'bg-cyan-gray-100 text-cyan-gray-800 hover:bg-cyan-200 hover:text-cyan-900'"
+          :class="checked ? 'bg-emerald-100 text-emerald-900' : 'bg-emerald-gray-100 text-emerald-gray-800 hover:bg-emerald-200 hover:text-emerald-900'"
         >
           <span >{{ option.label }}</span>
         </div>

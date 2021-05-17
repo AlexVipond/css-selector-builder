@@ -14,7 +14,7 @@
   />
   <div 
     v-if="inputType === 'selector'"
-    class="px-4 py-6 bg-cyan-100 rounded shadow"
+    class="px-4 py-6 bg-emerald-100 rounded shadow"
   >
     <FormConditions v-model="arg" />
   </div>

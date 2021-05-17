@@ -36,7 +36,7 @@
       />
     </div>
     <button
-      class="mx-auto p-3 text-2xl btn--raised btn--grows rounded-full p-3 bg-gradient-to-r from-cyan-700 to-cyan-700 text-cyan-100 flex-shrink-0"
+      class="mx-auto p-3 text-2xl btn--raised btn--grows rounded-full p-3 bg-gradient-to-r from-emerald-700 to-emerald-700 text-emerald-100 flex-shrink-0"
       @click="conditionCreate"
       type="button"
     >

@@ -1,7 +1,7 @@
 <template>
   <main class="min-h-screen w-screen flex flex-col items-center gap-12 py-24 px-10 bg-gray-1000">
     <section class="w-full max-w-xl flex flex-col gap-4">
-      <pre class="rounded-md shadow-lg p-4 bg-gradient-to-r from-cyan-700 to-cyan-600 text-cyan-100 overflow-x-scroll text-xl"><code>{{ selector || '*' }}</code></pre>
+      <pre class="rounded-md shadow-lg p-4 bg-gradient-to-r from-emerald-900 to-emerald-700 text-emerald-100 overflow-x-scroll text-xl"><code>{{ selector || '*' }}</code></pre>
     </section>
     <section class="w-full max-w-xl flex flex-col gap-4">
       <section class="px-6 py-8 rounded-md shadow-lg bg-gray-900 text-gray-200">
@@ -9,9 +9,9 @@
       </section>
     </section>
   </main>
-  <!-- <footer class="bg-gray-900 h-20">
+  <footer class="bg-gray-1100 h-20">
   
-  </footer> -->
+  </footer>
 </template>
 
 <script lang="ts">

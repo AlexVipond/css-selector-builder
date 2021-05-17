@@ -1,6 +1,6 @@
 <template>
   <section class="flex flex-col gap-3">
-    <label class="input-label text-cyan-gray-300">{{ label }}</label>
+    <label class="input-label text-emerald-gray-300">{{ label }}</label>
     <div class="flex items-center gap-3">
       <div class="flex w-full min-w-0">
         <InputPipe
