@@ -92,7 +92,7 @@ export default defineComponent({
             conditions.value = [
               ...conditions.value,
               {
-                id: nanoid(),
+                id: nanoid(8),
                 pipe: pipeMetadata[0].label,
                 args: []
               }
