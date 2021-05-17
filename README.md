@@ -22,16 +22,12 @@ This project is a TypeScript library for building CSS selectors programmatically
 
 To use the CSS selector builder interface, go to [the website](https://css-selector-builder.netlify.app).
 
+As you build your selector, you'll see the URL update with any new conditions you've created. You can share that URL with anyone to show them what you've built!
+
 The relevant source code for the user interface is in [in the `src/interface` directory](https://github.com/AlexVipond/css-selector-builder/tree/main/src/interface).
 
 
 ### Library
-
-To run tests:
-
-```shell
-git clone https://github.com/AlexVipond/css-selector-builder && cd css-selector-builder && npm install && npm run test
-```
 
 To use the library:
 
@@ -49,15 +45,15 @@ className('poop')()  // .poop
 not(tag('h1')())()   // ':not(h1)'
 ```
 
-Each function is a **higher order function**, returning a function that accepts a CSS selector as it's only parameter, and returns the transformed selector.
+Each function is a **higher order function**, returning a function that accepts a CSS selector (String) as its only parameter, and returns the transformed selector.
 
 ```js
 import { tag, className } from '@alexvipond/css-selector-pipes'
 
-const tagTransform = tag('h1')
-const classNameTransform = className('poop')
+const tagFunction = tag('h1')
+const classNameFunction = className('poop')
 
-tagTransform(classNameTransform()) // h1.poop
+tagFunction(classNameFunction()) // h1.poop
 ```
 
 You can also import a `pipe` utility that makes it easier to compose multiple functions into a selector pipeline.
@@ -97,3 +93,45 @@ All functions are fully typed, and you can check out these test files for furthe
 - [`relate`](https://github.com/AlexVipond/css-selector-builder/blob/main/tests/node/relate.test.ts)
 
 The relevant source code is in [the `src/pipes` directory](https://github.com/AlexVipond/css-selector-builder/tree/main/src/pipes).
+
+
+### Development
+
+Set up the project locally:
+
+```shell
+git clone https://github.com/AlexVipond/css-selector-builder && cd css-selector-builder && npm install
+```
+
+Run tests:
+
+```shell
+npm run test
+```
+
+Run tests for a specific file:
+
+```shell
+npm run test:only [filename, excluding the .test.ts extension]
+
+npm tun test:only toSelector
+npm tun test:only append
+```
+
+Run the interface in development mode on `localhost:3000`:
+
+```shell
+npm run dev
+```
+
+Build the interface for production:
+
+```shell
+npm run build
+```
+
+Build the library for production:
+
+```shell
+npm run build:lib
+```
