@@ -1,6 +1,6 @@
 export const directionalities = [
   { label: 'left to right', value: 'ltr' },
-  { label: 'right to left', value: 'ltr' }
+  { label: 'right to left', value: 'rtl' }
 ]
 
 export const directionalityDefault = directionalities[0]
@@ -37,9 +37,9 @@ export const attributeOperatorDefault = attributeOperators[0]
 
 
 export const attributeCaseSensitivities = [
+  { label: 'unspecified', value: 'unspecified' },
   { label: 'sensitive', value: true },
   { label: 'insensitive', value: false },
-  { label: 'unspecified', value: 'unspecified' },
 ]
 export const attributeCaseSensitivityDefault = attributeCaseSensitivities[0]
 

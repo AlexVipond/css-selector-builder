@@ -1,5 +1,12 @@
 import * as pipes from '../pipes'
 import type { AttributeOperator } from '../pipes'
+import type { Condition } from './toSelector'
+import {
+  attributeCaseSensitivityDefault,
+  attributeOperatorDefault,
+  nthPatternDefault,
+  directionalityDefault
+} from './options'
 
 type PipeMetadatum = {
   name: keyof typeof pipes,
@@ -9,8 +16,9 @@ type PipeMetadatum = {
     name: string,
     inputType: 'unknown' | 'string' | 'selector' | 'attributeOperator' | 'attributeCaseSensitivity' | 'directionality' | 'nthPattern',
     label: string,
-    required: boolean | ((attributeUserInput: { attribute: string, operator: AttributeOperator, value: string, isCaseSensitive: boolean | 'unspecified' }) => boolean),
-    repeatable?: boolean
+    defaultValue: string | boolean | number | Condition[],
+    required: boolean,
+    repeatable?: boolean,
   }[]
 }
 
@@ -31,7 +39,8 @@ export const pipeMetadata: PipeMetadatum[] = [
         name: 'tag',
         inputType: 'string',
         label: 'The tag',
-        required: true
+        required: true,
+        defaultValue: '',
       },
     ]
   },
@@ -44,7 +53,8 @@ export const pipeMetadata: PipeMetadatum[] = [
         name: 'name',
         inputType: 'string',
         label: 'The class name',
-        required: true
+        required: true,
+        defaultValue: '',
       },
     ]
   },
@@ -57,7 +67,8 @@ export const pipeMetadata: PipeMetadatum[] = [
         name: 'id',
         inputType: 'string',
         label: 'The ID',
-        required: true
+        required: true,
+        defaultValue: '',
       },
     ]
   },
@@ -70,7 +81,8 @@ export const pipeMetadata: PipeMetadatum[] = [
         name: 'attribute',
         inputType: 'string',
         label: 'Name of the attribute',
-        required: true
+        required: true,
+        defaultValue: '',
       },
     ]
   },
@@ -83,23 +95,28 @@ export const pipeMetadata: PipeMetadatum[] = [
         name: 'attribute',
         inputType: 'string',
         label: 'Name of the attribute',
-        required: true
+        required: true,
+        defaultValue: '',
       },
       {
         name: 'operator',
         inputType: 'attributeOperator',
+        defaultValue: attributeOperatorDefault.value,
         label: 'Operator that describes the relationship between the attribute and its value',
-        required: attributeUserInput => !!attributeUserInput.value || attributeUserInput.isCaseSensitive !== 'unspecified',
+        required: true,
       },
       {
         name: 'value',
         inputType: 'string',
+        defaultValue: '',
         label: 'Value of the attribute',
-        required: attributeUserInput => !!attributeUserInput.operator || attributeUserInput.isCaseSensitive !== 'unspecified',
+        required: true,
+        
       },
       {
         name: 'isCaseSensitive',
         inputType: 'attributeCaseSensitivity',
+        defaultValue: attributeCaseSensitivityDefault.value,
         label: 'Value of the attribute',
         required: false,
       },
@@ -367,6 +384,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'pattern',
         inputType: 'nthPattern',
+        defaultValue: nthPatternDefault.value,
         label: 'nth pattern describing the element\'s position',
         required: true,
       }
@@ -380,6 +398,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'pattern',
         inputType: 'nthPattern',
+        defaultValue: nthPatternDefault.value,
         label: 'nth pattern describing the element\'s position',
         required: true,
       }
@@ -393,6 +412,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'pattern',
         inputType: 'nthPattern',
+        defaultValue: nthPatternDefault.value,
         label: 'nth pattern describing the element\'s position',
         required: true,
       }
@@ -406,6 +426,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'pattern',
         inputType: 'nthPattern',
+        defaultValue: nthPatternDefault.value,
         label: 'nth pattern describing the element\'s position',
         required: true,
       }
@@ -419,6 +440,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'pattern',
         inputType: 'nthPattern',
+        defaultValue: nthPatternDefault.value,
         label: 'nth pattern describing the element\'s position',
         required: true,
       }
@@ -432,6 +454,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'pattern',
         inputType: 'nthPattern',
+        defaultValue: nthPatternDefault.value,
         label: 'nth pattern describing the element\'s position',
         required: true,
       }
@@ -510,6 +533,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'directionality',
         inputType: 'directionality',
+        defaultValue: directionalityDefault.value,
         label: 'Text directionality',
         required: true,
       }
@@ -523,6 +547,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'language code',
         inputType: 'string',
+        defaultValue: '',
         label: 'Language code for the element\'s content',
         required: true,
       }
@@ -536,6 +561,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'selector',
         inputType: 'selector',
+        defaultValue: [],
         label: 'Selector for the contained element',
         required: true,
       }
@@ -549,6 +575,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'selector',
         inputType: 'selector',
+        defaultValue: [],
         label: 'Additional selector conditions for the shadow root host',
         required: true,
       }
@@ -562,6 +589,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'selector',
         inputType: 'selector',
+        defaultValue: [],
         label: 'Selector for the shadow root host\'s ancestor',
         required: true,
       }
@@ -575,6 +603,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'selector',
         inputType: 'selector',
+        defaultValue: [],
         label: 'A selector that the element might match',
         required: true,
         repeatable: true,
@@ -589,6 +618,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'selector',
         inputType: 'selector',
+        defaultValue: [],
         label: 'A selector that the element might match',
         required: true,
         repeatable: true,
@@ -603,6 +633,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'selector',
         inputType: 'selector',
+        defaultValue: [],
         label: 'A selector that the element must not match',
         required: true,
         repeatable: true,
@@ -617,6 +648,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'state',
         inputType: 'string',
+        defaultValue: '',
         label: 'Custom state',
         required: true,
       }
@@ -715,6 +747,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'part',
         inputType: 'string',
+        defaultValue: '',
         label: 'The part name',
         required: true,
       }
@@ -728,6 +761,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'selector',
         inputType: 'selector',
+        defaultValue: [],
         label: 'Selector for the element in the slot',
         required: true,
       }
@@ -743,6 +777,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'ancestor',
         inputType: 'selector',
+        defaultValue: [],
         label: 'Ancestor of the selected element',
         required: true,
       }
@@ -756,6 +791,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'parent',
         inputType: 'selector',
+        defaultValue: [],
         label: 'Parent of the selected element',
         required: true,
       }
@@ -769,6 +805,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'sibling',
         inputType: 'selector',
+        defaultValue: [],
         label: 'Sibling of the selected element',
         required: true,
       }
@@ -782,6 +819,7 @@ export const pipeMetadata: PipeMetadatum[] = [
       {
         name: 'sibling',
         inputType: 'selector',
+        defaultValue: [],
         label: 'Sibling of the selected element',
         required: true,
       }
@@ -799,7 +837,8 @@ export const pipeMetadata: PipeMetadatum[] = [
         name: 'prepended',
         inputType: 'string',
         label: 'Custom selector that should be prepended to the current selector',
-        required: true
+        required: true,
+        defaultValue: '',
       },
     ]
   },
@@ -812,7 +851,8 @@ export const pipeMetadata: PipeMetadatum[] = [
         name: 'appended',
         inputType: 'string',
         label: 'Custom selector that should be appended to the current selector',
-        required: true
+        required: true,
+        defaultValue: '',
       },
     ]
   },
@@ -825,7 +865,8 @@ export const pipeMetadata: PipeMetadatum[] = [
         name: 'state',
         inputType: 'string',
         label: 'Name of the pseudo state',
-        required: true
+        required: true,
+        defaultValue: '',
       },
     ]
   },
@@ -838,11 +879,13 @@ export const pipeMetadata: PipeMetadatum[] = [
         name: 'fn',
         inputType: 'string',
         label: 'Name of the pseudo state function',
-        required: true
+        required: true,
+        defaultValue: '',
       },
       {
         name: 'args',
         inputType: 'unknown',
+        defaultValue: '',
         label: 'An argument to pass to the pseudo state function',
         required: true,
         repeatable: true,
@@ -858,7 +901,8 @@ export const pipeMetadata: PipeMetadatum[] = [
         name: 'state',
         inputType: 'string',
         label: 'Name of the pseudo element',
-        required: true
+        required: true,
+        defaultValue: '',
       },
     ]
   },
@@ -871,11 +915,13 @@ export const pipeMetadata: PipeMetadatum[] = [
         name: 'fn',
         inputType: 'string',
         label: 'Name of the pseudo element function',
-        required: true
+        required: true,
+        defaultValue: '',
       },
       {
         name: 'args',
         inputType: 'unknown',
+        defaultValue: '',
         label: 'An argument to pass to the pseudo element function',
         required: true,
         repeatable: true,
@@ -891,11 +937,13 @@ export const pipeMetadata: PipeMetadatum[] = [
         name: 'combinator',
         inputType: 'string',
         label: 'Custom combinator that goes between your selector and its relative',
-        required: true
+        required: true,
+        defaultValue: '',
       },
       {
         name: 'relative',
         inputType: 'selector',
+        defaultValue: [],
         label: 'Your selector\'s relative',
         required: true
       },

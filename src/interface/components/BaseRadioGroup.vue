@@ -3,7 +3,7 @@
     class="flex flex-col gap-3"
     v-model="selectedOption"
   >
-    <RadioGroupLabel class="input-label text-blue-gray-300">{{ label }}</RadioGroupLabel>
+    <RadioGroupLabel class="ml-3 input-label text-blue-gray-900">{{ label }}</RadioGroupLabel>
     <div class="flex gap-4">
       <RadioGroupOption
         v-for="option in options"

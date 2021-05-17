@@ -5,7 +5,7 @@
       <InputPipe
         class="w-full"
         :modelValue="pipeOption"
-        @update:modelValue="option => condition = ({ ...condition, args: [], pipe: option.value })"
+        @update:modelValue="option => condition = ({ ...condition, args: toDefaultValues(option.value), pipe: option.value })"
       />
       <button
         type="button"
@@ -49,6 +49,7 @@ export default defineComponent({
     const condition = computed<Condition>({
             get: () => props.modelValue,
             set: value => {
+              console.log({ pipe:  pipe.value, value })
               emit('update:modelValue', value)
             }
           }),
@@ -67,7 +68,12 @@ export default defineComponent({
       pipeOption,
       createReplace,
       emitDelete,
+      toDefaultValues,
     }
   }
 })
+
+function toDefaultValues (label) {
+  return pipeMetadata.find(({ label: l }) => l === label).args.map(({ defaultValue }) => defaultValue)
+}
 </script>

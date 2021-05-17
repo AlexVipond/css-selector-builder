@@ -10,6 +10,7 @@
     type="text"
     :placeholder="label"
     v-model="arg"
+    :required="required"
   />
   <FormConditions
     v-model="arg"
@@ -43,7 +44,12 @@ import InputAttributeCaseSensitivity from './InputAttributeCaseSensitivity.vue'
 import InputAttributeOperator from './InputAttributeOperator.vue'
 import InputDirectionality from './InputDirectionality.vue'
 import InputNthPattern from './InputNthPattern.vue'
-import { attributeCaseSensitivityDefault, attributeOperatorDefault, nthPatternDefault, directionalityDefault } from '../options'
+import {
+  attributeCaseSensitivityDefault,
+  attributeOperatorDefault,
+  nthPatternDefault,
+  directionalityDefault
+} from '../options'
 
 export default defineComponent({
   components: {
