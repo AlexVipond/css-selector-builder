@@ -1,176 +1,178 @@
 <template>
-  <label class="input-label text-emerald-900">{{ label }}</label>
-  <Listbox v-model="selectedOption" v-slot="{ open }">
-    <div class="relative mt-1" :class="open ? 'z-10' : ''">
-      <ListboxButton
-        class="relative w-full py-2 pl-3 pr-10 text-left border border-gray-600 rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-primary-300 focus-visible:ring-offset-2 focus-visible:border-primary-500"
-      >
-        <span class="block truncate">{{ selectedOption.label }}</span>
-        <span
-          class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"
+  <section class="flex flex-col gap-1">
+    <!-- <label class="ml-1 input-label">{{ label }}:</label> -->
+    <Listbox v-model="selectedOption" v-slot="{ open }">
+      <div class="relative mt-1" :class="open ? 'z-10' : ''">
+        <ListboxButton
+          class="relative w-full py-2 pl-3 pr-10 text-left border rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-violet-300 focus-visible:ring-offset-2 focus-visible:border-violet-500"
+          :class="isNestedVariant ? 'border-denim-400' : 'border-denim-500'"
         >
-          <SelectorIcon class="w-5 h-5" aria-hidden="true" />
-        </span>
-      </ListboxButton>
-
-      <transition
-        leave-active-class="transition duration-100 ease-in"
-        leave-from-class="opacity-100"
-        leave-to-class="opacity-0"
-      >
-        <ListboxOptions
-          class="absolute w-full py-1 mt-1 overflow-auto bg-gray-800 rounded-md shadow-lg max-h-72 ring-1 ring-black ring-opacity-5 focus:outline-none"
+          <span class="block truncate">{{ selectedOption.label }}</span>
+          <span
+            class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"
+          >
+            <SelectorIcon class="w-5 h-5" aria-hidden="true" />
+          </span>
+        </ListboxButton>
+        <transition
+          leave-active-class="transition duration-100 ease-in"
+          leave-from-class="opacity-100"
+          leave-to-class="opacity-0"
         >
-          <ListboxOption
-            v-slot="{ active, selected }"
-            :key="options[0].key"
-            :value="options[0]"
-            as="template"
+          <ListboxOptions
+            class="absolute w-full py-1 mt-1 overflow-auto bg-denim-700 rounded-md shadow-lg max-h-72 ring-1 ring-black ring-opacity-5 focus:outline-none"
           >
-            <li
-              :class="[
-                active ? 'bg-gray-700' : '',
-                'cursor-default select-none relative py-3 pl-10 pr-4 transition duration-75 border-b border-gray-700',
-              ]"
+            <ListboxOption
+              v-slot="{ active, selected }"
+              :key="options[0].key"
+              :value="options[0]"
+              as="template"
             >
-              <span
+              <li
                 :class="[
-                  options[0].key === selectedOption.key ? 'font-medium' : 'font-normal',
-                  'block',
+                  active ? 'bg-denim-500 text-denim-100' : '',
+                  'cursor-default select-none relative py-3 pl-10 pr-4 transition duration-75',
                 ]"
               >
-                Every {{ options[0].value }}
-              </span>
-              <span
-                v-if="options[0].key === selectedOption.key"
-                class="absolute inset-y-0 left-0 flex items-center pl-3 text-emerald-600"
-              >
-                <CheckIcon class="w-5 h-5" aria-hidden="true" />
-              </span>
-            </li>
-          </ListboxOption>
-          <ListboxOption
-            v-slot="{ active, selected }"
-            :key="options[1].key"
-            :value="options[1]"
-            as="template"
-          >
-            <li
-              :class="[
-                active ? 'bg-gray-700' : '',
-                'cursor-default select-none relative py-3 pl-10 pr-4 transition duration-75 border-b border-gray-700',
-              ]"
+                <span
+                  :class="[
+                    options[0].key === selectedOption.key ? 'font-medium' : 'font-normal',
+                    'block',
+                  ]"
+                >
+                  Every {{ options[0].value }}
+                </span>
+                <span
+                  v-if="options[0].key === selectedOption.key"
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 text-violet-400"
+                >
+                  <CheckIcon class="w-5 h-5" aria-hidden="true" />
+                </span>
+              </li>
+            </ListboxOption>
+            <ListboxOption
+              v-slot="{ active, selected }"
+              :key="options[1].key"
+              :value="options[1]"
+              as="template"
             >
-              <span
+              <li
                 :class="[
-                  options[1].key === selectedOption.key ? 'font-medium' : 'font-normal',
-                  'block',
+                  active ? 'bg-denim-500 text-denim-100' : '',
+                  'cursor-default select-none relative py-3 pl-10 pr-4 transition duration-75',
                 ]"
               >
-                Every {{ options[1].value }}
-              </span>
-              <span
-                v-if="options[1].key === selectedOption.key"
-                class="absolute inset-y-0 left-0 flex items-center pl-3 text-emerald-600"
-              >
-                <CheckIcon class="w-5 h-5" aria-hidden="true" />
-              </span>
-            </li>
-          </ListboxOption>
-          <ListboxOption
-            v-slot="{ active, selected }"
-            :key="options[2].key"
-            :value="options[2]"
-            as="template"
-          >
-            <li
-              :class="[
-                active ? 'bg-gray-700' : '',
-                'cursor-default select-none relative py-3 pl-10 pr-4 transition duration-75 border-b border-gray-700',
-              ]"
+                <span
+                  :class="[
+                    options[1].key === selectedOption.key ? 'font-medium' : 'font-normal',
+                    'block',
+                  ]"
+                >
+                  Every {{ options[1].value }}
+                </span>
+                <span
+                  v-if="options[1].key === selectedOption.key"
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 text-violet-400"
+                >
+                  <CheckIcon class="w-5 h-5" aria-hidden="true" />
+                </span>
+              </li>
+            </ListboxOption>
+            <ListboxOption
+              v-slot="{ active, selected }"
+              :key="options[2].key"
+              :value="options[2]"
+              as="template"
             >
-              <div
+              <li
                 :class="[
-                  options[2].key === selectedOption.key ? 'font-medium' : 'font-normal',
-                  'flex items-center',
+                  active ? 'bg-denim-500 text-denim-100' : '',
+                  'cursor-default select-none relative py-3 pl-10 pr-4 transition duration-75',
                 ]"
               >
-                <span>Every </span>
-                <input
-                  @click="stopPropagation"
-                  @keydown="stopPropagation"
-                  @keydown.enter="() => enterHandle(2)"
-                  class="ml-2 appearance-textfield w-14 font-mono text-right bg-gray-1000 border-none rounded"
-                  type="number"
-                  :value="n"
-                  @input="({ target: { value } }) => n = isNaN(Number(value)) ? 0 : Number(value)"
-                />
-                <span>{{ toSuffix(n) }}</span>
-              </div>
-              <span
-                v-if="options[2].key === selectedOption.key"
-                class="absolute inset-y-0 left-0 flex items-center pl-3 text-emerald-600"
-              >
-                <CheckIcon class="w-5 h-5" aria-hidden="true" />
-              </span>
-            </li>
-          </ListboxOption>
-          <ListboxOption
-            v-slot="{ active, selected }"
-            :key="options[3].key"
-            :value="options[3]"
-            as="template"
-          >
-            <li
-              :class="[
-                active ? 'bg-gray-700' : '',
-                'cursor-default select-none relative py-3 pl-10 pr-4 transition duration-75 border-b border-gray-700',
-              ]"
+                <div
+                  :class="[
+                    options[2].key === selectedOption.key ? 'font-medium' : 'font-normal',
+                    'flex items-center',
+                  ]"
+                >
+                  <span>Every </span>
+                  <input
+                    @click="stopPropagation"
+                    @keydown="stopPropagation"
+                    @keydown.enter="() => enterHandle(2)"
+                    class="ml-2 appearance-textfield w-14 font-mono text-right bg-denim-1000 border-none rounded"
+                    type="number"
+                    :value="n"
+                    @input="({ target: { value } }) => n = isNaN(Number(value)) ? 0 : Number(value)"
+                  />
+                  <span>{{ toSuffix(n) }}</span>
+                </div>
+                <span
+                  v-if="options[2].key === selectedOption.key"
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 text-violet-400"
+                >
+                  <CheckIcon class="w-5 h-5" aria-hidden="true" />
+                </span>
+              </li>
+            </ListboxOption>
+            <ListboxOption
+              v-slot="{ active, selected }"
+              :key="options[3].key"
+              :value="options[3]"
+              as="template"
             >
-              <div
+              <li
                 :class="[
-                  options[3].key === selectedOption.key ? 'font-medium' : 'font-normal',
-                  'flex items-center',
+                  active ? 'bg-denim-500 text-denim-100' : '',
+                  'cursor-default select-none relative py-3 pl-10 pr-4 transition duration-75',
                 ]"
               >
-                <span>Every </span>
-                <input
-                  @click="stopPropagation"
-                  @keydown="stopPropagation"
-                  @keydown.enter="() => enterHandle(3)"
-                  class="ml-2 appearance-textfield w-14 font-mono text-right bg-gray-1000 border-none rounded"
-                  type="number"
-                  :value="a"
-                  @input="({ target: { value } }) => a = isNaN(Number(value)) ? 0 : Number(value)"
-                />
-                <span>{{ toSuffix(a) }} , starting from the </span>
-                <input
-                  @click="stopPropagation"
-                  @keydown="stopPropagation"
-                  @keydown.enter="() => enterHandle(3)"
-                  class="ml-2 appearance-textfield w-14 font-mono text-right bg-gray-1000 border-none rounded"
-                  type="number"
-                  :value="b"
-                  @input="({ target: { value } }) => b = isNaN(Number(value)) ? 0 : Number(value)"
-                />
-                <span>{{ toSuffix(b) }}</span>
-              </div>
-              <span
-                v-if="options[3].key === selectedOption.key"
-                class="absolute inset-y-0 left-0 flex items-center pl-3 text-emerald-600"
-              >
-                <CheckIcon class="w-5 h-5" aria-hidden="true" />
-              </span>
-            </li>
-          </ListboxOption>
-        </ListboxOptions>
-      </transition>
-    </div>
-  </Listbox>
+                <div
+                  :class="[
+                    options[3].key === selectedOption.key ? 'font-medium' : 'font-normal',
+                    'flex items-center',
+                  ]"
+                >
+                  <span>Every </span>
+                  <input
+                    @click="stopPropagation"
+                    @keydown="stopPropagation"
+                    @keydown.enter="() => enterHandle(3)"
+                    class="ml-2 appearance-textfield w-14 font-mono text-right bg-denim-1000 border-none rounded"
+                    type="number"
+                    :value="a"
+                    @input="({ target: { value } }) => a = isNaN(Number(value)) ? 0 : Number(value)"
+                  />
+                  <span>{{ toSuffix(a) }} , starting from the </span>
+                  <input
+                    @click="stopPropagation"
+                    @keydown="stopPropagation"
+                    @keydown.enter="() => enterHandle(3)"
+                    class="ml-2 appearance-textfield w-14 font-mono text-right bg-denim-1000 border-none rounded"
+                    type="number"
+                    :value="b"
+                    @input="({ target: { value } }) => b = isNaN(Number(value)) ? 0 : Number(value)"
+                  />
+                  <span>{{ toSuffix(b) }}</span>
+                </div>
+                <span
+                  v-if="options[3].key === selectedOption.key"
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 text-violet-400"
+                >
+                  <CheckIcon class="w-5 h-5" aria-hidden="true" />
+                </span>
+              </li>
+            </ListboxOption>
+          </ListboxOptions>
+        </transition>
+      </div>
+    </Listbox>
+  </section>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue'
+import { defineComponent, ref, computed, inject } from 'vue'
 import {
   Listbox,
   ListboxLabel,
@@ -179,6 +181,7 @@ import {
   ListboxOption,
 } from '@headlessui/vue'
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
+import { NESTED_STATUS_SYMBOL } from '../state'
 
 export default defineComponent({
   components: {
@@ -210,7 +213,8 @@ export default defineComponent({
             { key: 'aNPlusB', value: toANPlusBValue(a.value, b.value), label: toANPlusBLabel(a.value, b.value) },
           ]),
           stopPropagation = (event: KeyboardEvent | MouseEvent) => event.stopPropagation(),
-          enterHandle = (index: number) => selectedOption.value = options.value[index]
+          enterHandle = (index: number) => selectedOption.value = options.value[index],
+          isNestedVariant = inject<boolean>(NESTED_STATUS_SYMBOL)
 
     return {
       options,
@@ -221,6 +225,7 @@ export default defineComponent({
       toSuffix,
       stopPropagation,
       enterHandle,
+      isNestedVariant
     }
   }
 })

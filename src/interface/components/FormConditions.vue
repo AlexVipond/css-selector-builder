@@ -1,42 +1,60 @@
 <template>
-  <section class="flex flex-col gap-10">
+  <section class="flex flex-col gap-10" :class="isNestedVariant ? 'text-denim-100' : 'text-denim-200'">
     <h2
-      class="text-lg font-mono uppercase tracking-[.2em] text-center"
-      :class="nestingLevel % 2 === 0 ? '' : ''"
+      class="text-3xl font-mono uppercase tracking-[.2em] text-center"
+      :class="isNestedVariant ? '' : ''"
     >
       I'm looking for an element...
     </h2>
-    <div
-      v-for="(condition, index) in conditions"
-      :key="condition.id"
-      class="flex flex-col gap-6"
+    <transition-group
+      enter-active-class="transition duration-100 ease-in"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition duration-100 ease-in"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+      moveClass="transition duration-100"
     >
-      <div class="flex items-center justify-center gap-3 font-mono">
-        <div class="h-px bg-gray-600 w-16"/>
-        <h3
-          v-if="index === 0"
-          class="uppercase text-lg tracking-[0.2em] flex-shrink-0 text-gray-300"
-        >
-          that
-        </h3>
-        <h3
-          v-else
-          class="uppercase text-lg tracking-[0.2em] flex-shrink-0 text-gray-300"
-        >
-          and that
-        </h3>
-        <div class="h-px bg-gray-600 w-16"/>
+      <div 
+        v-for="(condition, index) in conditions"
+        :key="condition.id"
+        class="flex flex-col gap-6"
+      >
+        <div class="flex items-center justify-center gap-3 font-mono">
+          <div
+            class="h-px w-16"
+            :class="isNestedVariant ? 'bg-denim-400' : 'bg-denim-600'"
+          />
+          <h3
+            v-if="index === 0"
+            class="uppercase text-lg tracking-[0.2em] flex-shrink-0"
+            :class="isNestedVariant ? 'text-denim-200' : 'text-denim-300'"
+          >
+            that
+          </h3>
+          <h3
+            v-else
+            class="uppercase text-lg tracking-[0.2em] flex-shrink-0"
+            :class="isNestedVariant ? 'text-denim-200' : 'text-denim-300'"
+          >
+            and that
+          </h3>
+          <div
+            class="h-px w-16"
+            :class="isNestedVariant ? 'bg-denim-400' : 'bg-denim-600'"
+          />
+        </div>
+        <FormCondition
+          :modelValue="condition"
+          @update:modelValue="conditionUpdate"
+          @delete="conditionDelete"
+          @moveUp="() => { if (index !== 0) conditionReorder(condition.id, index - 1) }"
+          @moveDown="() => { if (index !== conditions.length - 1) conditionReorder(condition.id, index + 1) }"
+        />
       </div>
-      <FormCondition
-        :modelValue="condition"
-        @update:modelValue="conditionUpdate"
-        @delete="conditionDelete"
-        @moveUp="() => { if (index !== 0) conditionReorder(condition.id, index - 1) }"
-        @moveDown="() => { if (index !== conditions.length - 1) conditionReorder(condition.id, index + 1) }"
-      />
-    </div>
+    </transition-group>
     <button
-      class="mx-auto p-3 text-2xl btn--raised btn--grows rounded-full p-3 bg-gradient-to-r from-emerald-700 to-emerald-700 text-emerald-100 flex-shrink-0"
+      class="mx-auto p-3 text-2xl btn--raised btn--grows rounded-full p-3 brand-gradient-to-r flex-shrink-0"
       @click="conditionCreate"
       type="button"
     >
@@ -54,7 +72,7 @@ import { PlusIcon } from '@heroicons/vue/solid'
 import type { Condition } from '../toSelector'
 import FormCondition from './FormCondition.vue'
 import { pipeMetadata } from '../pipeMetadata'
-import { NESTING_LEVEL_SYMBOL } from '../state'
+import { NESTING_LEVEL_SYMBOL, NESTED_STATUS_SYMBOL } from '../state'
 
 export default defineComponent({
   name: 'FormConditions',
@@ -105,9 +123,11 @@ export default defineComponent({
             const index = findConditionIndex({ id, conditions })
             conditions.value = createReorder<Condition>({ from: index, to })(conditions.value)
           },
-          nestingLevel = shallowRef(props.isTopLevel ? 0 : inject<number>(NESTING_LEVEL_SYMBOL) + 1)
+          nestingLevel = shallowRef(props.isTopLevel ? 0 : inject<number>(NESTING_LEVEL_SYMBOL) + 1),
+          isNestedVariant = shallowRef(nestingLevel.value % 2 !== 0)
     
-    provide(NESTING_LEVEL_SYMBOL, nestingLevel)
+    provide(NESTING_LEVEL_SYMBOL, nestingLevel.value)
+    provide(NESTED_STATUS_SYMBOL, isNestedVariant.value)
 
     return {
       conditions,
@@ -116,6 +136,7 @@ export default defineComponent({
       conditionUpdate,
       conditionReorder,
       nestingLevel,
+      isNestedVariant,
     }
   },
 })

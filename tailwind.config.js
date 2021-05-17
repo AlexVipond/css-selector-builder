@@ -11,20 +11,20 @@ module.exports = {
       colors: {
         ...defaultTheme.colors,
         ...colors,
-        gray: {
-          "50": "#EAF2FB",
-          "100": "#DDEBF9",
-          "200": "#CADAEF",
-          "300": "#7C95B8",
-          "400": "#7E96B8",
-          "500": "#4E608B",
-          "600": "#364366",
-          "700": "#232E4C",
-          "800": "#1B2540",
-          "900": "#151F36",
-          "1000": "#0F1729",
-          "1100": "#0C1221",
-          "1200": "#080D17",
+        denim: {
+          '50': '#EAF3FB',
+          '100': '#DDECF9',
+          '200': '#CADCF0',
+          '300': '#AEC4E1',
+          '400': '#7C94B8',
+          '500': '#4E608B',
+          '600': '#324066',
+          '700': '#232E4C',
+          '800': '#1B2540',
+          '900': '#151F36',
+          '1000': '#0F1729',
+          '1100': '#0C1221',
+          '1200': '#080D17',
         },
       },
       fontFamily: {
@@ -49,6 +49,8 @@ module.exports = {
       '.btn--xl': apply('px-4 py-3 text-lg'),
       '.btn--raised': apply('shadow hover:shadow-lg focus:shadow-lg transition'),
       '.btn--grows': apply('scale-100 hover:scale-110 focus:scale-110 transform origin-center transition'),
+
+      '.brand-gradient-to-r': apply('bg-gradient-to-r from-violet-800 to-violet-600'),
 
       '.input-label': apply('text-sm font-semibold tracking-wide'),
     })),

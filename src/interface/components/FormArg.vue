@@ -6,7 +6,8 @@
   /> -->
   <input
     v-if="inputType === 'string'"
-    class="shadow-inner border-none bg-gray-1000 rounded appearance-textfield"
+    class="shadow-inner border-none rounded appearance-textfield"
+    :class="isNestedVariant ? 'bg-denim-800' : 'bg-denim-1000'"
     type="text"
     :placeholder="label"
     v-model="arg"
@@ -14,7 +15,8 @@
   />
   <div 
     v-if="inputType === 'selector'"
-    class="px-4 py-6 bg-emerald-100 rounded shadow"
+    class="px-4 py-6 rounded shadow-md"
+    :class="isNestedVariant ? 'bg-denim-800' : 'bg-denim-600'"
   >
     <FormConditions v-model="arg" />
   </div>
@@ -41,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, watch } from 'vue'
+import { defineComponent, computed, ref, watch, inject } from 'vue'
 import InputAttributeCaseSensitivity from './InputAttributeCaseSensitivity.vue'
 import InputAttributeOperator from './InputAttributeOperator.vue'
 import InputDirectionality from './InputDirectionality.vue'
@@ -51,6 +53,7 @@ import {
   attributeOperators,
   directionalities
 } from '../options'
+import { NESTED_STATUS_SYMBOL } from '../state'
 
 export default defineComponent({
   components: {
@@ -98,7 +101,8 @@ export default defineComponent({
               return { key: arg.value, value: arg.value, label: `Every ${arg.value}` }
             }
           })(),
-          modelledOption = ref(optionDefault)
+          modelledOption = ref(optionDefault),
+          isNestedVariant = inject<boolean>(NESTED_STATUS_SYMBOL)
 
 
     watch(
@@ -109,6 +113,7 @@ export default defineComponent({
     return { 
       arg,
       modelledOption,
+      isNestedVariant,
     }
   }
 })

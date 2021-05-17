@@ -1,6 +1,6 @@
 <template>
   <section class="flex flex-col gap-3">
-    <label class="input-label text-emerald-gray-300">{{ label }}</label>
+    <label class="input-label text-violet-denim-300">{{ label }}</label>
     <div class="flex items-center gap-3">
       <div class="flex w-full min-w-0">
         <InputPipe
@@ -21,7 +21,7 @@
         <button
           type="button"
           name="Delete condition"
-          class="my-auto flex-shrink-0 p-1 btn--raised btn--grows bg-[#324066] text-gray-200  rounded-full"
+          class="my-auto flex-shrink-0 p-1 btn--raised btn--grows bg-[#324066] text-denim-200  rounded-full"
           @click="emitMoveUp"
         >
           <ChevronUpIcon class="h-3 w-3" />
@@ -29,7 +29,7 @@
         <button
           type="button"
           name="Delete condition"
-          class="my-auto flex-shrink-0 p-1 btn--raised btn--grows bg-[#324066] text-gray-200  rounded-full"
+          class="my-auto flex-shrink-0 p-1 btn--raised btn--grows bg-[#324066] text-denim-200  rounded-full"
           @click="emitMoveDown"
         >
           <ChevronDownIcon class="h-3 w-3" />
