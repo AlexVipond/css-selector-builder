@@ -1,15 +1,11 @@
 <template>
-  <main class="min-h-screen w-screen flex flex-col items-center gap-12 p-24 bg-blue-gray-200">
+  <main class="min-h-screen w-screen flex flex-col items-center gap-12 py-24 px-10 bg-gray-1000">
     <section class="w-full max-w-xl flex flex-col gap-4">
-      <h2 class="uppercase font-bold text-violet-900 opacity-60 tracking-[.2em] text-sm">Selector</h2>
-      <pre class="rounded-md shadow-lg p-4 bg-gradient-to-r from-violet-600 to-violet-500 text-violet-100 overflow-x-scroll text-xl"><code>{{ selector || '*' }}</code></pre>
+      <pre class="rounded-md shadow-lg p-4 bg-gradient-to-r from-cyan-700 to-cyan-600 text-cyan-100 overflow-x-scroll text-xl"><code>{{ selector || '*' }}</code></pre>
     </section>
     <section class="w-full max-w-xl flex flex-col gap-4">
-      <h1 class="uppercase font-bold text-violet-900 opacity-60 tracking-[.2em] text-sm">Selector Builder</h1>
-
-      <section class="bg-white p-6 rounded-md shadow-lg text-blue-gray-900">
-        <h2 class="font-bold tracking-wide">I'm looking for an element...</h2>
-        <FormConditions v-model="conditions" />
+      <section class="px-6 py-8 rounded-md shadow-lg bg-gray-900 text-gray-200">
+        <FormConditions :isTopLevel="true" v-model="conditions" />
       </section>
     </section>
   </main>

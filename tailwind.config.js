@@ -11,13 +11,24 @@ module.exports = {
       colors: {
         ...defaultTheme.colors,
         ...colors,
-        'blue-gray': colors.blueGray,
-        'cool-gray': colors.coolGray,
-        primary: colors.blue,
+        gray: {
+          "50": "#EAF2FB",
+          "100": "#DDEBF9",
+          "200": "#CADAEF",
+          "300": "#7C95B8",
+          "400": "#7E96B8",
+          "500": "#4E608B",
+          "600": "#364366",
+          "700": "#232E4C",
+          "800": "#1B2540",
+          "900": "#151F36",
+          "1000": "#0F1729",
+        },
       },
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
         mono: ['Inconsolata', ...defaultTheme.fontFamily.mono],
+        display: ['Shadows Into Light Two', ...defaultTheme.fontFamily.sans]
       },
     }
   },

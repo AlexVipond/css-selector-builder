@@ -1,9 +1,9 @@
 <template>
-  <label class="input-label text-violet-900">{{ label }}</label>
+  <label class="input-label text-cyan-900">{{ label }}</label>
   <Listbox v-model="selectedOption" v-slot="{ open }">
     <div class="relative mt-1" :class="open ? 'z-10' : ''">
       <ListboxButton
-        class="relative w-full py-2 pl-3 pr-10 text-left border border-blue-gray-300 rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-primary-300 focus-visible:ring-offset-2 focus-visible:border-primary-500"
+        class="relative w-full py-2 pl-3 pr-10 text-left border border-gray-600 rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-primary-300 focus-visible:ring-offset-2 focus-visible:border-primary-500"
       >
         <span class="block truncate">{{ selectedOption.label }}</span>
         <span
@@ -19,7 +19,7 @@
         leave-to-class="opacity-0"
       >
         <ListboxOptions
-          class="absolute w-full py-1 mt-1 overflow-auto bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none"
+          class="absolute w-full py-1 mt-1 overflow-auto bg-gray-800 rounded-md shadow-lg max-h-72 ring-1 ring-black ring-opacity-5 focus:outline-none"
         >
           <ListboxOption
             v-slot="{ active, selected }"
@@ -29,8 +29,8 @@
           >
             <li
               :class="[
-                active ? 'text-violet-900 bg-violet-100' : '',
-                'cursor-default select-none relative py-3 pl-10 pr-4 transition duration-75 border-b border-violet-100',
+                active ? 'bg-gray-700' : '',
+                'cursor-default select-none relative py-3 pl-10 pr-4 transition duration-75 border-b border-gray-700',
               ]"
             >
               <span
@@ -43,7 +43,7 @@
               </span>
               <span
                 v-if="options[0].key === selectedOption.key"
-                class="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-400"
+                class="absolute inset-y-0 left-0 flex items-center pl-3 text-cyan-600"
               >
                 <CheckIcon class="w-5 h-5" aria-hidden="true" />
               </span>
@@ -57,8 +57,8 @@
           >
             <li
               :class="[
-                active ? 'text-violet-900 bg-violet-100' : '',
-                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-violet-100',
+                active ? 'bg-gray-700' : '',
+                'cursor-default select-none relative py-3 pl-10 pr-4 transition duration-75 border-b border-gray-700',
               ]"
             >
               <span
@@ -71,7 +71,7 @@
               </span>
               <span
                 v-if="options[1].key === selectedOption.key"
-                class="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-400"
+                class="absolute inset-y-0 left-0 flex items-center pl-3 text-cyan-600"
               >
                 <CheckIcon class="w-5 h-5" aria-hidden="true" />
               </span>
@@ -85,8 +85,8 @@
           >
             <li
               :class="[
-                active ? 'text-violet-900 bg-violet-100' : '',
-                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-violet-100',
+                active ? 'bg-gray-700' : '',
+                'cursor-default select-none relative py-3 pl-10 pr-4 transition duration-75 border-b border-gray-700',
               ]"
             >
               <div
@@ -100,7 +100,7 @@
                   @click="stopPropagation"
                   @keydown="stopPropagation"
                   @keydown.enter="() => enterHandle(2)"
-                  class="ml-2 appearance-textfield w-14 font-mono text-right border-blue-gray-300 rounded"
+                  class="ml-2 appearance-textfield w-14 font-mono text-right bg-gray-1000 border-none rounded"
                   type="number"
                   :value="n"
                   @input="({ target: { value } }) => n = isNaN(Number(value)) ? 0 : Number(value)"
@@ -109,7 +109,7 @@
               </div>
               <span
                 v-if="options[2].key === selectedOption.key"
-                class="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-400"
+                class="absolute inset-y-0 left-0 flex items-center pl-3 text-cyan-600"
               >
                 <CheckIcon class="w-5 h-5" aria-hidden="true" />
               </span>
@@ -123,8 +123,8 @@
           >
             <li
               :class="[
-                active ? 'text-violet-900 bg-violet-100' : '',
-                'cursor-default select-none relative py-2 pl-10 pr-4 transition duration-75 border-b border-violet-100',
+                active ? 'bg-gray-700' : '',
+                'cursor-default select-none relative py-3 pl-10 pr-4 transition duration-75 border-b border-gray-700',
               ]"
             >
               <div
@@ -138,7 +138,7 @@
                   @click="stopPropagation"
                   @keydown="stopPropagation"
                   @keydown.enter="() => enterHandle(3)"
-                  class="ml-2 appearance-textfield w-14 font-mono text-right border-blue-gray-300 rounded"
+                  class="ml-2 appearance-textfield w-14 font-mono text-right bg-gray-1000 border-none rounded"
                   type="number"
                   :value="a"
                   @input="({ target: { value } }) => a = isNaN(Number(value)) ? 0 : Number(value)"
@@ -148,7 +148,7 @@
                   @click="stopPropagation"
                   @keydown="stopPropagation"
                   @keydown.enter="() => enterHandle(3)"
-                  class="ml-2 appearance-textfield w-14 font-mono text-right border-blue-gray-300 rounded"
+                  class="ml-2 appearance-textfield w-14 font-mono text-right bg-gray-1000 border-none rounded"
                   type="number"
                   :value="b"
                   @input="({ target: { value } }) => b = isNaN(Number(value)) ? 0 : Number(value)"
@@ -157,7 +157,7 @@
               </div>
               <span
                 v-if="options[3].key === selectedOption.key"
-                class="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-400"
+                class="absolute inset-y-0 left-0 flex items-center pl-3 text-cyan-600"
               >
                 <CheckIcon class="w-5 h-5" aria-hidden="true" />
               </span>

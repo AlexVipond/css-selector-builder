@@ -6,16 +6,18 @@
   /> -->
   <input
     v-if="inputType === 'string'"
-    class="border-blue-gray-300 rounded appearance-textfield"
+    class="shadow-inner border-none bg-gray-1000 rounded appearance-textfield"
     type="text"
     :placeholder="label"
     v-model="arg"
     :required="required"
   />
-  <FormConditions
-    v-model="arg"
+  <div 
     v-if="inputType === 'selector'"
-  />
+    class="px-4 py-6 bg-cyan-100 rounded shadow"
+  >
+    <FormConditions v-model="arg" />
+  </div>
   <InputAttributeOperator
     v-if="inputType === 'attributeOperator'"
     :label="label"

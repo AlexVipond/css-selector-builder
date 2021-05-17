@@ -37,7 +37,7 @@ export const attributeOperatorDefault = attributeOperators[0]
 
 
 export const attributeCaseSensitivities = [
-  { label: 'unspecified', value: 'unspecified' },
+  { label: 'unspecified', value: undefined },
   { label: 'sensitive', value: true },
   { label: 'insensitive', value: false },
 ]
