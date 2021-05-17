@@ -32,7 +32,7 @@ export default defineComponent({
     const conditions = ref<Condition[]>([
             { id: '123', pipe: 'has an ID, which I\'ll specify', args: ['haha'] },
             { id: 'ABC', pipe: 'has a class, which I\'ll specify', args: ['business'] },
-            { id: '456', pipe: 'is the nth child inside a parent', args: ['even'] },
+            { id: '456', pipe: 'is the nth child inside a parent', args: ['4n+5'] },
           ]),
           selector = computed(() => toSelector(conditions.value))
 

@@ -200,14 +200,14 @@ export default defineComponent({
               emit('update:modelValue', options.value.find(({ key }) => key === option.key))
             }
           }),
-          n = ref(0),
-          a = ref(0),
-          b = ref(0),
+          n = ref(toN(selectedOption.value.value)),
+          a = ref(toA(selectedOption.value.value)),
+          b = ref(toB(selectedOption.value.value)),
           options = computed(() => [
             { key: 'odd', value: 'odd', label: 'odd' },
             { key: 'even', value: 'even', label: 'even' },
-            { key: 'n', value: n.value, label: `Every ${n.value}${toSuffix(n.value)}` },
-            { key: 'aNPlusB', value: `${a.value}n+${b.value}`, label: `Every ${a.value}${toSuffix(a.value)}, starting from the ${b.value}${toSuffix(b.value)}` },
+            { key: 'n', value: n.value, label: toNLabel(n.value) },
+            { key: 'aNPlusB', value: toANPlusBValue(a.value, b.value), label: toANPlusBLabel(a.value, b.value) },
           ]),
           stopPropagation = (event: KeyboardEvent | MouseEvent) => event.stopPropagation(),
           enterHandle = (index: number) => selectedOption.value = options.value[index]
@@ -225,7 +225,43 @@ export default defineComponent({
   }
 })
 
-function toSuffix (number: number): 'st' | 'nd' | 'rd' | 'th' {
+export function toNLabel (n: number) {
+  return `Every ${n}${toSuffix(n)}`
+}
+
+export function toANPlusBValue (a: number, b: number) {
+  return `${a}n+${b}`
+}
+
+export function toANPlusBLabel (a: number, b: number) {
+  return `Every ${a}${toSuffix(a)}, starting from the ${b}${toSuffix(b)}`
+}
+
+export function toN (value: string | number) {
+  return typeof value === 'number' ? value : 0
+}
+
+const aRE = /^(\d+)/
+export function toA (value: string | number) {
+  if (typeof value === 'number') {
+    return 0
+  }
+
+  const number = Number(value.match(aRE)?.[0])
+  return isNaN(number) ? 0 : number
+}
+
+const bRE = /^\d+n\+(\d+)$/
+export function toB (value: string | number) {
+  if (typeof value === 'number') {
+    return 0
+  }
+
+  const number = Number(value.match(bRE)?.[1])
+  return isNaN(number) ? 0 : number
+}
+
+export function toSuffix (number: number): 'st' | 'nd' | 'rd' | 'th' {
   const string = number.toString(),
         lastDigit = Number(string[string.length - 1])
 

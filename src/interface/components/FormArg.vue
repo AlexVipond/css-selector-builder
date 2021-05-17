@@ -43,12 +43,11 @@ import { defineComponent, computed, ref, watch } from 'vue'
 import InputAttributeCaseSensitivity from './InputAttributeCaseSensitivity.vue'
 import InputAttributeOperator from './InputAttributeOperator.vue'
 import InputDirectionality from './InputDirectionality.vue'
-import InputNthPattern from './InputNthPattern.vue'
+import InputNthPattern, { toNLabel, toA, toB, toANPlusBLabel } from './InputNthPattern.vue'
 import {
-  attributeCaseSensitivityDefault,
-  attributeOperatorDefault,
-  nthPatternDefault,
-  directionalityDefault
+  attributeCaseSensitivities,
+  attributeOperators,
+  directionalities
 } from '../options'
 
 export default defineComponent({
@@ -68,19 +67,33 @@ export default defineComponent({
           }),
           optionDefault = (() => {
             if (props.inputType === 'attributeOperator') {
-              return attributeOperatorDefault
+              return attributeOperators.find(({ value }) => value === arg.value)
             }
             
             if (props.inputType === 'attributeCaseSensitivity') {
-              return attributeCaseSensitivityDefault
+              return attributeCaseSensitivities.find(({ value }) => value === arg.value)
             }
             
             if (props.inputType === 'directionality') {
-              return directionalityDefault
+              return directionalities.find(({ value }) => value === arg.value)
             }
 
             if (props.inputType === 'nthPattern') {
-              return nthPatternDefault
+              // Check if n
+              if (typeof arg.value === 'number') {
+                return { key: 'n', value: arg.value, label: toNLabel(arg.value) }
+              }
+
+              // Check if An+B
+              if (/^\d/.test(arg.value)) {
+                const a = toA(arg.value),
+                      b = toB(arg.value)
+
+                return { key: 'aNPlusB', value: arg.value, label: toANPlusBLabel(a, b) }
+              }
+
+              // It's either odd or even
+              return { key: arg.value, value: arg.value, label: `Every ${arg.value}` }
             }
           })(),
           modelledOption = ref(optionDefault)
