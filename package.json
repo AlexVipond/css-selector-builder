@@ -2,28 +2,25 @@
   "name": "@alexvipond/css-selector-pipes",
   "version": "0.0.0",
   "description": "Pipeline functions for building CSS selectors programmatically",
-  "files": [
-    "dist"
-  ],
-  "main": "./dist/css-selector-pipes.umd.js",
-  "module": "./dist/css-selector-pipes.es.js",
+  "main": "./lib/index.umd.js",
+  "module": "./lib/index.es.js",
+  "types": "./lib/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/css-selector-pipes.es.js",
-      "require": "./dist/css-selector-pipes.umd.js"
+      "import": "./lib/index.es.js",
+      "require": "./lib/index.umd.js"
     }
   },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:lib": "vite build --config vite.lib.config.ts",
+    "build:lib": "vite build --config vite.lib.config.ts && tsc",
     "test:only": "run() { uvu -r ts-node/register tests/$2 $1.test.ts$; }; run",
     "test": "npm run test:only ."
   },
   "devDependencies": {
     "@fontsource/inconsolata": "^4.3.0",
     "@fontsource/inter": "^4.3.0",
-    "@fontsource/shadows-into-light-two": "^4.3.0",
     "@tailwindcss/forms": "^0.3.2",
     "@vitejs/plugin-vue": "^1.2.2",
     "autoprefixer": "^10.2.5",
@@ -40,7 +37,6 @@
     "@headlessui/vue": "^1.2.0",
     "@heroicons/vue": "^1.0.1",
     "nanoid": "^3.1.23",
-    "query-string": "^7.0.0",
     "vue": "^3.0.11"
   }
 }

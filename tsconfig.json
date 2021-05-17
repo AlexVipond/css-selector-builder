@@ -6,11 +6,11 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "declarationDir": "types",
+    "declarationDir": "lib",
     "emitDeclarationOnly": true
   },
   "include": [
-    "src/**/*",
+    "src/pipes/**/*",
   ],
   "exclude": [
     "node_modules"
