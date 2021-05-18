@@ -25,6 +25,11 @@ module.exports = {
           '1100': '#0C1221',
           '1200': '#080D17',
         },
+        cranberry: {
+          '300': '#FED7D7',
+          '500': '#F58686',
+          '700': '#AD4040',
+        }
       },
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],

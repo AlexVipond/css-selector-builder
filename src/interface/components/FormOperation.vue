@@ -12,7 +12,7 @@
       <button
         type="button"
         name="Delete condition"
-        class="my-auto flex-shrink-0 p-1 btn--raised btn--grows bg-[#AD4040] text-[#FED7D7]  rounded-full"
+        class="my-auto flex-shrink-0 p-1 btn--raised btn--grows bg-cranberry-700 text-cranberry-300  rounded-full"
         @click="emitDelete"
       >
         <TrashIcon class="h-5 w-5" />

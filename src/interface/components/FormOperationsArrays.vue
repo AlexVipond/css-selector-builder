@@ -16,7 +16,7 @@
       > 
         <div
           class="relative rounded-md transition duration-75"
-          :class="statuses[index] === 'ready to delete' ? 'ring ring-[#AD4040] ring-offset-4 ring-offset-denim-1000' : ''"
+          :class="statuses[index] === 'ready to delete' ? 'ring ring-cranberry-700 ring-offset-4 ring-offset-denim-1000' : ''"
         >
           <FormOperations
             :modelValue="operations"
@@ -27,7 +27,7 @@
             <button
               type="button"
               name="Delete condition"
-              class="p-2 text-base rounded-full bg-[#AD4040] text-[#FED7D7] flex-shrink-0 text-denim-100"
+              class="p-2 text-base rounded-full bg-cranberry-700 text-cranberry-300 flex-shrink-0 text-denim-100"
               @click="() => operationsArrayDelete(index)"
               @mouseenter="() => readyToDelete(index)"
               @focus="() => readyToDelete(index)"

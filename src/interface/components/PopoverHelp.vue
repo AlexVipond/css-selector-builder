@@ -29,6 +29,8 @@
               <p>This is a user interface for building CSS selectors, and for learning what types of CSS selectors are available.</p>
             
               <p>Use the <strong class="bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">plus button</strong> to start adding conditions for your selector, and use the <strong class="bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">OR button</strong> to combine a separate selector with the others that you've built.</p>
+
+              <p>Careful with the <strong class="bg-gradient-to-r from-cranberry-700 to-cranberry-500 bg-clip-text text-transparent">delete button</strong>! The small one deletes individual conditions, but the big one can delete an entire selector.</p>
             
               <p>As you build, you'll see the URL update with any new selector conditions you've created. You can <strong class="bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">share that URL</strong> with anyone to show them what you've built!</p>
             </article>
