@@ -25,11 +25,12 @@
           <div class="brand-gradient-to-r p-px rounded-md shadow-lg">
             <article class="flex flex-col gap-5 px-4 py-6 sm:p-6 sm:py-8 bg-denim-1100 text-denim-300 rounded-md">
               <h2 class="mr-auto font-bold text-2xl bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">What is this?</h2>
-              <p>This is a user interface for building CSS selectors and learning what types of CSS selectors are available.</p>
+              
+              <p>This is a user interface for building CSS selectors, and for learning what types of CSS selectors are available.</p>
             
-              <p><strong class="bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">Click the plus button</strong> to start adding operations for your selector.</p>
+              <p>Use the <strong class="bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">plus button</strong> to start adding conditions for your selector, and use the <strong class="bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">OR button</strong> to combine a separate selector with the others that you've built.</p>
             
-              <p>As you build, you'll see the URL update with any new operations you've created. You can <strong class="bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">share that URL</strong> with anyone to show them what you've built!</p>
+              <p>As you build, you'll see the URL update with any new selector conditions you've created. You can <strong class="bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">share that URL</strong> with anyone to show them what you've built!</p>
             </article>
           </div>
         </PopoverPanel>

@@ -33,7 +33,7 @@
         class="relative w-full max-w-xl btn--grows rounded-md text-violet-100 text-xl"
         @click="() => copyable.copy()"
       >
-        <pre class="w-full p-4 brand-gradient-to-r overflow-x-scroll rounded-md shadow-lg"><code>{{ selector || '*' }}</code></pre>
+        <pre class="w-full p-4 brand-gradient-to-r overflow-x-scroll rounded-md shadow-lg text-left"><code>{{ selector || '*' }}</code></pre>
         <transition
           enter-active-class="transition duration-100 delay-125 ease-in"
           enter-from-class="opacity-0"
@@ -87,11 +87,21 @@
           :key="index"
           class="flex flex-col gap-8"
         >
-          <FormOperations
-            :modelValue="operations"
-            @update:modelValue="newOperations => operationsArrays = createReplace({ index, item: newOperations })(operationsArrays)"
-            :isTopLevel="true"
-          />
+          <div class="flex flex-col gap-4">
+            <button
+              type="button"
+              name="Delete condition"
+              class="ml-auto flex-shrink-0 p-1 btn--raised btn--grows bg-[#AD4040] text-[#FED7D7]  rounded-full"
+              @click="() => operationsArrays = createDelete({ index })(operationsArrays)"
+            >
+              <TrashIcon class="h-5 w-5" />
+            </button>
+            <FormOperations
+              :modelValue="operations"
+              @update:modelValue="newOperations => operationsArrays = createReplace({ index, item: newOperations })(operationsArrays)"
+              :isTopLevel="true"
+            />
+          </div>
           <div
             v-if="index !== operationsArrays.length - 1"
             class="flex items-center justify-center gap-3 font-mono"
@@ -106,7 +116,7 @@
       </transition-group>
       <button
         name="Add conditions for another selector"
-        class="mx-auto p-3 text-lg btn--raised btn--grows rounded-full p-3 brand-gradient-to-r flex-shrink-0 text-violet-100"
+        class="mx-auto p-3 text-lg btn--raised btn--grows rounded-full p-3 bg-gradient-to-r from-denim-700 to-denim-600 flex-shrink-0 text-denim-100"
         @click="operationsArrays = [...operationsArrays, []]"
         type="button"
       >
@@ -141,8 +151,12 @@ import {
   SimpleNPM,
 } from '@baleada/vue-simple-icons'
 import { useCopyable } from '@baleada/vue-composition'
-import { createReplace } from '@baleada/logic'
-import { CheckIcon, ClipboardCopyIcon } from '@heroicons/vue/solid'
+import { createReplace, createDelete, createReorder } from '@baleada/logic'
+import { 
+  CheckIcon,
+  ClipboardCopyIcon,
+} from '@heroicons/vue/solid'
+import { TrashIcon } from '@heroicons/vue/outline'
 import { toOperated } from './toOperated'
 import type { Operation } from './toOperated'
 import FormOperations from './components/FormOperations.vue'
@@ -157,6 +171,7 @@ export default defineComponent({
     PopoverHelp,
     CheckIcon,
     ClipboardCopyIcon,
+    TrashIcon,
   },
   setup () {
     const operationsArrays = ref<Operation[][]>([[]]),
@@ -188,6 +203,8 @@ export default defineComponent({
       selector,
       copyable,
       createReplace,
+      createDelete,
+      createReorder,
     }
   }
 })
