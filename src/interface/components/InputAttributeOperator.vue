@@ -19,8 +19,8 @@ export default defineComponent({
   setup(props, { emit }) {
     const selected = computed<{ value: string, label: string }>({
             get: () => props.modelValue,
-            set: option => {
-              emit('update:modelValue', option)
+            set: newOption => {
+              emit('update:modelValue', newOption)
             }
           })
 

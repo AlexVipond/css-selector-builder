@@ -18,8 +18,8 @@ export default defineComponent({
   setup(props, { emit }) {
     const selected = computed<{ value: string, label: string }>({
             get: () => props.modelValue,
-            set: value => {
-              emit('update:modelValue', value)
+            set: newValue => {
+              emit('update:modelValue', newValue)
             }
           }),
           options = pipeMetadata.map(({ label }) => ({ value: label, label }))

@@ -10,7 +10,7 @@
       class="text-3xl font-mono uppercase tracking-[.2em] text-center"
       :class="isNestedVariant ? '' : ''"
     >
-      I'm looking for an element...
+      I'm looking for <br class="hidden sm:block" />an element...
     </h2>
     <transition-group
       enter-active-class="transition duration-100 ease-in"
@@ -54,28 +54,20 @@
           :modelValue="operation"
           @update:modelValue="operationUpdate"
           @delete="operationDelete"
-          @moveUp="() => { if (index !== 0) operationReorder(operation.id, index - 1) }"
-          @moveDown="() => { if (index !== operations.length - 1) operationReorder(operation.id, index + 1) }"
+          @moveUp="operation => { if (index !== 0) operationReorder(operation, index - 1) }"
+          @moveDown="operation => { if (index !== operations.length - 1) operationReorder(operation, index + 1) }"
         />
       </div>
     </transition-group>
     <button
       name="Add condition"
-      class="mx-auto p-3 text-2xl btn--raised btn--grows rounded-full p-3 brand-gradient-to-r flex-shrink-0"
+      class="mx-auto p-3 text-2xl btn--raised btn--grows rounded-full p-3 brand-gradient-to-r flex-shrink-0 text-violet-0"
       @click="operationCreate"
       type="button"
     >
       <PlusIcon class="h-[1em] w-[1em]"></PlusIcon>
     </button>
   </section>
-  <button
-    name="Add conditions"
-    class="mx-auto p-3 text-2xl btn--raised btn--grows rounded-full p-3 brand-gradient-to-r flex-shrink-0"
-    @click="operationCreate"
-    type="button"
-  >
-    <PlusIcon class="h-[1em] w-[1em]"></PlusIcon>
-  </button>
 </template>
 
 <script lang="ts">
@@ -84,7 +76,7 @@ import type { Ref } from 'vue'
 import { nanoid } from 'nanoid'
 import { createReorder } from '@baleada/logic'
 import { PlusIcon } from '@heroicons/vue/solid'
-import type { Operation } from '../toSelector'
+import type { Operation } from '../toOperated'
 import FormOperation from './FormOperation.vue'
 import { pipeMetadata } from '../pipeMetadata'
 import { NESTING_LEVEL_SYMBOL, NESTED_STATUS_SYMBOL } from '../state'
@@ -99,8 +91,8 @@ export default defineComponent({
   setup (props, { emit }) {
     const operations = computed<Operation[]>({
             get: () => props.modelValue,
-            set: operations => {
-              emit('update:modelValue', operations)
+            set: newOperations => {
+              emit('update:modelValue', newOperations)
             }
           }),
           operationCreate = () => {
@@ -113,8 +105,8 @@ export default defineComponent({
               }
             ]
           },
-          operationDelete = (id: string) => {
-            const operationIndex = findOperationIndex({ id, operations }),
+          operationDelete = (operation: Operation) => {
+            const operationIndex = findOperationIndex({ id: operation.id, operations }),
                   before = operationIndex === 0 ? [] : operations.value.slice(0, operationIndex),
                   after = operations.value.slice(operationIndex + 1)
             
@@ -134,8 +126,8 @@ export default defineComponent({
               ...after,
             ]
           },
-          operationReorder = (id: string, to: number) => {
-            const index = findOperationIndex({ id, operations })
+          operationReorder = (operation: Operation, to: number) => {
+            const index = findOperationIndex({ id: operation.id, operations })
             operations.value = createReorder<Operation>({ from: index, to })(operations.value)
           },
           nestingLevel = shallowRef(props.isTopLevel ? 0 : inject<number>(NESTING_LEVEL_SYMBOL) + 1),

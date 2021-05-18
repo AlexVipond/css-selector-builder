@@ -82,8 +82,8 @@ export default defineComponent({
   setup (props, { emit }) {
     const selectedOption = computed({
             get: () => props.modelValue,
-            set: value => {
-              emit('update:modelValue', value)
+            set: newValue => {
+              emit('update:modelValue', newValue)
             }
           }),
           isNestedVariant = inject<boolean>(NESTED_STATUS_SYMBOL)

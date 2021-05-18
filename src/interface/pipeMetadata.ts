@@ -1,6 +1,6 @@
 import * as pipes from '../pipes'
 import type { AttributeOperator } from '../pipes'
-import type { Operation } from './toSelector'
+import type { Operation } from './toOperated'
 import {
   attributeCaseSensitivityDefault,
   attributeOperatorDefault,

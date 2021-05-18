@@ -60,8 +60,8 @@ export default defineComponent({
   setup (props, { emit }) {
     const arg = computed({
             get: () => props.modelValue,
-            set: value => {
-              emit('update:modelValue', value)
+            set: newValue => {
+              emit('update:modelValue', newValue)
             }
           }),
           optionDefault = (() => {

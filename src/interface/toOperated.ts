@@ -9,10 +9,10 @@ export type Operation = {
   args: any[],
 }
 
-export function toSelector (operations: Operation[] = []) {
+export function toOperated (operations: Operation[] = []) {
   const reduced: Pipe[] = operations.reduce((reduced, { pipe, args: rawArgs }) => {
     const pipeName = pipeMetadata.find(({ label }) => label === pipe).name
-    const args = rawArgs.map(arg => Array.isArray(arg) ? toSelector(arg) : arg)
+    const args = rawArgs.map(arg => Array.isArray(arg) ? toOperated(arg) : arg)
     
     return [
       ...reduced,

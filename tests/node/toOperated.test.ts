@@ -1,12 +1,12 @@
 import { suite as createSuite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { toSelector } from '../../src/interface/toSelector'
+import { toOperated } from '../../src/interface/toOperated'
 
-const suite = createSuite('toSelector (node)')
+const suite = createSuite('toOperated (node)')
 
-suite(`toSelector`, () => {
+suite(`toOperated`, () => {
   assert.is(
-    toSelector([
+    toOperated([
       { id: '123', pipe: 'has an ID, which I\'ll specify', args: ['haha'] },
       { id: 'ABC', pipe: 'has a class, which I\'ll specify', args: ['business'] },
     ]),
@@ -15,7 +15,7 @@ suite(`toSelector`, () => {
   
   // Recurses
   assert.is(
-    toSelector([
+    toOperated([
       { 
         id: '123',
         pipe: 'matches none of one or more selectors, which I\'ll specify', 

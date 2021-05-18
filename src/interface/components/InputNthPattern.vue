@@ -197,7 +197,7 @@ export default defineComponent({
   setup (props, { emit }) {
     const selectedOption = computed<{ key: string, value: string | number, label: string }>({
             get: () => props.modelValue,
-            set: option => {
+            set: newOption => {
               // Option for n and An+B was coming out stale, so I'm
               // rereading it from the array.
               emit('update:modelValue', options.value.find(({ key }) => key === option.key))

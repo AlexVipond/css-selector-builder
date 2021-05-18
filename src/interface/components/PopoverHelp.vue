@@ -52,7 +52,7 @@ export default {
     
     onMounted(() => {
       effect()
-      watch(props.selector, effect)
+      watch(() => props.selector, effect)
     })
     
     return {
