@@ -1,11 +1,11 @@
 import { createApp } from 'vue'
 import CssSelectorBuilder from './CssSelectorBuilder.vue'
-import FormConditions from './components/FormConditions.vue'
+import FormOperations from './components/FormOperations.vue'
 import './index.css'
 import '@fontsource/inconsolata/400.css'
 import '@fontsource/inter/400.css'
 import '@fontsource/inter/700.css'
 
 createApp(CssSelectorBuilder)
-.component('FormConditions', FormConditions)
+.component('FormOperations', FormOperations)
 .mount('#app')

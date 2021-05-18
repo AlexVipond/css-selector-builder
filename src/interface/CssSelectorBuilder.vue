@@ -72,10 +72,8 @@
         </transition>
       </button>
     </section>
-    <section class="w-full max-w-xl flex flex-col gap-4">
-      <section class="px-6 py-8 rounded-md shadow-lg bg-denim-800 text-denim-200">
-        <FormConditions :isTopLevel="true" v-model="conditions" />
-      </section>
+    <section class="w-full max-w-xl">
+      <FormOperations :isTopLevel="true" v-model="operations" />
     </section>
   </main>
   <footer class="flex flex-col gap-6 bg-denim-1200 px-6 py-8 text-denim-300">
@@ -107,13 +105,13 @@ import {
 import { useCopyable } from '@baleada/vue-composition'
 import { CheckIcon, ClipboardCopyIcon } from '@heroicons/vue/solid'
 import { toSelector } from './toSelector'
-import type { Condition } from './toSelector'
-import FormConditions from './components/FormConditions.vue'
+import type { Operation } from './toSelector'
+import FormOperations from './components/FormOperations.vue'
 import PopoverHelp from './components/PopoverHelp.vue'
 
 export default defineComponent({
   components: {
-    FormConditions,
+    FormOperations,
     SimpleTwitter,
     SimpleGitHub,
     SimpleNPM,
@@ -122,42 +120,42 @@ export default defineComponent({
     ClipboardCopyIcon,
   },
   setup () {
-    const conditions = ref<Condition[]>([]),
-          selector = computed(() => toSelector(conditions.value)),
+    const operations = ref<Operation[]>([]),
+          selector = computed(() => toSelector(operations.value)),
           clipboard = { text: '' },
           copyable = useCopyable(selector.value, { clipboard })
 
     watch(selector, async () => copyable.value.string = selector.value)
 
     onMounted(() => {
-      const urlConditions = new URL(window.location.toString()).searchParams.get('conditions')
-      if (urlConditions) {
-        conditions.value = withoutNull(JSON.parse(urlConditions))
+      const urlOperations = new URL(window.location.toString()).searchParams.get('operations')
+      if (urlOperations) {
+        operations.value = withoutNull(JSON.parse(urlOperations))
       }
     })
 
     watch(
-      conditions,
+      operations,
       () => {
         const url = new URL(window.origin)
-        url.searchParams.set('conditions', JSON.stringify(conditions.value))
+        url.searchParams.set('operations', JSON.stringify(operations.value))
         history.pushState({}, document.title, url.toString())
       }
     )
 
 
     return {
-      conditions,
+      operations,
       selector,
       copyable,
     }
   }
 })
 
-function withoutNull (parsedConditions: Record<any, any>): Condition[] {
-  return parsedConditions.map(condition => ({
-    ...condition,
-    args: condition.args.map(arg => {
+function withoutNull (parsedOperations: Record<any, any>): Operation[] {
+  return parsedOperations.map(operation => ({
+    ...operation,
+    args: operation.args.map(arg => {
       if (arg === null) {
         return undefined
       }

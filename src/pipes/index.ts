@@ -57,7 +57,7 @@ export function attribute (name: string): Pipe
 export function attribute (name: string, operator: AttributeOperator, value: string, isCaseSensitive?: boolean): Pipe
 export function attribute (name: string, operator?: AttributeOperator, value?: string, isCaseSensitive?: boolean) {
   if (operator !== undefined) {
-    const condition = `"${name}"${operator}"${value}"`,
+    const operation = `"${name}"${operator}"${value}"`,
           caseSensitivityModifier = (() => {
             switch (isCaseSensitive) {
               case true: 
@@ -68,7 +68,7 @@ export function attribute (name: string, operator?: AttributeOperator, value?: s
                 return ''
             }
           })()
-    return append(`[${condition}${caseSensitivityModifier}]`)
+    return append(`[${operation}${caseSensitivityModifier}]`)
   }
 
   return append(`["${name}"]`)

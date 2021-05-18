@@ -6,7 +6,7 @@
         <InputPipe
           class="w-full"
           :modelValue="pipeOption"
-          @update:modelValue="option => condition = ({ ...condition, args: toDefaultValues(option.value), pipe: option.value })"
+          @update:modelValue="option => operation = ({ ...operation, args: toDefaultValues(option.value), pipe: option.value })"
         />
       </div>
       <button
@@ -42,8 +42,8 @@
       :label="arg.label"
       :inputType="arg.inputType"
       :required="arg.required"
-      :modelValue="condition.args[index]"
-      @update:modelValue="arg => condition = ({ ...condition, args: createReplace({ index, item: arg })(condition.args) })"
+      :modelValue="operation.args[index]"
+      @update:modelValue="arg => operation = ({ ...operation, args: createReplace({ index, item: arg })(operation.args) })"
     />
   <!-- Arg repetition should be handled here -->
   </section>
@@ -57,7 +57,7 @@ import {
   ChevronUpIcon,
   ChevronDownIcon,
 } from '@heroicons/vue/outline'
-import type { Condition } from '../toSelector'
+import type { Operation } from '../toSelector'
 import InputPipe from './InputPipe.vue'
 import FormArg from './FormArg.vue'
 import { pipeMetadata } from '../pipeMetadata'
@@ -72,19 +72,19 @@ export default defineComponent({
   },
   props: ['modelValue', 'label'],
   setup (props, { emit }) {
-    const condition = computed<Condition>({
+    const operation = computed<Operation>({
             get: () => props.modelValue,
             set: value => {
               emit('update:modelValue', value)
             }
           }),
-          pipe = computed(() => pipeMetadata.find(({ label }) => label === condition.value.pipe)),
+          pipe = computed(() => pipeMetadata.find(({ label }) => label === operation.value.pipe)),
           pipeOption = computed(() => ({
             value: pipe.value.name,
             label: pipe.value.label,
           })),
           emitDelete = () => {
-            emit('delete', condition.value.id)
+            emit('delete', operation.value.id)
           },
           emitMoveUp = () => {
             emit('moveUp')
@@ -94,7 +94,7 @@ export default defineComponent({
           }
     
     return {
-      condition,
+      operation,
       pipe,
       pipeOption,
       createReplace,

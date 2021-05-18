@@ -1,5 +1,11 @@
 <template>
-  <section class="flex flex-col gap-10" :class="isNestedVariant ? 'text-denim-100' : 'text-denim-200'">
+  <section
+    class="flex flex-col gap-10 rounded-md shadow-lg"
+    :class="[
+      isNestedVariant ? 'bg-denim-600 text-denim-100' : 'bg-denim-800 text-denim-200',
+      nestingLevel === 0 ? 'px-6 py-8' : 'px-4 py-6'
+    ]"
+  >
     <h2
       class="text-3xl font-mono uppercase tracking-[.2em] text-center"
       :class="isNestedVariant ? '' : ''"
@@ -16,8 +22,8 @@
       moveClass="transition duration-100"
     >
       <div 
-        v-for="(condition, index) in conditions"
-        :key="condition.id"
+        v-for="(operation, index) in operations"
+        :key="operation.id"
         class="flex flex-col gap-6"
       >
         <div class="flex items-center justify-center gap-3 font-mono">
@@ -44,23 +50,32 @@
             :class="isNestedVariant ? 'bg-denim-400' : 'bg-denim-600'"
           />
         </div>
-        <FormCondition
-          :modelValue="condition"
-          @update:modelValue="conditionUpdate"
-          @delete="conditionDelete"
-          @moveUp="() => { if (index !== 0) conditionReorder(condition.id, index - 1) }"
-          @moveDown="() => { if (index !== conditions.length - 1) conditionReorder(condition.id, index + 1) }"
+        <FormOperation
+          :modelValue="operation"
+          @update:modelValue="operationUpdate"
+          @delete="operationDelete"
+          @moveUp="() => { if (index !== 0) operationReorder(operation.id, index - 1) }"
+          @moveDown="() => { if (index !== operations.length - 1) operationReorder(operation.id, index + 1) }"
         />
       </div>
     </transition-group>
     <button
+      name="Add condition"
       class="mx-auto p-3 text-2xl btn--raised btn--grows rounded-full p-3 brand-gradient-to-r flex-shrink-0"
-      @click="conditionCreate"
+      @click="operationCreate"
       type="button"
     >
       <PlusIcon class="h-[1em] w-[1em]"></PlusIcon>
     </button>
   </section>
+  <button
+    name="Add conditions"
+    class="mx-auto p-3 text-2xl btn--raised btn--grows rounded-full p-3 brand-gradient-to-r flex-shrink-0"
+    @click="operationCreate"
+    type="button"
+  >
+    <PlusIcon class="h-[1em] w-[1em]"></PlusIcon>
+  </button>
 </template>
 
 <script lang="ts">
@@ -69,28 +84,28 @@ import type { Ref } from 'vue'
 import { nanoid } from 'nanoid'
 import { createReorder } from '@baleada/logic'
 import { PlusIcon } from '@heroicons/vue/solid'
-import type { Condition } from '../toSelector'
-import FormCondition from './FormCondition.vue'
+import type { Operation } from '../toSelector'
+import FormOperation from './FormOperation.vue'
 import { pipeMetadata } from '../pipeMetadata'
 import { NESTING_LEVEL_SYMBOL, NESTED_STATUS_SYMBOL } from '../state'
 
 export default defineComponent({
-  name: 'FormConditions',
+  name: 'FormOperations',
   components: {
-    FormCondition,
+    FormOperation,
     PlusIcon
   },
   props: ['modelValue', 'isTopLevel'],
   setup (props, { emit }) {
-    const conditions = computed<Condition[]>({
+    const operations = computed<Operation[]>({
             get: () => props.modelValue,
-            set: conditions => {
-              emit('update:modelValue', conditions)
+            set: operations => {
+              emit('update:modelValue', operations)
             }
           }),
-          conditionCreate = () => {
-            conditions.value = [
-              ...conditions.value,
+          operationCreate = () => {
+            operations.value = [
+              ...operations.value,
               {
                 id: nanoid(8),
                 pipe: pipeMetadata[0].label,
@@ -98,30 +113,30 @@ export default defineComponent({
               }
             ]
           },
-          conditionDelete = (id: string) => {
-            const conditionIndex = findConditionIndex({ id, conditions }),
-                  before = conditionIndex === 0 ? [] : conditions.value.slice(0, conditionIndex),
-                  after = conditions.value.slice(conditionIndex + 1)
+          operationDelete = (id: string) => {
+            const operationIndex = findOperationIndex({ id, operations }),
+                  before = operationIndex === 0 ? [] : operations.value.slice(0, operationIndex),
+                  after = operations.value.slice(operationIndex + 1)
             
-            conditions.value = [
+            operations.value = [
               ...before,
               ...after,
             ]
           },
-          conditionUpdate = (condition: Condition) => {
-            const index = findConditionIndex({ id: condition.id, conditions }),
-                  before = index === 0 ? [] : conditions.value.slice(0, index),
-                  after = conditions.value.slice(index + 1)
+          operationUpdate = (operation: Operation) => {
+            const index = findOperationIndex({ id: operation.id, operations }),
+                  before = index === 0 ? [] : operations.value.slice(0, index),
+                  after = operations.value.slice(index + 1)
 
-            conditions.value = [
+            operations.value = [
               ...before,
-              condition,
+              operation,
               ...after,
             ]
           },
-          conditionReorder = (id: string, to: number) => {
-            const index = findConditionIndex({ id, conditions })
-            conditions.value = createReorder<Condition>({ from: index, to })(conditions.value)
+          operationReorder = (id: string, to: number) => {
+            const index = findOperationIndex({ id, operations })
+            operations.value = createReorder<Operation>({ from: index, to })(operations.value)
           },
           nestingLevel = shallowRef(props.isTopLevel ? 0 : inject<number>(NESTING_LEVEL_SYMBOL) + 1),
           isNestedVariant = shallowRef(nestingLevel.value % 2 !== 0)
@@ -130,18 +145,18 @@ export default defineComponent({
     provide(NESTED_STATUS_SYMBOL, isNestedVariant.value)
 
     return {
-      conditions,
-      conditionCreate,
-      conditionDelete,
-      conditionUpdate,
-      conditionReorder,
+      operations,
+      operationCreate,
+      operationDelete,
+      operationUpdate,
+      operationReorder,
       nestingLevel,
       isNestedVariant,
     }
   },
 })
 
-function findConditionIndex ({ id, conditions }: { id: string, conditions: Ref<Condition[]> }) {
-  return conditions.value.findIndex(({ id: i }) => i === id)
+function findOperationIndex ({ id, operations }: { id: string, operations: Ref<Operation[]> }) {
+  return operations.value.findIndex(({ id: i }) => i === id)
 }
 </script>

@@ -13,13 +13,7 @@
     v-model="arg"
     :required="required"
   />
-  <div 
-    v-if="inputType === 'selector'"
-    class="px-4 py-6 rounded shadow-md"
-    :class="isNestedVariant ? 'bg-denim-800' : 'bg-denim-600'"
-  >
-    <FormConditions v-model="arg" />
-  </div>
+  <FormOperations v-if="inputType === 'selector'" v-model="arg" />
   <InputAttributeOperator
     v-if="inputType === 'attributeOperator'"
     :label="label"

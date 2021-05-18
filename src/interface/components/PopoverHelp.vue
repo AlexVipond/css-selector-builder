@@ -27,9 +27,9 @@
               <h2 class="mr-auto font-bold text-2xl bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">What is this?</h2>
               <p>This is a user interface for building CSS selectors and learning what types of CSS selectors are available.</p>
             
-              <p><strong class="bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">Click the plus button</strong> to start adding conditions for your selector.</p>
+              <p><strong class="bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">Click the plus button</strong> to start adding operations for your selector.</p>
             
-              <p>As you build, you'll see the URL update with any new conditions you've created. You can <strong class="bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">share that URL</strong> with anyone to show them what you've built!</p>
+              <p>As you build, you'll see the URL update with any new operations you've created. You can <strong class="bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">share that URL</strong> with anyone to show them what you've built!</p>
             </article>
           </div>
         </PopoverPanel>

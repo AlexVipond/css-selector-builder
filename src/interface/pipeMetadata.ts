@@ -1,6 +1,6 @@
 import * as pipes from '../pipes'
 import type { AttributeOperator } from '../pipes'
-import type { Condition } from './toSelector'
+import type { Operation } from './toSelector'
 import {
   attributeCaseSensitivityDefault,
   attributeOperatorDefault,
@@ -16,7 +16,7 @@ type PipeMetadatum = {
     name: string,
     inputType: 'unknown' | 'string' | 'selector' | 'attributeOperator' | 'attributeCaseSensitivity' | 'directionality' | 'nthPattern',
     label: string,
-    defaultValue: string | boolean | number | Condition[],
+    defaultValue: string | boolean | number | Operation[],
     required: boolean,
     repeatable?: boolean,
   }[]
