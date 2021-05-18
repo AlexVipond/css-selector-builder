@@ -22,20 +22,16 @@
         leave-to-class="translate-y-1 opacity-0"
       >
         <PopoverPanel class="mt-3 absolute z-20 w-screen max-w-md -left-6 px-6">
-          <article class="flex flex-col gap-5 px-4 py-6 sm:p-6 sm:py-8 bg-denim-1100 text-denim-300 rounded-md shadow-lg">
-            <h2 class="mr-auto font-bold text-xl bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">What is this?</h2>
-            <p>You're looking at a user interface for building CSS selectors and learning what types of CSS selectors are available.</p>
+          <div class="brand-gradient-to-r p-px rounded-md shadow-lg">
+            <article class="flex flex-col gap-5 px-4 py-6 sm:p-6 sm:py-8 bg-denim-1100 text-denim-300 rounded-md">
+              <h2 class="mr-auto font-bold text-2xl bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">What is this?</h2>
+              <p>This is a user interface for building CSS selectors and learning what types of CSS selectors are available.</p>
             
-            <p><strong class="bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">Click the plus button</strong> to start adding conditions for your selector.</p>
+              <p><strong class="bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">Click the plus button</strong> to start adding conditions for your selector.</p>
             
-            <p>As you build, you'll see the URL update with any new conditions you've created. You can <strong class="bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">share that URL</strong> with anyone to show them what you've built!</p>
-            <p>To play with the builder's recursive abilities:</p>
-            <ol class="flex flex-col gap-2 pl-6 list-decimal">
-              <li>Add a new condition</li>
-              <li>Open the dropdown, and type <code class="font-mono bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">matches</code></li>
-              <li>Pick one of the options that starts with "matches" to render a nested selector builder. Fun stuff!</li>
-            </ol>
-          </article>
+              <p>As you build, you'll see the URL update with any new conditions you've created. You can <strong class="bg-gradient-to-r from-violet-600 to-violet-400 bg-clip-text text-transparent">share that URL</strong> with anyone to show them what you've built!</p>
+            </article>
+          </div>
         </PopoverPanel>
       </transition>
     </Popover>

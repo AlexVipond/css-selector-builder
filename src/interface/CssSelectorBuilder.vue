@@ -1,6 +1,6 @@
 <template>
   <header class="bg-denim-1000 px-6 pt-8 flex">
-    <nav class="mr-auto flex items-center gap-8">
+    <nav class="mr-auto flex items-center gap-4">
       <PopoverHelp :selector="selector" />
       <a
         href="https://github.com/AlexVipond/css-selector-builder"
@@ -25,7 +25,7 @@
       </a>
     </nav>
   </header>
-  <main class="min-h-screen w-screen flex flex-col items-center gap-12 py-20 px-6 bg-denim-1000">
+  <main class="min-h-screen w-screen flex flex-col items-center gap-12 py-14 px-6 bg-denim-1000">
     <section class="flex items-center gap-4 w-full max-w-xl">
       <button
         type="button"
@@ -80,20 +80,20 @@
   </main>
   <footer class="flex flex-col gap-6 bg-denim-1200 px-6 py-8 text-denim-300">
     <h2 class="mx-auto"> 🌱  Created by <a class="underline hover:text-denim-100 focus:text-denim-200 transition" href="https://alexvipond.dev">Alex Vipond</a></h2>
-    <nav class="mx-auto flex items-center gap-8">
-        <a class="btn--grows" href="https://github.com/AlexVipond/css-selector-builder">
-          <span class="sr-only">View source code</span>
-          <SimpleGitHub class="h-7 w-7 fill-current hover:text-denim-100 focus:text-denim-200 transition" />
-        </a>
-        <a class="btn--grows" href="https://www.npmjs.com/package/@alexvipond/css-selector-pipes">
-          <span class="sr-only">View on NPM</span>
-          <SimpleNPM class="h-7 w-7 fill-current hover:text-denim-100 focus:text-denim-200 transition" />
-        </a>
-        <a class="btn--grows" href="https://twitter.com/AlPalVipond">
-          <span class="sr-only">Follow me on Twitter</span>
-          <SimpleTwitter class="h-7 w-7 fill-current hover:text-denim-100 focus:text-denim-200 transition" />
-        </a>
-      </nav>
+    <nav class="mx-auto flex items-center gap-4">
+      <a class="btn--grows" href="https://github.com/AlexVipond/css-selector-builder">
+        <span class="sr-only">View source code</span>
+        <SimpleGitHub class="h-7 w-7 fill-current hover:text-denim-100 focus:text-denim-200 transition" />
+      </a>
+      <a class="btn--grows" href="https://www.npmjs.com/package/@alexvipond/css-selector-pipes">
+        <span class="sr-only">View on NPM</span>
+        <SimpleNPM class="h-7 w-7 fill-current hover:text-denim-100 focus:text-denim-200 transition" />
+      </a>
+      <a class="btn--grows" href="https://twitter.com/AlPalVipond">
+        <span class="sr-only">Follow me on Twitter</span>
+        <SimpleTwitter class="h-7 w-7 fill-current hover:text-denim-100 focus:text-denim-200 transition" />
+      </a>
+    </nav>
   </footer>
 </template>
 
