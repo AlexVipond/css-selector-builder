@@ -6,7 +6,7 @@ This project is a TypeScript library for building CSS selectors programmatically
 ## Motivation
 
 - Create a nice interface that people can use to build CSS selectors and explore different types of CSS selectors
-- Practice type definitions, test-driven development, functional programming, pipelines, and recursive components in Vue 3
+- Practice type definitions, test-driven development, functional programming, pipelines, dark mode design, and recursive components in Vue 3
 - Have fun with my favorite tools
   - TypeScript
   - Vue 3 Composition API
@@ -23,6 +23,11 @@ This project is a TypeScript library for building CSS selectors programmatically
 To use the CSS selector builder interface, go to [the website](https://css-selector-builder.netlify.app).
 
 As you build your selector, you'll see the URL update with any new conditions you've created. You can share that URL with anyone to show them what you've built!
+
+To play with the selector builder's recursive abilities:
+1. Add a new condition
+2. Open the dropdown, and type `matches`
+3. Pick one of the options that starts with "matches" to render a nested selector builder. Fun stuff!
 
 The relevant source code for the user interface is in [in the `src/interface` directory](https://github.com/AlexVipond/css-selector-builder/tree/main/src/interface).
 

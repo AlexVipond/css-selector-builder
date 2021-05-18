@@ -4,17 +4,18 @@
     v-model="selectedOption"
   >
     <RadioGroupLabel class="ml-1 input-label">{{ label }}:</RadioGroupLabel>
-    <div class="flex gap-4">
+    <div class="flex flex-wrap gap-4">
       <RadioGroupOption
         v-for="option in options"
         :key="option.value"
         :value="option"
-        v-slot="{ checked }"
+        v-slot="{ active, checked }"
         class="flex"
       >
         <div
           class="btn btn--lg mr-auto transition duration-150"
           :class="[
+            active ? 'ring-2 ring-offset-2 ring-offset-violet-300 ring-violet-300 ring-opacity-60' : '',
             isNestedVariant
               ? (checked ? 'bg-violet-700 text-violet-100' : 'bg-denim-500 text-denim-50 hover:bg-denim-400')
               : (checked ? 'bg-violet-900 text-violet-100' : 'bg-denim-600 text-denim-50 hover:bg-denim-500')

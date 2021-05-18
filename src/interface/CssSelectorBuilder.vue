@@ -1,31 +1,76 @@
 <template>
   <header class="bg-denim-1000 px-6 pt-8 flex">
-    <nav class="mx-auto sm:ml-auto flex items-center gap-8">
-      <a class="btn--grows" href="https://github.com/AlexVipond/css-selector-builder">
+    <nav class="mr-auto flex items-center gap-8">
+      <PopoverHelp :selector="selector" />
+      <a
+        href="https://github.com/AlexVipond/css-selector-builder"
+        class="btn--grows rounded-full p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 focus-visible:ring-opacity-75"
+      >
         <span class="sr-only">View source code</span>
-        <SimpleGitHub class="h-7 w-7 fill-current text-denim-400 hover:text-denim-200 focus:text-denim-200 transition" />
+        <SimpleGitHub class="h-7 w-7 fill-current text-denim-300 hover:text-denim-100 focus:text-denim-200 transition" />
       </a>
-      <a class="btn--grows" href="https://www.npmjs.com/package/@alexvipond/css-selector-pipes">
+      <a
+        href="https://www.npmjs.com/package/@alexvipond/css-selector-pipes"
+        class="btn--grows rounded-full p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 focus-visible:ring-opacity-75"
+      >
         <span class="sr-only">View on NPM</span>
-        <SimpleNPM class="h-7 w-7 fill-current text-denim-400 hover:text-denim-200 focus:text-denim-200 transition" />
+        <SimpleNPM class="h-7 w-7 fill-current text-denim-300 hover:text-denim-100 focus:text-denim-200 transition" />
       </a>
-      <a class="btn--grows" href="https://twitter.com/AlPalVipond">
+      <a
+        href="https://twitter.com/AlPalVipond"
+        class="btn--grows rounded-full p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 focus-visible:ring-opacity-75"
+      >
         <span class="sr-only">Follow me on Twitter</span>
-        <SimpleTwitter class="h-7 w-7 fill-current text-denim-400 hover:text-denim-200 focus:text-denim-200 transition" />
+        <SimpleTwitter class="h-7 w-7 fill-current text-denim-300 hover:text-denim-100 focus:text-denim-200 transition" />
       </a>
     </nav>
   </header>
   <main class="min-h-screen w-screen flex flex-col items-center gap-12 py-20 px-6 bg-denim-1000">
     <section class="flex items-center gap-4 w-full max-w-xl">
       <button
-        name="copy selector"
         type="button"
-        class="btn--grows p-3 rounded-full text-2xl brand-gradient-to-r text-violet-100"
+        name="copy selector"
+        class="relative flex items-center w-full max-w-xl btn--grows rounded-md shadow-lg p-4 brand-gradient-to-r text-violet-100 overflow-x-scroll text-xl"
         @click="() => copyable.copy()"
       >
-        <ClipboardCopyIcon class="h-[1em] w-1[em]" />
+        <pre><code>{{ selector || '*' }}</code></pre>
+        <transition
+          enter-active-class="transition duration-100 delay-125 ease-in"
+          enter-from-class="opacity-0"
+          enter-to-class="opacity-100"
+          leave-active-class="transition duration-100 ease-in"
+          leave-from-class="opacity-100"
+          leave-to-class="opacity-0"
+        >
+          <div
+            class="group absolute top-0 right-0 bottom-0 left-0"
+            v-if="!copyable.isClipboardText"
+          >
+            <div class="absolute top-0 right-0 pb-1 text-sm text-denim-300 transform -translate-y-full flex items-center opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition">
+              <ClipboardCopyIcon class="h-[1em] w-[1em]" />
+              <span>Copy selector</span>
+            </div>
+          </div>
+        </transition>
+        <transition
+          enter-active-class="transition duration-100 delay-125 ease-in"
+          enter-from-class="opacity-0"
+          enter-to-class="opacity-100"
+          leave-active-class="transition duration-100 ease-in"
+          leave-from-class="opacity-100"
+          leave-to-class="opacity-0"
+        >
+          <div
+            class="group absolute top-0 right-0 bottom-0 left-0"
+            v-if="copyable.isClipboardText"
+          >
+            <div class="absolute top-0 right-0 pb-1 text-sm text-denim-300 transform -translate-y-full flex items-center opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition">
+              <CheckIcon class="h-[1em] w-[1em]" />
+              <span>Copied!</span>
+            </div>
+          </div>
+        </transition>
       </button>
-      <pre class="w-full rounded-md shadow-lg p-4 brand-gradient-to-r text-violet-100 overflow-x-scroll text-xl"><code>{{ selector || '*' }}</code></pre>
     </section>
     <section class="w-full max-w-xl flex flex-col gap-4">
       <section class="px-6 py-8 rounded-md shadow-lg bg-denim-800 text-denim-200">
@@ -33,20 +78,20 @@
       </section>
     </section>
   </main>
-  <footer class="flex flex-col gap-6 bg-denim-1200 px-6 py-8 text-denim-400">
-    <h2 class="mx-auto"> 🌱  Created by <a class="underline hover:text-denim-200 focus:text-denim-200 transition" href="https://alexvipond.dev">Alex Vipond</a></h2>
+  <footer class="flex flex-col gap-6 bg-denim-1200 px-6 py-8 text-denim-300">
+    <h2 class="mx-auto"> 🌱  Created by <a class="underline hover:text-denim-100 focus:text-denim-200 transition" href="https://alexvipond.dev">Alex Vipond</a></h2>
     <nav class="mx-auto flex items-center gap-8">
         <a class="btn--grows" href="https://github.com/AlexVipond/css-selector-builder">
           <span class="sr-only">View source code</span>
-          <SimpleGitHub class="h-7 w-7 fill-current hover:text-denim-200 focus:text-denim-200 transition" />
+          <SimpleGitHub class="h-7 w-7 fill-current hover:text-denim-100 focus:text-denim-200 transition" />
         </a>
         <a class="btn--grows" href="https://www.npmjs.com/package/@alexvipond/css-selector-pipes">
           <span class="sr-only">View on NPM</span>
-          <SimpleNPM class="h-7 w-7 fill-current hover:text-denim-200 focus:text-denim-200 transition" />
+          <SimpleNPM class="h-7 w-7 fill-current hover:text-denim-100 focus:text-denim-200 transition" />
         </a>
         <a class="btn--grows" href="https://twitter.com/AlPalVipond">
           <span class="sr-only">Follow me on Twitter</span>
-          <SimpleTwitter class="h-7 w-7 fill-current hover:text-denim-200 focus:text-denim-200 transition" />
+          <SimpleTwitter class="h-7 w-7 fill-current hover:text-denim-100 focus:text-denim-200 transition" />
         </a>
       </nav>
   </footer>
@@ -60,10 +105,11 @@ import {
   SimpleNPM,
 } from '@baleada/vue-simple-icons'
 import { useCopyable } from '@baleada/vue-composition'
-import { ClipboardCopyIcon } from '@heroicons/vue/solid'
-import FormConditions from './components/FormConditions.vue'
+import { CheckIcon, ClipboardCopyIcon } from '@heroicons/vue/solid'
 import { toSelector } from './toSelector'
 import type { Condition } from './toSelector'
+import FormConditions from './components/FormConditions.vue'
+import PopoverHelp from './components/PopoverHelp.vue'
 
 export default defineComponent({
   components: {
@@ -71,19 +117,22 @@ export default defineComponent({
     SimpleTwitter,
     SimpleGitHub,
     SimpleNPM,
+    PopoverHelp,
+    CheckIcon,
     ClipboardCopyIcon,
   },
   setup () {
     const conditions = ref<Condition[]>([]),
           selector = computed(() => toSelector(conditions.value)),
-          copyable = useCopyable(selector.value)
+          clipboard = { text: '' },
+          copyable = useCopyable(selector.value, { clipboard })
 
-    watch(selector, () => copyable.value.string = selector.value)
+    watch(selector, async () => copyable.value.string = selector.value)
 
     onMounted(() => {
       const urlConditions = new URL(window.location.toString()).searchParams.get('conditions')
       if (urlConditions) {
-        conditions.value = JSON.parse(urlConditions)
+        conditions.value = withoutNull(JSON.parse(urlConditions))
       }
     })
 
@@ -104,4 +153,21 @@ export default defineComponent({
     }
   }
 })
+
+function withoutNull (parsedConditions: Record<any, any>): Condition[] {
+  return parsedConditions.map(condition => ({
+    ...condition,
+    args: condition.args.map(arg => {
+      if (arg === null) {
+        return undefined
+      }
+
+      if (Array.isArray(arg)) {
+        return withoutNull(arg)
+      }
+
+      return arg
+    })
+  }))
+}
 </script>

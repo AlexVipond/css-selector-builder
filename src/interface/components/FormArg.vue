@@ -7,7 +7,7 @@
   <input
     v-if="inputType === 'string'"
     class="shadow-inner border-none rounded appearance-textfield"
-    :class="isNestedVariant ? 'bg-denim-800' : 'bg-denim-1000'"
+    :class="isNestedVariant ? 'bg-denim-800 placeholder-denim-400' : 'bg-denim-1000 placeholder-denim-400'"
     type="text"
     :placeholder="label"
     v-model="arg"

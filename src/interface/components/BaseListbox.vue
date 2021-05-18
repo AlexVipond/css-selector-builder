@@ -1,8 +1,8 @@
 <template>
   <Listbox v-model="selectedOption" v-slot="{ open }">
-    <div class="relative mt-1" :class="open ? 'z-10' : ''">
+    <div class="relative mt-1">
       <ListboxButton
-        class="relative w-full py-2 pl-3 pr-10 text-left border rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-violet-300 focus-visible:ring-offset-2 focus-visible:border-violet-500"
+        class="relative w-full py-2 pl-3 pr-10 text-left border rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-denim-200 focus-visible:ring-offset-violet-300 focus-visible:ring-offset-2 focus-visible:border-violet-500"
         :class="isNestedVariant ? 'border-denim-400' : 'border-denim-500'"
       >
         <span class="block truncate">{{ selectedOption.label }}</span>
@@ -19,7 +19,7 @@
         leave-to-class="opacity-0"
       >
         <ListboxOptions
-          class="absolute w-full py-1 mt-1 overflow-auto bg-denim-700 rounded-md shadow-lg max-h-72 ring-1 ring-black ring-opacity-5 focus:outline-none"
+          class="z-10 absolute w-full py-1 mt-1 overflow-auto bg-denim-700 rounded-md shadow-lg max-h-72 ring-1 ring-black ring-opacity-5 focus:outline-none"
         >
           <ListboxOption
             v-slot="{ active }"
