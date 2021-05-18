@@ -1,9 +1,9 @@
 <template>
   <section
-    class="flex flex-col gap-10 rounded-md shadow-lg"
+    class="flex flex-col gap-10 rounded-md shadow-lg pb-10"
     :class="[
       isNestedVariant ? 'bg-denim-600 text-denim-100' : 'bg-denim-800 text-denim-200',
-      nestingLevel === 0 ? 'px-6 py-8' : 'px-4 py-6'
+      nestingLevel === 0 ? 'px-6 pt-8' : 'px-4 pt-6'
     ]"
   >
     <h2
@@ -79,7 +79,7 @@ import { PlusIcon } from '@heroicons/vue/solid'
 import type { Operation } from '../toOperated'
 import FormOperation from './FormOperation.vue'
 import { pipeMetadata } from '../pipeMetadata'
-import { NESTING_LEVEL_SYMBOL, NESTED_STATUS_SYMBOL } from '../state'
+import { OPERATIONS_NESTING_LEVEL_SYMBOL, OPERATIONS_NESTED_STATUS_SYMBOL } from '../state'
 
 export default defineComponent({
   name: 'FormOperations',
@@ -130,11 +130,11 @@ export default defineComponent({
             const index = findOperationIndex({ id: operation.id, operations })
             operations.value = createReorder<Operation>({ from: index, to })(operations.value)
           },
-          nestingLevel = shallowRef(props.isTopLevel ? 0 : inject<number>(NESTING_LEVEL_SYMBOL) + 1),
+          nestingLevel = shallowRef(props.isTopLevel ? 0 : inject<number>(OPERATIONS_NESTING_LEVEL_SYMBOL) + 1),
           isNestedVariant = shallowRef(nestingLevel.value % 2 !== 0)
     
-    provide(NESTING_LEVEL_SYMBOL, nestingLevel.value)
-    provide(NESTED_STATUS_SYMBOL, isNestedVariant.value)
+    provide(OPERATIONS_NESTING_LEVEL_SYMBOL, nestingLevel.value)
+    provide(OPERATIONS_NESTED_STATUS_SYMBOL, isNestedVariant.value)
 
     return {
       operations,

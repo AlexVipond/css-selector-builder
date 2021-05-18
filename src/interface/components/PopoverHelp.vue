@@ -46,19 +46,19 @@ import { QuestionMarkCircleIcon } from '@heroicons/vue/outline'
 
 export default {
   components: { Popover, PopoverButton, PopoverPanel, QuestionMarkCircleIcon },
-  props: ['selector'],
+  props: ['operated'],
   setup (props) {
-    const tweetIntent = ref(''),
-          effect = () => tweetIntent.value = getTweetIntent()
+    // const tweetIntent = ref(''),
+    //       effect = () => tweetIntent.value = getTweetIntent()
     
-    onMounted(() => {
-      effect()
-      watch(() => props.selector, effect)
-    })
+    // onMounted(() => {
+    //   effect()
+    //   watch(() => props.operated, effect)
+    // })
     
-    return {
-      tweetIntent
-    }
+    // return {
+    //   tweetIntent
+    // }
   }
 
 }

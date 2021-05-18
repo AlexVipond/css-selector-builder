@@ -63,7 +63,7 @@ import type { Operation } from '../toOperated'
 import InputPipe from './InputPipe.vue'
 import FormArg from './FormArg.vue'
 import { pipeMetadata } from '../pipeMetadata'
-import { NESTED_STATUS_SYMBOL } from '../state'
+import { OPERATIONS_NESTED_STATUS_SYMBOL } from '../state'
 
 export default defineComponent({
   components: {
@@ -95,7 +95,7 @@ export default defineComponent({
           emitMoveDown = () => {
             emit('moveDown', operation.value)
           },
-          isNestedVariant = inject<boolean>(NESTED_STATUS_SYMBOL)
+          isNestedVariant = inject<boolean>(OPERATIONS_NESTED_STATUS_SYMBOL)
     
     return {
       operation,

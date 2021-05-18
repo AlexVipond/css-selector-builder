@@ -35,7 +35,7 @@ import {
   RadioGroupLabel,
   RadioGroupOption,
 } from '@headlessui/vue'
-import { NESTED_STATUS_SYMBOL } from '../state'
+import { OPERATIONS_NESTED_STATUS_SYMBOL } from '../state'
 
 export default defineComponent({
   components: {
@@ -51,7 +51,7 @@ export default defineComponent({
               emit('update:modelValue', newValue)
             }
           }),
-          isNestedVariant = inject<boolean>(NESTED_STATUS_SYMBOL)
+          isNestedVariant = inject<boolean>(OPERATIONS_NESTED_STATUS_SYMBOL)
 
     return { selectedOption, isNestedVariant }
   }

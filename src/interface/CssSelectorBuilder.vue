@@ -1,7 +1,7 @@
 <template>
   <header class="bg-denim-1000 px-6 pt-8 flex">
     <nav class="mr-auto flex items-center gap-4">
-      <PopoverHelp :selector="selector" />
+      <PopoverHelp :operated="operated" />
       <a
         href="https://github.com/AlexVipond/css-selector-builder"
         class="btn--grows rounded-full p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 focus-visible:ring-opacity-75"
@@ -33,7 +33,7 @@
         class="relative w-full max-w-xl btn--grows rounded-md text-violet-100 text-xl"
         @click="() => copyable.copy()"
       >
-        <pre class="w-full p-4 brand-gradient-to-r overflow-x-scroll rounded-md shadow-lg text-left"><code>{{ selector || '*' }}</code></pre>
+        <pre class="w-full p-4 brand-gradient-to-r overflow-x-scroll rounded-md shadow-lg text-left"><code>{{ operated || '*' }}</code></pre>
         <transition
           enter-active-class="transition duration-100 delay-125 ease-in"
           enter-from-class="opacity-0"
@@ -72,56 +72,8 @@
         </transition>
       </button>
     </section>
-    <section class="w-full max-w-xl flex flex-col gap-8">
-      <transition-group
-        enter-active-class="transition duration-100 ease-in"
-        enter-from-class="opacity-0"
-        enter-to-class="opacity-100"
-        leave-active-class="transition duration-100 ease-in"
-        leave-from-class="opacity-100"
-        leave-to-class="opacity-0"
-        moveClass="transition duration-100"
-      >
-        <div
-          v-for="(operations, index) in operationsArrays"
-          :key="index"
-          class="flex flex-col gap-8"
-        >
-          <div class="flex flex-col gap-4">
-            <button
-              type="button"
-              name="Delete condition"
-              class="ml-auto flex-shrink-0 p-1 btn--raised btn--grows bg-[#AD4040] text-[#FED7D7]  rounded-full"
-              @click="() => operationsArrays = createDelete({ index })(operationsArrays)"
-            >
-              <TrashIcon class="h-5 w-5" />
-            </button>
-            <FormOperations
-              :modelValue="operations"
-              @update:modelValue="newOperations => operationsArrays = createReplace({ index, item: newOperations })(operationsArrays)"
-              :isTopLevel="true"
-            />
-          </div>
-          <div
-            v-if="index !== operationsArrays.length - 1"
-            class="flex items-center justify-center gap-3 font-mono"
-          >
-            <div class="h-px w-16 bg-denim-500" />
-            <h3 class="uppercase text-xl tracking-[0.2em] flex-shrink-0 text-denim-500" >
-              or
-            </h3>
-            <div class="h-px w-16 bg-denim-500" />
-          </div>
-        </div>
-      </transition-group>
-      <button
-        name="Add conditions for another selector"
-        class="mx-auto p-3 text-lg btn--raised btn--grows rounded-full p-3 bg-gradient-to-r from-denim-700 to-denim-600 flex-shrink-0 text-denim-100"
-        @click="operationsArrays = [...operationsArrays, []]"
-        type="button"
-      >
-        OR
-      </button>
+    <section class="w-full max-w-xl">
+      <FormOperationsArrays v-model="operationsArrays" :isTopLevel="true" />
     </section>
   </main>
   <footer class="flex flex-col gap-6 bg-denim-1200 px-6 py-8 text-denim-300">
@@ -151,35 +103,32 @@ import {
   SimpleNPM,
 } from '@baleada/vue-simple-icons'
 import { useCopyable } from '@baleada/vue-composition'
-import { createReplace, createDelete, createReorder } from '@baleada/logic'
 import { 
   CheckIcon,
   ClipboardCopyIcon,
 } from '@heroicons/vue/solid'
-import { TrashIcon } from '@heroicons/vue/outline'
 import { toOperated } from './toOperated'
 import type { Operation } from './toOperated'
-import FormOperations from './components/FormOperations.vue'
+import FormOperationsArrays from './components/FormOperationsArrays.vue'
 import PopoverHelp from './components/PopoverHelp.vue'
 
 export default defineComponent({
   components: {
-    FormOperations,
+    FormOperationsArrays,
     SimpleTwitter,
     SimpleGitHub,
     SimpleNPM,
     PopoverHelp,
     CheckIcon,
     ClipboardCopyIcon,
-    TrashIcon,
   },
   setup () {
     const operationsArrays = ref<Operation[][]>([[]]),
-          selector = computed(() => operationsArrays.value.map(toOperated).join(', ')),
+          operated = computed(() => operationsArrays.value.map(toOperated).filter(o => o !== '').join(', ')),
           clipboard = { text: '' },
-          copyable = useCopyable(selector.value, { clipboard })
+          copyable = useCopyable(operated.value, { clipboard })
 
-    watch(selector, async () => copyable.value.string = selector.value)
+    watch(operated, async () => copyable.value.string = operated.value)
 
     onMounted(() => {
       const urlOperationsArrays = new URL(window.location.toString()).searchParams.get('conditions')
@@ -197,14 +146,10 @@ export default defineComponent({
       }
     )
 
-
     return {
       operationsArrays,
-      selector,
+      operated,
       copyable,
-      createReplace,
-      createDelete,
-      createReorder,
     }
   }
 })
