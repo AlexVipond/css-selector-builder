@@ -47,7 +47,7 @@ import {
   attributeOperators,
   directionalities
 } from '../options'
-import { OPERATIONS_NESTED_STATUS_SYMBOL } from '../state'
+import { NESTED_STATUS_SYMBOL } from '../state'
 
 export default defineComponent({
   components: {
@@ -96,7 +96,7 @@ export default defineComponent({
             }
           })(),
           modelledOption = ref(optionDefault),
-          isNestedVariant = inject<boolean>(OPERATIONS_NESTED_STATUS_SYMBOL)
+          isNestedVariant = inject<boolean>(NESTED_STATUS_SYMBOL)
 
 
     watch(

@@ -181,7 +181,7 @@ import {
   ListboxOption,
 } from '@headlessui/vue'
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
-import { OPERATIONS_NESTED_STATUS_SYMBOL } from '../state'
+import { NESTED_STATUS_SYMBOL } from '../state'
 
 export default defineComponent({
   components: {
@@ -214,7 +214,7 @@ export default defineComponent({
           ]),
           stopPropagation = (event: KeyboardEvent | MouseEvent) => event.stopPropagation(),
           enterHandle = (index: number) => selectedOption.value = options.value[index],
-          isNestedVariant = inject<boolean>(OPERATIONS_NESTED_STATUS_SYMBOL)
+          isNestedVariant = inject<boolean>(NESTED_STATUS_SYMBOL)
 
     return {
       options,

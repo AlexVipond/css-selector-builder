@@ -71,7 +71,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide, inject, shallowRef } from 'vue'
+import { computed, defineComponent, inject } from 'vue'
 import type { Ref } from 'vue'
 import { nanoid } from 'nanoid'
 import { createReorder } from '@baleada/logic'
@@ -79,7 +79,7 @@ import { PlusIcon } from '@heroicons/vue/solid'
 import type { Operation } from '../toOperated'
 import FormOperation from './FormOperation.vue'
 import { pipeMetadata } from '../pipeMetadata'
-import { OPERATIONS_NESTING_LEVEL_SYMBOL, OPERATIONS_NESTED_STATUS_SYMBOL } from '../state'
+import { NESTING_LEVEL_SYMBOL, NESTED_STATUS_SYMBOL } from '../state'
 
 export default defineComponent({
   name: 'FormOperations',
@@ -130,11 +130,8 @@ export default defineComponent({
             const index = findOperationIndex({ id: operation.id, operations })
             operations.value = createReorder<Operation>({ from: index, to })(operations.value)
           },
-          nestingLevel = shallowRef(props.isTopLevel ? 0 : inject<number>(OPERATIONS_NESTING_LEVEL_SYMBOL) + 1),
-          isNestedVariant = shallowRef(nestingLevel.value % 2 !== 0)
-    
-    provide(OPERATIONS_NESTING_LEVEL_SYMBOL, nestingLevel.value)
-    provide(OPERATIONS_NESTED_STATUS_SYMBOL, isNestedVariant.value)
+          nestingLevel = inject<number>(NESTING_LEVEL_SYMBOL),
+          isNestedVariant = inject<boolean>(NESTED_STATUS_SYMBOL)
 
     return {
       operations,

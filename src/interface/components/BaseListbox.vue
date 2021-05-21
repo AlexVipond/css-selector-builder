@@ -66,7 +66,7 @@ import {
   ListboxOption,
 } from '@headlessui/vue'
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
-import { OPERATIONS_NESTED_STATUS_SYMBOL } from '../state'
+import { NESTED_STATUS_SYMBOL } from '../state'
 
 export default defineComponent({
   components: {
@@ -86,7 +86,7 @@ export default defineComponent({
               emit('update:modelValue', newValue)
             }
           }),
-          isNestedVariant = inject<boolean>(OPERATIONS_NESTED_STATUS_SYMBOL)
+          isNestedVariant = inject<boolean>(NESTED_STATUS_SYMBOL)
 
     return { selectedOption, isNestedVariant }
   }

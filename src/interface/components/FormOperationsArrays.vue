@@ -1,5 +1,18 @@
 <template>
-  <section class="flex flex-col gap-8">
+  <section class="relative flex flex-col gap-8">
+    <div
+      v-if="!isTopLevel"
+      class="
+        absolute top-0 left-1/2 transform -translate-x-1/2
+        h-full w-full
+        px-7 sm:px-24
+      "
+    >
+      <div
+        class="h-full w-full border-l-[.5rem] border-r-[.5rem]"
+        :class="!isNestedVariant ? 'border-denim-800' : 'border-denim-600'"
+      ></div>
+    </div>
     <transition-group
       enter-active-class="transition duration-100 ease-in"
       enter-from-class="opacity-0"
@@ -12,11 +25,14 @@
       <div
         v-for="(operations, index) in operationsArrays"
         :key="index"
-        class="flex flex-col gap-14"
+        class="relative flex flex-col gap-14"
       > 
         <div
           class="relative rounded-md transition duration-75"
-          :class="statuses[index] === 'ready to delete' ? 'ring ring-cranberry-700 ring-offset-4 ring-offset-denim-1000' : ''"
+          :class="[
+            statuses[index] === 'ready to delete' ? 'ring ring-cranberry-700 ring-offset-4' : '',
+            (isTopLevel && 'ring-offset-denim-1000') || (!isNestedVariant && 'ring-offset-denim-600') || 'ring-offset-denim-800'
+          ]"
         >
           <FormOperations
             :modelValue="operations"
@@ -42,11 +58,20 @@
           v-if="index !== operationsArrays.length - 1"
           class="flex items-center justify-center gap-3 font-mono"
         >
-          <div class="h-px w-16 bg-denim-500" />
-          <h3 class="uppercase text-xl tracking-[0.2em] flex-shrink-0 text-denim-500" >
+          <div
+            class="h-px w-16"
+            :class="(isTopLevel  && 'bg-denim-500') || (!isNestedVariant && 'bg-denim-400') || 'bg-denim-600'"
+          />
+          <h3
+            class="uppercase text-xl tracking-[0.2em] flex-shrink-0 "
+            :class="(isTopLevel  && 'text-denim-500') || (!isNestedVariant && 'text-denim-200') || 'text-denim-300'"
+          >
             or
           </h3>
-          <div class="h-px w-16 bg-denim-500" />
+          <div
+            class="h-px w-16"
+            :class="(isTopLevel  && 'bg-denim-500') || (!isNestedVariant && 'bg-denim-400') || 'bg-denim-600'"
+          />
         </div>
       </div>
     </transition-group>
@@ -66,7 +91,7 @@ import { computed, ref, shallowRef, provide, inject } from 'vue'
 import { TrashIcon } from '@heroicons/vue/outline'
 import { createReplace, createDelete } from '@baleada/logic'
 import FormOperations from './FormOperations.vue'
-import { OPERATIONS_ARRAYS_NESTED_STATUS_SYMBOL, OPERATIONS_ARRAYS_NESTING_LEVEL_SYMBOL } from '../state'
+import { NESTED_STATUS_SYMBOL, NESTING_LEVEL_SYMBOL } from '../state'
 import type { Operation } from '../toOperated'
 
 import { defineComponent } from 'vue'
@@ -102,11 +127,11 @@ export default defineComponent({
           operationsArrayUpdate = (index: number, operations: Operation[]) => {
             operationsArrays.value = createReplace<Operation[]>({ index, item: operations })(operationsArrays.value)
           },
-          nestingLevel = shallowRef(props.isTopLevel ? 0 : inject<number>(OPERATIONS_ARRAYS_NESTING_LEVEL_SYMBOL) + 1),
+          nestingLevel = shallowRef(props.isTopLevel ? 0 : inject<number>(NESTING_LEVEL_SYMBOL) + 1),
           isNestedVariant = shallowRef(nestingLevel.value % 2 !== 0)
     
-    provide(OPERATIONS_ARRAYS_NESTING_LEVEL_SYMBOL, nestingLevel.value)
-    provide(OPERATIONS_ARRAYS_NESTED_STATUS_SYMBOL, isNestedVariant.value)
+    provide(NESTING_LEVEL_SYMBOL, nestingLevel.value)
+    provide(NESTED_STATUS_SYMBOL, isNestedVariant.value)
 
     return {
       operationsArrays,
