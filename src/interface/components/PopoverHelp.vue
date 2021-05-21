@@ -42,42 +42,11 @@
 </template>
 
 <script>
-import { ref, onMounted, watch } from 'vue'
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 import { QuestionMarkCircleIcon } from '@heroicons/vue/outline'
 
 export default {
   components: { Popover, PopoverButton, PopoverPanel, QuestionMarkCircleIcon },
-  props: ['operated'],
-  setup (props) {
-    // const tweetIntent = ref(''),
-    //       effect = () => tweetIntent.value = getTweetIntent()
-    
-    // onMounted(() => {
-    //   effect()
-    //   watch(() => props.operated, effect)
-    // })
-    
-    // return {
-    //   tweetIntent
-    // }
-  }
-
+  props: ['tweetIntent'],
 }
-
-function getTweetIntent () {
-  const url = window.location.toString(),
-        text="I built a CSS selector!",
-        via="AlexVipond",
-        encodedText = encodeURIComponent(text),
-        params = [
-          `text=${encodedText}&`,
-          `url=${url}&`,
-          `via=${via}`
-        ],
-        encodedParams = params.join('&')
-
-  return 'https://twitter.com/intent/tweet?' + encodedParams
-}
-
 </script>

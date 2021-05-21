@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
+    "isolatedModules": true,
     "target": "esnext",
     "module": "esnext",
-    "types": [],
+    "types": ["node"],
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "declaration": true,

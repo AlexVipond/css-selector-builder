@@ -102,7 +102,7 @@ import {
   SimpleGitHub,
   SimpleNPM,
 } from '@baleada/vue-simple-icons'
-import { useCopyable } from '@baleada/vue-composition'
+import { useCopyable, useFetchable } from '@baleada/vue-composition'
 import { 
   CheckIcon,
   ClipboardCopyIcon,
@@ -146,10 +146,34 @@ export default defineComponent({
       }
     )
 
+    const fetchable = useFetchable(window.location.origin + '/api/create-short-link'),
+          tweetIntent = ref('')
+
+    async function getShortLink () {
+      // @ts-ignore
+      await fetchable.value.post(({ withJson }) => withJson({ url: 'https://css-selector-builder.netlify.app/' + window.location.search }))
+      const bitlyResponse = (await fetchable.value.json).response
+
+      // @ts-ignore
+      if (fetchable.value.response.status === 200) {
+        return bitlyResponse.data.link
+      }
+      
+      return 'https://css-selector-builder.netlify.app/'
+    }
+
+    async function shareClickHandle () {
+      const shortLink = await getShortLink()
+      tweetIntent.value = toTweetIntent(shortLink)
+
+      console.log(tweetIntent.value)
+    }
+
     return {
       operationsArrays,
       operated,
       copyable,
+      shareClickHandle,
     }
   }
 })
@@ -177,5 +201,19 @@ function withoutNull (parsedOperationsArrays: Record<any, any>[][]): Operation[]
   }
     
   )
+}
+
+function toTweetIntent (url) {
+  const text="I built a CSS selector!",
+        via="AlexVipond",
+        encodedText = encodeURIComponent(text),
+        params = [
+          `text=${encodedText}&`,
+          `url=${url}&`,
+          `via=${via}`
+        ],
+        encodedParams = params.join('&')
+
+  return 'https://twitter.com/intent/tweet?' + encodedParams
 }
 </script>
