@@ -39,10 +39,17 @@ suite(`toFamily parses simple targets with multiple relatives`, () => {
   )
 })
   
-suite(`toFamily parses complex targets`, () => {
+suite(`toFamily parses complex targets that include spaces inside attribute values`, () => {
   assert.equal(
     toFamily('.haha ~ ["name"="with multiple spaces"].business'),
     { relative: '.haha ~ ', selected: '["name"="with multiple spaces"].business' }
+  )
+})
+
+suite(`toFamily parses complex targets that include spaces between joined selectors`, () => {
+  assert.equal(
+    toFamily('.haha ~ :not(.business, .poop)'),
+    { relative: '.haha ~ ', selected: ':not(.business, .poop)' }
   )
 })
   
@@ -50,6 +57,13 @@ suite(`toFamily parses complex targets with complex relatives`, () => {
   assert.equal(
     toFamily('["name"="with multiple spaces"].haha ~ ["name"="with multiple spaces"].business'),
     { relative: '["name"="with multiple spaces"].haha ~ ', selected: '["name"="with multiple spaces"].business' }
+  )
+})
+
+suite(`toFamily doesn't support attribute values that include spaces after closed square brackets`, () => {
+  assert.equal(
+    toFamily('.haha ~ ["name"="] "]'),
+    { relative: '.haha ~ [\"name\"=\"] ', selected: '"]' } // Neither half is a valid selector
   )
 })
 

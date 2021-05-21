@@ -349,8 +349,8 @@ export function dir (directionality: 'rtl' | 'ltr') {
   return pseudoFn('dir', directionality)
 }
 
-export function has (selector: string) {
-  return pseudoFn('has', selector)
+export function has (...selectors: string[]) {
+  return pseudoFn('has', ...selectors)
 }
 
 export function hostFn (selector: string) {

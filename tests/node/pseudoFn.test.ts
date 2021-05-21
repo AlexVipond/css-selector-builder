@@ -38,6 +38,11 @@ suite(`has`, () => {
     pipes.has('.poop')(),
     ':has(.poop)',
   )
+
+  assert.is(
+    pipes.has('.haha', '.business')(),
+    ':has(.haha, .business)',
+  )
 })
 
 suite(`hostFn`, () => {

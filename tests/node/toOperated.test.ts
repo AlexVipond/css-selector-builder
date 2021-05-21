@@ -41,6 +41,61 @@ suite(`toOperated`, () => {
   )
 })
 
-
+suite(`asdfasdf`, context => {
+  assert.is(
+    toOperated([
+      {
+        "id": "B6tx0Teu",
+        "pipe": "contains any element that matches a selector, which I'll specify",
+        "args": [
+          [
+            {
+              "id": "cmAQvcva",
+              "pipe": "contains any element that matches a selector, which I'll specify",
+              "args": [
+                [
+                  {
+                    "id": "vpGIBkQj",
+                    "pipe": "has a tag, which I'll specify",
+                    "args": ["poop"]
+                  },
+                  {
+                    "id": "biVhxLpU",
+                    "pipe": "has a class, which I'll specify",
+                    "args": ["stinky"]
+                  }
+                ],
+                [
+                  {
+                    "id": "eEU5_DkV",
+                    "pipe": "has an ID, which I'll specify",
+                    "args": ["fart"]
+                  }
+                ]
+              ]
+            },
+            {
+              "id": "1v7zPR5F",
+              "pipe": "has a tag, which I'll specify",
+              "args": ["butt"]
+            }
+          ]
+        ]
+      },
+      {
+        "id": "0lEZLWhl",
+        "pipe": "has a class, which I'll specify",
+        "args": ["lol"]
+      },
+      {
+        "id": "sdpEaF5l",
+        "pipe": "has a tag, which I'll specify",
+        "args": ["poopy"]
+      }
+    ]),
+    'poopy:has(butt:has(poop.stinky, #fart)).lol'
+  )
+  
+})
 
 suite.run()

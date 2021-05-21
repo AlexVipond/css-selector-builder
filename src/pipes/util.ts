@@ -53,11 +53,16 @@ export function toFamily (selector: string): {
 //
 // Notably, this implementation doesn't support attribute values that include
 // spaces after closed square brackets, even though it's valid CSS.
-const attributeSpaceRE = /(\[[^\]]*?)(\s)(.*?\])/
-const attributeSpaceAfterClosedSquareBracketRE = /(\[[^\]]*?)(\s)(.*?\])/
+const attributeSpaceRE = /(\[[^\]]*?)(\s)(.*?\])/,
+      joinedSelectorSpaceRE = /(,\s)/
+// const attributeSpaceAfterClosedSquareBracketRE = /(\[[^\]]*?)(\s)(.*?\])/
 const ATTRIBUTE_SPACE_REPLACEMENT = 'Qx3qlPtYnH-YhkuNvdNez' // nanoid
 export function toWithoutAttributeSpaces (): Pipe {
   return selector => {
+    while(joinedSelectorSpaceRE.test(selector)) {
+      selector = selector.replace(joinedSelectorSpaceRE, `,${ATTRIBUTE_SPACE_REPLACEMENT}`)
+    }
+
     while(attributeSpaceRE.test(selector)) {
       selector = selector.replace(attributeSpaceRE, (match, before, space, after) => `${before}${ATTRIBUTE_SPACE_REPLACEMENT}${after}`)
     }
