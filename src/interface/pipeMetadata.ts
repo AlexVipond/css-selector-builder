@@ -564,6 +564,7 @@ export const pipeMetadata: PipeMetadatum[] = [
         defaultValue: [],
         label: 'Selector for the contained element',
         required: true,
+        repeatable: true,
       }
     ]
   },
@@ -828,127 +829,127 @@ export const pipeMetadata: PipeMetadatum[] = [
 
   
   // ABSTRACTIONS
-  {
-    name: 'prepend',
-    category: 'abstractions',
-    label: 'is selected by a custom selector prepended to the current selector',
-    args: [
-      {
-        name: 'prepended',
-        inputType: 'string',
-        label: 'Custom selector that should be prepended to the current selector',
-        required: true,
-        defaultValue: '',
-      },
-    ]
-  },
-  {
-    name: 'append',
-    category: 'abstractions',
-    label: 'is selected by a custom selector appended to the current selector',
-    args: [
-      {
-        name: 'appended',
-        inputType: 'string',
-        label: 'Custom selector that should be appended to the current selector',
-        required: true,
-        defaultValue: '',
-      },
-    ]
-  },
-  {
-    name: 'pseudoState',
-    category: 'abstractions',
-    label: 'has a custom pseudo state',
-    args: [
-      {
-        name: 'state',
-        inputType: 'string',
-        label: 'Name of the pseudo state',
-        required: true,
-        defaultValue: '',
-      },
-    ]
-  },
-  {
-    name: 'pseudoFn',
-    category: 'abstractions',
-    label: 'has a custom pseudo state that accepts arguments',
-    args: [
-      {
-        name: 'fn',
-        inputType: 'string',
-        label: 'Name of the pseudo state function',
-        required: true,
-        defaultValue: '',
-      },
-      {
-        name: 'args',
-        inputType: 'unknown',
-        defaultValue: '',
-        label: 'An argument to pass to the pseudo state function',
-        required: true,
-        repeatable: true,
-      },
-    ]
-  },
-  {
-    name: 'pseudoElement',
-    category: 'abstractions',
-    label: 'has a custom pseudo element',
-    args: [
-      {
-        name: 'state',
-        inputType: 'string',
-        label: 'Name of the pseudo element',
-        required: true,
-        defaultValue: '',
-      },
-    ]
-  },
-  {
-    name: 'pseudoElementFn',
-    category: 'abstractions',
-    label: 'has a custom pseudo element that accepts arguments',
-    args: [
-      {
-        name: 'fn',
-        inputType: 'string',
-        label: 'Name of the pseudo element function',
-        required: true,
-        defaultValue: '',
-      },
-      {
-        name: 'args',
-        inputType: 'unknown',
-        defaultValue: '',
-        label: 'An argument to pass to the pseudo element function',
-        required: true,
-        repeatable: true,
-      },
-    ]
-  },
-  {
-    name: 'relate',
-    category: 'abstractions',
-    label: 'has a custom relationship with another selector',
-    args: [
-      {
-        name: 'combinator',
-        inputType: 'string',
-        label: 'Custom combinator that goes between your selector and its relative',
-        required: true,
-        defaultValue: '',
-      },
-      {
-        name: 'relative',
-        inputType: 'selector',
-        defaultValue: [],
-        label: 'Your selector\'s relative',
-        required: true
-      },
-    ]
-  },
+  // {
+  //   name: 'prepend',
+  //   category: 'abstractions',
+  //   label: 'is selected by a custom selector prepended to the current selector',
+  //   args: [
+  //     {
+  //       name: 'prepended',
+  //       inputType: 'string',
+  //       label: 'Custom selector that should be prepended to the current selector',
+  //       required: true,
+  //       defaultValue: '',
+  //     },
+  //   ]
+  // },
+  // {
+  //   name: 'append',
+  //   category: 'abstractions',
+  //   label: 'is selected by a custom selector appended to the current selector',
+  //   args: [
+  //     {
+  //       name: 'appended',
+  //       inputType: 'string',
+  //       label: 'Custom selector that should be appended to the current selector',
+  //       required: true,
+  //       defaultValue: '',
+  //     },
+  //   ]
+  // },
+  // {
+  //   name: 'pseudoState',
+  //   category: 'abstractions',
+  //   label: 'has a custom pseudo state',
+  //   args: [
+  //     {
+  //       name: 'state',
+  //       inputType: 'string',
+  //       label: 'Name of the pseudo state',
+  //       required: true,
+  //       defaultValue: '',
+  //     },
+  //   ]
+  // },
+  // {
+  //   name: 'pseudoFn',
+  //   category: 'abstractions',
+  //   label: 'has a custom pseudo state that accepts arguments',
+  //   args: [
+  //     {
+  //       name: 'fn',
+  //       inputType: 'string',
+  //       label: 'Name of the pseudo state function',
+  //       required: true,
+  //       defaultValue: '',
+  //     },
+  //     {
+  //       name: 'args',
+  //       inputType: 'unknown',
+  //       defaultValue: '',
+  //       label: 'An argument to pass to the pseudo state function',
+  //       required: true,
+  //       repeatable: true,
+  //     },
+  //   ]
+  // },
+  // {
+  //   name: 'pseudoElement',
+  //   category: 'abstractions',
+  //   label: 'has a custom pseudo element',
+  //   args: [
+  //     {
+  //       name: 'state',
+  //       inputType: 'string',
+  //       label: 'Name of the pseudo element',
+  //       required: true,
+  //       defaultValue: '',
+  //     },
+  //   ]
+  // },
+  // {
+  //   name: 'pseudoElementFn',
+  //   category: 'abstractions',
+  //   label: 'has a custom pseudo element that accepts arguments',
+  //   args: [
+  //     {
+  //       name: 'fn',
+  //       inputType: 'string',
+  //       label: 'Name of the pseudo element function',
+  //       required: true,
+  //       defaultValue: '',
+  //     },
+  //     {
+  //       name: 'args',
+  //       inputType: 'unknown',
+  //       defaultValue: '',
+  //       label: 'An argument to pass to the pseudo element function',
+  //       required: true,
+  //       repeatable: true,
+  //     },
+  //   ]
+  // },
+  // {
+  //   name: 'relate',
+  //   category: 'abstractions',
+  //   label: 'has a custom relationship with another selector',
+  //   args: [
+  //     {
+  //       name: 'combinator',
+  //       inputType: 'string',
+  //       label: 'Custom combinator that goes between your selector and its relative',
+  //       required: true,
+  //       defaultValue: '',
+  //     },
+  //     {
+  //       name: 'relative',
+  //       inputType: 'selector',
+  //       defaultValue: [],
+  //       label: 'Your selector\'s relative',
+  //       required: true
+  //     },
+  //   ]
+  // },
 ]
 
 export const pipeMetadataDefault = pipeMetadata[0]

@@ -38,15 +38,24 @@
         </button>
       </div>
     </div>
-    <FormArg
-      v-for="(arg, index) in pipe.args"
-      :key="arg.name"
-      :label="arg.label"
-      :inputType="arg.inputType"
-      :required="arg.required"
-      :modelValue="operation.args[index]"
-      @update:modelValue="newArg => operation = ({ ...operation, args: createReplace({ index, item: newArg })(operation.args) })"
-    />
+    <template v-if="shouldUseFormOperationsArrays">
+      <FormOperationsArrays
+        :modelValue="operation.args"
+        @update:modelValue="newOperationsArrays => operation = ({ ...operation, args: newOperationsArrays })"
+        :isTopLevel="false"
+      />
+    </template>
+    <template v-else>
+      <FormArg
+        v-for="(arg, index) in pipe.args"
+        :key="arg.name"
+        :label="arg.label"
+        :inputType="arg.inputType"
+        :required="arg.required"
+        :modelValue="operation.args[index]"
+        @update:modelValue="newArg => operation = ({ ...operation, args: createReplace({ index, item: newArg })(operation.args) })"
+      />
+    </template>
   <!-- Arg repetition should be handled here -->
   </section>
 </template>
@@ -82,6 +91,11 @@ export default defineComponent({
             }
           }),
           pipe = computed(() => pipeMetadata.find(({ label }) => label === operation.value.pipe)),
+          shouldUseFormOperationsArrays = computed(() => 
+            pipe.value.args.length === 1
+            && pipe.value.args[0].inputType === 'selector'
+            && pipe.value.args[0].repeatable === true
+          ),
           pipeOption = computed(() => ({
             value: pipe.value.name,
             label: pipe.value.label,
@@ -100,6 +114,7 @@ export default defineComponent({
     return {
       operation,
       pipe,
+      shouldUseFormOperationsArrays,
       pipeOption,
       createReplace,
       emitDelete,

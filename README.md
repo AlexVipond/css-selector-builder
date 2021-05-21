@@ -6,7 +6,7 @@ This project is a TypeScript library for building CSS selectors programmatically
 ## Motivation
 
 - Create a nice interface that people can use to build CSS selectors and explore different types of CSS selectors
-- Practice type definitions, test-driven development, functional programming, pipelines, dark mode design, and recursive components in Vue 3
+- Practice type definitions, test-driven development, functional programming, pipelines, dark mode design, controlled components, and recursive components in Vue 3
 - Have fun with my favorite tools
   - TypeScript
   - Vue 3 Composition API
