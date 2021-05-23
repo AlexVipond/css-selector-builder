@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full max-w-sm">
+  <div>
     <Popover v-slot="{ open }" class="relative">
       <PopoverButton
         :class="open ? '' : 'text-opacity-90'"

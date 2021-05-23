@@ -1,6 +1,6 @@
 <template>
   <header class="bg-denim-1000 px-6 pt-8 flex">
-    <nav class="mr-auto flex items-center gap-4">
+    <nav class="w-full flex items-center gap-4">
       <PopoverHelp :operated="operated" />
       <a
         href="https://github.com/AlexVipond/css-selector-builder"
@@ -23,6 +23,14 @@
         <span class="sr-only">Follow me on Twitter</span>
         <SimpleTwitter class="h-7 w-7 fill-current text-denim-300 hover:text-denim-100 focus:text-denim-200 transition" />
       </a>
+      <button
+        type="button"
+        class="ml-auto btn--grows rounded-full p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 focus-visible:ring-opacity-75"
+        @click="dialogShareStatus = 'open'"
+      >
+        <span class="sr-only">Open share dialog</span>
+        <ShareIcon class="h-7 w-7 stroke-current text-denim-300 hover:text-denim-100 focus:text-denim-200 transition" />
+      </button>
     </nav>
   </header>
   <main class="min-h-screen w-screen flex flex-col items-center gap-12 py-14 px-6 bg-denim-1000">
@@ -75,6 +83,11 @@
     <section class="w-full max-w-xl">
       <FormOperationsArrays v-model="operationsArrays" :isTopLevel="true" />
     </section>
+    <DialogShare
+      :status="dialogShareStatus"
+      :operationsArrays="operationsArrays"
+      @close="dialogShareStatus = 'closed'"
+    ></DialogShare>
   </main>
   <footer class="flex flex-col gap-6 bg-denim-1200 px-6 py-8 text-denim-300">
     <h2 class="mx-auto"> 🌱  Created by <a class="underline hover:text-denim-100 focus:text-denim-200 transition" href="https://alexvipond.dev">Alex Vipond</a></h2>
@@ -102,25 +115,26 @@ import {
   SimpleGitHub,
   SimpleNPM,
 } from '@baleada/vue-simple-icons'
-import { useCopyable, useFetchable } from '@baleada/vue-composition'
-import { 
-  CheckIcon,
-  ClipboardCopyIcon,
-} from '@heroicons/vue/solid'
+import { useCopyable } from '@baleada/vue-composition'
+import { CheckIcon, ClipboardCopyIcon } from '@heroicons/vue/solid'
+import { ShareIcon } from '@heroicons/vue/outline'
 import { toOperated } from './toOperated'
 import type { Operation } from './toOperated'
 import FormOperationsArrays from './components/FormOperationsArrays.vue'
 import PopoverHelp from './components/PopoverHelp.vue'
+import DialogShare from './components/DialogShare.vue'
 
 export default defineComponent({
   components: {
-    FormOperationsArrays,
     SimpleTwitter,
     SimpleGitHub,
     SimpleNPM,
-    PopoverHelp,
+    ShareIcon,
     CheckIcon,
     ClipboardCopyIcon,
+    FormOperationsArrays,
+    PopoverHelp,
+    DialogShare,
   },
   setup () {
     const operationsArrays = ref<Operation[][]>([[]]),
@@ -146,34 +160,13 @@ export default defineComponent({
       }
     )
 
-    const fetchable = useFetchable(window.location.origin + '/api/create-short-link'),
-          tweetIntent = ref('')
-
-    async function getShortLink () {
-      // @ts-ignore
-      await fetchable.value.post(({ withJson }) => withJson({ url: 'https://css-selector-builder.netlify.app/' + window.location.search }))
-      const bitlyResponse = (await fetchable.value.json).response
-
-      // @ts-ignore
-      if (fetchable.value.response.status === 200) {
-        return bitlyResponse.data.link
-      }
-      
-      return 'https://css-selector-builder.netlify.app/'
-    }
-
-    async function shareClickHandle () {
-      const shortLink = await getShortLink()
-      tweetIntent.value = toTweetIntent(shortLink)
-
-      console.log(tweetIntent.value)
-    }
+    const dialogShareStatus = ref('closed')
 
     return {
       operationsArrays,
       operated,
       copyable,
-      shareClickHandle,
+      dialogShareStatus,
     }
   }
 })
@@ -201,19 +194,5 @@ function withoutNull (parsedOperationsArrays: Record<any, any>[][]): Operation[]
   }
     
   )
-}
-
-function toTweetIntent (url) {
-  const text="I built a CSS selector!",
-        via="AlexVipond",
-        encodedText = encodeURIComponent(text),
-        params = [
-          `text=${encodedText}&`,
-          `url=${url}&`,
-          `via=${via}`
-        ],
-        encodedParams = params.join('&')
-
-  return 'https://twitter.com/intent/tweet?' + encodedParams
 }
 </script>
