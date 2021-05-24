@@ -13,12 +13,11 @@ export function toOperated (operations: Operation[] = []) {
   const reduced: Pipe[] = operations.reduce((reduced, { pipe, args: rawArgs }) => {
     const pipeName = pipeMetadata.find(({ label }) => label === pipe).name
     const args = rawArgs.map(arg => Array.isArray(arg) ? toOperated(arg) : arg)
+
+    // @ts-ignore
+    reduced.push(pipes[pipeName](...args))
     
-    return [
-      ...reduced,
-      // @ts-ignore
-      pipes[pipeName](...args),
-    ]
+    return reduced
   }, [])
   
   return pipe(...reduced)('')

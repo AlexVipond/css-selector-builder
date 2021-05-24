@@ -11,9 +11,8 @@
     type="text"
     :placeholder="label"
     v-model="arg"
-    :required="required"
+    :required="isRequired"
   />
-  <FormOperations v-if="inputType === 'selector'" v-model="arg" />
   <InputAttributeOperator
     v-if="inputType === 'attributeOperator'"
     :label="label"
@@ -56,7 +55,7 @@ export default defineComponent({
     InputDirectionality,
     InputNthPattern,
   },
-  props: ['modelValue', 'inputType', 'label', 'required'],
+  props: ['modelValue', 'inputType', 'label', 'isRequired'],
   setup (props, { emit }) {
     const arg = computed({
             get: () => props.modelValue,

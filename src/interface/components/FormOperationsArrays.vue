@@ -76,6 +76,7 @@
       </div>
     </transition-group>
     <button
+      v-if="isRepeatable"
       name="Add conditions for another selector"
       class="mx-auto p-3 text-lg btn--raised btn--grows rounded-full bg-gradient-to-r from-denim-700 to-denim-600 flex-shrink-0 text-denim-100"
       @click="operationsArrayCreate"
@@ -100,7 +101,7 @@ export default defineComponent({
     FormOperations,
     TrashIcon,
   },
-  props: ['modelValue', 'isTopLevel'],
+  props: ['modelValue', 'isTopLevel', 'isRepeatable'],
   setup (props, { emit }) {
     const operationsArrays = computed<Operation[][]>({
             get: () => props.modelValue,

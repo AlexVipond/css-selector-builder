@@ -62,6 +62,7 @@
         :modelValue="operation.args"
         @update:modelValue="newOperationsArrays => operation = ({ ...operation, args: newOperationsArrays })"
         :isTopLevel="false"
+        :isRepeatable="operation.args[0].isRepeatable"
       />
     </template>
     <template v-else>
@@ -70,7 +71,7 @@
         :key="arg.name"
         :label="arg.label"
         :inputType="arg.inputType"
-        :required="arg.required"
+        :isRequired="arg.isRequired"
         :modelValue="operation.args[index]"
         @update:modelValue="newArg => operation = ({ ...operation, args: createReplace({ index, item: newArg })(operation.args) })"
       />
@@ -112,7 +113,6 @@ export default defineComponent({
           shouldUseFormOperationsArrays = computed(() => 
             pipe.value.args.length === 1
             && pipe.value.args[0].inputType === 'selector'
-            && pipe.value.args[0].repeatable === true
           ),
           pipeOption = computed(() => ({
             value: pipe.value.name,
