@@ -62,7 +62,7 @@
         :modelValue="operation.args"
         @update:modelValue="newOperationsArrays => operation = ({ ...operation, args: newOperationsArrays })"
         :isTopLevel="false"
-        :isRepeatable="operation.args[0].isRepeatable"
+        :isRepeatable="pipe.args[0].isRepeatable"
       />
     </template>
     <template v-else>

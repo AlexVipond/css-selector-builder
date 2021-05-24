@@ -24,7 +24,7 @@ To use the CSS selector builder interface, go to [the website](https://css-selec
 
 As you build your selector, the URL updates with any new conditions you've created. Click the share button to create a tweet intent with a custom short link for your selector.
 
-[Example link](https://css-selector-builder.netlify.app/?conditions=[[{"id"%3A"d7j4UMsM"%2C"pipe"%3A"has+a+class%2C+which+I'll+specify"%2C"args"%3A["this"]}%2C{"id"%3A"6xIfbS_i"%2C"pipe"%3A"matches+any+of+one+or+more+selectors%2C+which+I'll+specify%2C+and+retains+the+specificity+of+the+most+specific+matching+selector"%2C"args"%3A[[{"id"%3A"HmAfTmVh"%2C"pipe"%3A"has+an+attribute+whose+value+meets+certain+conditions"%2C"args"%3A["super"%2C"^%3D"%2C"cool"%2Cnull]}]%2C[{"id"%3A"pGcH5x9k"%2C"pipe"%3A"has+an+ID%2C+which+I'll+specify"%2C"args"%3A["and"]}]]}]%2C[{"id"%3A"z_vlIhxT"%2C"pipe"%3A"is+the+first+child+of+its+type+inside+a+parent"%2C"args"%3A[]}%2C{"id"%3A"6CuaUTWJ"%2C"pipe"%3A"is+the+adjacent+sibling+of+an+element%2C+which+I'll+specify"%2C"args"%3A[[{"id"%3A"9mvLCYee"%2C"pipe"%3A"has+valid+contents"%2C"args"%3A[]}]]}]])
+[Example link](https://css-selector-builder.netlify.app/?conditions=[[{"id"%3A"joTEMeGs"%2C"pipe"%3A"has+a+tag%2C+which+I'll+specify"%2C"args"%3A["html"]}%2C{"id"%3A"eYipSw24"%2C"pipe"%3A"matches+any+of+one+or+more+selectors%2C+which+I'll+specify%2C+and+retains+the+specificity+of+the+most+specific+matching+selector"%2C"args"%3A[[{"id"%3A"6hpjy1gY"%2C"pipe"%3A"has+a+class%2C+which+I'll+specify"%2C"args"%3A["fun"]}]]}]%2C[{"id"%3A"hKwnFaB3"%2C"pipe"%3A"has+an+ID%2C+which+I'll+specify"%2C"args"%3A["💩"]}]])
 
 To play with the selector builder's recursive abilities:
 1. Add a new condition

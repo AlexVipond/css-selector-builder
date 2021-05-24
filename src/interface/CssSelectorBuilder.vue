@@ -81,7 +81,7 @@
       </button>
     </section>
     <section class="w-full max-w-xl">
-      <FormOperationsArrays v-model="operationsArrays" :isTopLevel="true" />
+      <FormOperationsArrays v-model="operationsArrays" :isTopLevel="true" :isRepeatable="true" />
     </section>
     <DialogShare
       :status="dialogShareStatus"
