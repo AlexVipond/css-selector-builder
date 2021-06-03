@@ -123,6 +123,7 @@ import type { Operation } from './toOperated'
 import FormOperationsArrays from './components/FormOperationsArrays.vue'
 import PopoverHelp from './components/PopoverHelp.vue'
 import DialogShare from './components/DialogShare.vue'
+import { clipboard } from './state'
 
 export default defineComponent({
   components: {
@@ -139,10 +140,9 @@ export default defineComponent({
   setup () {
     const operationsArrays = ref<Operation[][]>([[]]),
           operated = computed(() => operationsArrays.value.map(toOperated).filter(o => o !== '').join(', ')),
-          clipboard = { text: '' },
           copyable = useCopyable(operated.value, { clipboard })
 
-    watch(operated, async () => copyable.value.string = operated.value)
+    watch(operated, () => copyable.value.string = operated.value)
 
     onMounted(() => {
       const urlOperationsArrays = new URL(window.location.toString()).searchParams.get('conditions')

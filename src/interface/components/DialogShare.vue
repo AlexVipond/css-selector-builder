@@ -27,7 +27,7 @@
         leave-from="opacity-100 scale-100"
         leave-to="opacity-0 scale-95"
       >
-        <section class="relative h-64 w-full max-w-md flex flex-col items-center justify-center p-6 bg-denim-800 text-denim-200 shadow-lg rounded-lg">
+        <section class="relative h-64 w-full max-w-md flex flex-col items-center justify-center p-6 gap-8 bg-denim-800 text-denim-200 shadow-lg rounded-lg">
           <button
             @click="$emit('close')"
             class="
@@ -89,14 +89,59 @@
               <span>Tweet your selector!</span>
             </a>
           </transition>
+          <section><span>Or click to copy short link:</span></section>
+          <button
+            type="button"
+            name="copy selector"
+            class="relative btn--grows rounded-md text-violet-100 text-xl"
+            @click="() => copyable.copy()"
+          >
+            <pre class="w-full p-4 brand-gradient-to-r overflow-x-scroll rounded-md shadow-lg text-left"><code>{{ displayedShortLink }}</code></pre>
+            <transition
+              enter-active-class="transition duration-100 delay-125 ease-in"
+              enter-from-class="opacity-0"
+              enter-to-class="opacity-100"
+              leave-active-class="transition duration-100 ease-in"
+              leave-from-class="opacity-100"
+              leave-to-class="opacity-0"
+            >
+              <div
+                class="group absolute top-0 right-0 bottom-0 left-0 pointer-events-none"
+                v-if="!copyable.isClipboardText"
+              >
+                <div class="absolute top-0 right-0 pb-1 text-sm text-denim-300 transform -translate-y-full flex items-center opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition">
+                  <ClipboardCopyIcon class="h-[1em] w-[1em]" />
+                  <span>Copy selector</span>
+                </div>
+              </div>
+            </transition>
+            <transition
+              enter-active-class="transition duration-100 delay-125 ease-in"
+              enter-from-class="opacity-0"
+              enter-to-class="opacity-100"
+              leave-active-class="transition duration-100 ease-in"
+              leave-from-class="opacity-100"
+              leave-to-class="opacity-0"
+            >
+              <div
+                class="group absolute top-0 right-0 bottom-0 left-0"
+                v-if="copyable.isClipboardText"
+              >
+                <div class="absolute top-0 right-0 pb-1 text-sm text-denim-300 transform -translate-y-full flex items-center opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition">
+                  <CheckIcon class="h-[1em] w-[1em]" />
+                  <span>Copied!</span>
+                </div>
+              </div>
+            </transition>
+          </button>
         </section>
       </TransitionChild>
     </Dialog>
   </TransitionRoot>
 </template>
 
-<script>
-import { defineComponent, ref, watch } from "vue"
+<script lang="ts">
+import { defineComponent, ref, computed, watch } from "vue"
 import {
   TransitionRoot,
   TransitionChild,
@@ -105,9 +150,12 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@headlessui/vue"
+import { CheckIcon, ClipboardCopyIcon } from '@heroicons/vue/solid'
 import { XCircleIcon } from '@heroicons/vue/outline'
 import { SimpleTwitter } from '@baleada/vue-simple-icons'
-import { useFetchable, useDelayable } from '@baleada/vue-composition'
+import { useFetchable, useCopyable } from '@baleada/vue-composition'
+import { useWithMinimumDelay } from '../composition/useWithMinimumDelay'
+import { clipboard } from '../state'
 
 export default defineComponent({
   components: {
@@ -117,37 +165,41 @@ export default defineComponent({
     DialogOverlay,
     DialogTitle,
     DialogDescription,
+    ClipboardCopyIcon,
+    CheckIcon,
     XCircleIcon,
     SimpleTwitter,
   },
   props: ['status', 'operationsArrays'],
   setup (props) {
     const fetchable = useFetchable(window.location.origin + '/api/create-short-link'),
-          tweetIntent = ref(''),
-          activeCallToAction = ref('fetch animation')
+          shortLink = ref('...'),
+          displayedShortLink = ref(shortLink.value),
+          tweetIntent = computed(() => toTweetIntent(shortLink.value)),
+          activeCallToAction = ref<'fetch animation' | 'tweet intent'>('fetch animation')
 
     watch(
       () => props.status,
       async () => {
         if (props.status === 'open') {
-          const timeStart = performance.now(),
-                shortLink = await getShortLink()
-          
-          tweetIntent.value = toTweetIntent(shortLink)
-
-          const timeEnd = performance.now()
-
-          useDelayable(
-            () => activeCallToAction.value = 'tweet intent',
-            { delay: Math.max(0, 500 - (timeEnd - timeStart)) } // To be less jarring, animation should play for minimum 500ms before showing the tweet intent
-          ).value.delay()
+          await useWithMinimumDelay(
+            async () => (shortLink.value = await getShortLink()),
+            () => {
+              activeCallToAction.value = 'tweet intent'
+              displayedShortLink.value = shortLink.value
+            },
+            500
+          )
         }
       }
     )
 
     watch(
       () => props.operationsArrays,
-      () => activeCallToAction.value = 'fetch animation'
+      () => {
+        shortLink.value = '...'
+        activeCallToAction.value = 'fetch animation'
+      }
     )
 
     async function getShortLink () {
@@ -163,9 +215,14 @@ export default defineComponent({
       return 'https://css-selector-builder.netlify.app/'
     }
 
+    const copyable = useCopyable(shortLink.value, { clipboard })
+    watch(shortLink, () => copyable.value.string = shortLink.value)
+
     return {
+      displayedShortLink,
       tweetIntent,
       activeCallToAction,
+      copyable,
     }
   }
 })
