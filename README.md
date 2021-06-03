@@ -1,6 +1,8 @@
 # CSS Selector Builder
 
-This project is a TypeScript library for building CSS selectors programmatically, and also a user interface around that library.
+This project is a TypeScript library for building CSS selectors programmatically, and also a user interface for that library.
+
+The library is published on npm as `@alexvipond/css-selector-pipes`, and the user interface is at [https://css-selector-builder.netlify.app](https://css-selector-builder.netlify.app).
 
 
 ## Motivation
