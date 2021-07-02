@@ -2,8 +2,7 @@
 
 This project is a TypeScript library for building CSS selectors programmatically, and also a user interface for that library.
 
-The library is published on npm as `@alexvipond/css-selector-pipes`, and the user interface is at [https://css-selector-builder.netlify.app](https://css-selector-builder.netlify.app).
-
+The library is published on npm as `@alexvipond/css-selector-pipes`, and the user interface is [here](https://css-selector-builder.alexvipond.dev/).
 
 ## Motivation
 
@@ -22,7 +21,7 @@ The library is published on npm as `@alexvipond/css-selector-pipes`, and the use
 
 ### Interface
 
-To use the CSS selector builder interface, go to [the website](https://css-selector-builder.netlify.app).
+To use the CSS selector builder interface, go to [the website](https://css-selector-builder.alexvipond.dev/).
 
 As you build your selector, the URL updates with any new conditions you've created. Click the share button to create a tweet intent with a custom short link for your selector.
 
